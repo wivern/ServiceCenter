@@ -1,0 +1,128 @@
+ru:
+  add_order: "Создать заказ"
+  activerecord:
+    attributes:
+      name: Наименование
+      complect:
+        name: Наименование
+      customer:
+        address: Адрес
+        name: Имя
+        email: "Эл.почта"
+        passport: Документ
+        phone: Телефон
+      currency:
+        name: Обозначение
+        full_name: Наименование
+        char_code: Код
+        num_code: Код(число)
+      dealer:
+        name: Наименование
+      defect:
+        name: Наименование
+      external_state:
+        name: Наименование
+      internal_state:
+        name: Наименование
+      goal:
+        name: Наименование
+      ground:
+        name: Наименование
+      order:
+        number: "№ заказа"
+        ticket: "№ талона"
+        applied_at: "Дата обращения"
+        plan_deliver_at: "Дата выдачи (план)"
+        actual_deliver_at: "Дата выдачи (факт)"
+        actual_defect: "Выявленная неисправность"
+        repair_type__name: "Тип ремонта"
+        customer__name: Заказчик
+        customer__address: Адрес
+        customer__phone: Телефон
+        customer__email: Эл.почта
+        customer__passport: Паспорт
+        defect: Заявленная неисправность
+        diag_manager__name: Диагностику провел
+        diag_price: Стоимость диагностики
+        diag_ground: Основание проведения диагностики
+        diagnosed_at: Дата проведения диагностики
+        goal__name: Цель диагностики
+        prior_cost: Предварительная стоимость
+        maximum_cost: Максимальная стоимость
+        result__name: Результат диагностики
+        manager__name: Приемщик
+        manager__display_name: Принят
+        status__name: Статус
+        service_note: Примечание
+        guarantee_case: Гарантия
+        deliver_manager__name: Выдал
+        product_passport__factory_number: "Заводской номер"
+        product_passport__producer__name: "Производитель"
+        product_passport__product_name__name: "Наименование изделия"
+        product_passport__guarantee_stub_number: "Номер гарантийного талона"
+        product_passport__purchase_place__name: "Место покупки"
+        product_passport__purchased_at: "Дата покупки"
+        product_passport__dealer__name: "Поступило от дилера"
+      person:
+        name: Наименование
+      producer:
+        name: Наименование
+      product_name:
+        name: Наименование
+      purchase_place:
+        name: Наименование
+      reason:
+        name: Наименование
+      result:
+        name: Наименование
+      repair_type:
+        name: Наименование
+      status:
+        name: Наименование
+    errors:
+      attributes:
+        name:
+          blank: Не заполнено поле наименование
+      messages:
+        blank: Не заполнено обязательное поле
+      models:
+        order:
+          attributes:
+            customer:
+              blank: Не указан заказчик
+    models:
+      activity: Работа
+      complect: Комплект
+      customer: Заказчик
+      currency: Валюта
+      dealer: Дилер
+      defect: Неисправность
+      external_state: Внешнее состояние
+      internal_state: Внутреннее состояние
+      goal: Цель диагностики
+      ground: Основание диагностики
+      order: Заказ
+      person: Сотрудник
+      producer: Производитель
+      product_name: Изделие
+      purchase_place: Место покупки
+      reason: Причина обращения
+      result: Результат диагностики
+      repair_type: Тип ремонта
+      status: Статус
+  views:
+    actions:
+      add_order:
+        text: "Создать заказ"
+        tooltip: "Мастер создания заказа"
+    forms:
+      add_order:
+        customer: "Заказчик"
+        product_passport: "Паспорт изделия"
+        order_details: "Атрибуты заказа"
+    orders:
+      title: Список заказов
+    order_details:
+      title: Заказ
+    navigation:
+      title: Навигатор

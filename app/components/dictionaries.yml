@@ -1,0 +1,166 @@
+---
+dictionaries:
+  status:
+    text: activerecord.models.status
+    leaf: true
+    component: status_component
+  complect:
+    text: activerecord.models.complect
+    leaf: true
+    component: complect_component
+  dealer:
+    text: activerecord.models.dealer
+    leaf: true
+    component: dealer_component
+  defect:
+    text: activerecord.models.defect
+    leaf: true
+    component: defect_component
+  external_state:
+    text: activerecord.models.external_state
+    leaf: true
+    component: external_state_component
+  goal:
+    text: activerecord.models.goal
+    leaf: true
+    component: goal_component
+  ground:
+    text: activerecord.models.ground
+    leaf: true
+    component: ground_component
+  internal_state:
+    text: activerecord.models.internal_state
+    leaf: true
+    component: internal_state_component
+  producer:
+    text: activerecord.models.producer
+    leaf: true
+    component: producer_component
+  product_name:
+    text: activerecord.models.product_name
+    leaf: true
+    component: product_name_component
+  purchase_place:
+    text: activerecord.models.purchase_place
+    leaf: true
+    component: purchase_place_component
+  reason:
+    text: activerecord.models.reason
+    leaf: true
+    component: reason_component
+  result:
+    text: activerecord.models.result
+    leaf: true
+    component: result_component
+  repair_type:
+    text: activerecord.models.repair_type
+    leaf: true
+    component: repair_type_component
+  customer:
+    text: activerecord.models.customer
+    leaf: true
+    component: customer_component
+  activity:
+    text: activerecord.models.activity
+    leaf: true
+    component: activity_component
+  currency:
+    text: activerecord.models.currency
+    leaf: true
+    component: currency_component
+components:
+  :status_component:
+    :class_name: Basepack::GridPanel
+    :model: Status
+    :lazy_loading: true
+    :persistance: true
+    :columns:
+      :name: !!null 
+  complect_component:
+    :class_name: Basepack::GridPanel
+    :model: Complect
+    :lazy_loading: true
+    :persistance: true
+    :columns:
+      :name: !!null 
+  dealer_component:
+    :class_name: Basepack::GridPanel
+    :model: Dealer
+    :lazy_loading: true
+    :persistance: true
+  defect_component:
+    :class_name: Basepack::GridPanel
+    :model: Defect
+    :lazy_loading: true
+    :persistance: true
+  external_state_component:
+    :class_name: Basepack::GridPanel
+    :model: ExternalState
+    :lazy_loading: true
+    :persistance: true
+  goal_component:
+    :class_name: Basepack::GridPanel
+    :model: Goal
+    :lazy_loading: true
+    :persistance: true
+  ground_component:
+    :class_name: Basepack::GridPanel
+    :model: Ground
+    :lazy_loading: true
+    :persistance: true
+  internal_state_component:
+    :class_name: Basepack::GridPanel
+    :model: InternalState
+    :lazy_loading: true
+    :persistance: true
+  producer_component:
+    :class_name: Basepack::GridPanel
+    :model: Producer
+    :lazy_loading: true
+    :persistance: true
+  product_name_component:
+    :class_name: Basepack::GridPanel
+    :model: ProductName
+    :lazy_loading: true
+    :persistance: true
+  purchase_place_component:
+    :class_name: Basepack::GridPanel
+    :model: PurchasePlace
+    :lazy_loading: true
+    :persistance: true
+  reason_component:
+    :class_name: Basepack::GridPanel
+    :model: Reason
+    :lazy_loading: true
+    :persistance: true
+  result_component:
+    :class_name: Basepack::GridPanel
+    :model: Result
+    :lazy_loading: true
+    :persistance: true
+  repair_type_component:
+    :class_name: Basepack::GridPanel
+    :model: RepairType
+    :lazy_loading: true
+    :persistance: true
+  customer_component:
+    :class_name: Basepack::GridPanel
+    :model: Customer
+    :lazy_loading: true
+    :persistance: true
+    :columns:
+      :name: !!null 
+      :address: !!null 
+      :email: !!null 
+      :phone: !!null 
+      :passport: !!null 
+  activity_component:
+    :class_name: Basepack::GridPanel
+    :model: Activity
+    :lazy_loading: true
+    :persistance: true
+  currency_component:
+    :class_name: Basepack::GridPanel
+    :model: Currency
+    :lazy_loading: true
+    :persistance: true

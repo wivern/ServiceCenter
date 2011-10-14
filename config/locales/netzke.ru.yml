@@ -1,0 +1,79 @@
+ru:
+  netzke:
+    basepack:
+      grid_panel:
+        actions:
+          add: Добавить
+          edit: Править
+          del: Удалить
+          apply: Применить
+          add_in_form: Добавить через форму
+          edit_in_form: Править в форме
+          search: Поиск
+
+        deleted_n_records: "Удалено %{n} запись(-ей)"
+        cannot_delete: "У вас нет прав для удаления данных"
+        confirmation: Подтверждение
+        are_you_sure: Вы уверены?
+
+        record_form_window:
+          actions:
+            ok: OK
+            cancel: Отмена
+
+      search_window:
+        title: Расширенный поиск
+        actions:
+          search: Поиск
+          cancel: Отмена
+
+      form_panel:
+        actions:
+          edit: Править
+          edit_tooltip: Править
+          cancel: Отмена
+          cancel_tooltip: Отменить изменения
+          apply: Применить
+          apply_tooltip: Сохранить изменения
+
+      search_panel:
+        presets: Запросы
+        equals: Равно
+        greater_than: Больше чем
+        less_than: Меньше чем
+        contains: Содержит
+        matches: Похоже на
+        date_equals: "On"
+        before: До
+        after: После
+
+      paging_form_panel:
+        actions:
+          search: Поиск
+          search_tooltip: Расширенный поиск
+
+      query_builder:
+        presets: Запросы
+        preset_saved: Запрос успешно сохранен
+        preset_deleted: Запрос успешно удален
+        overwrite_confirm: "Вы действительно хотите обновить запрос '{0}'?"
+        overwrite_confirm_title: "Обновление запроса"
+        delete_confirm: "Вы действительно хотите удалить запрос '{0}'?"
+        delete_confirm_title: "Удаление запроса"
+        actions:
+          clear_all: Очистить
+          clear_all_tooltip: Удалить все условия
+          reset: Сбросить
+          reset_tooltip: Сбросить значения
+          save_preset: Сохранить запрос
+          save_preset_tooltip: Сохранить запрос
+          delete_preset: Удалить запрос
+          delete_preset_tooltip: Удалить запрос
+          apply: Применить
+          apply_tooltip: Применить обновленные условия
+
+
+    formats:
+      date: d.m.Y
+      datetime: d.m.Y H:i:s
+      time: H:i:s
