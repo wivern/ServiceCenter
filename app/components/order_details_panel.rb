@@ -19,15 +19,15 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
                                   {:name => :ticket, :xtype => :displayfield},
                                   {:name => :manager__display_name, :xtype => :textfield, :read_only => true, :width => 300}
                               ]},
-                              { :title => "Паспорт изделия",
+                              { :title => "Паспорт изделия", :defaults => {:read_only => true, :xtype => :textfield},
                                 :items => [
-                                    {:name => :product_passport__producer__name, :xtype => :displayfield},
-                                    {:name => :product_passport__product_name__name, :xtype => :displayfield},
-                                    {:name => :product_passport__factory_number, :xtype => :displayfield},
-                                    {:name => :product_passport__guarantee_stub_number, :xtype => :displayfield},
-                                    {:name => :product_passport__purchase_place__name, :xtype => :displayfield},
+                                    {:name => :product_passport__producer__name},
+                                    {:name => :product_passport__product_name__name},
+                                    {:name => :product_passport__factory_number},
+                                    {:name => :product_passport__guarantee_stub_number},
+                                    {:name => :product_passport__purchase_place__name},
                                     {:name => :product_passport__purchased_at, :xtype => :datefield, :read_only => true},
-                                    {:name => :product_passport__dealer__name, :xtype => :displayfield}
+                                    {:name => :product_passport__dealer__name}
                                 ]
                               },
                               {
