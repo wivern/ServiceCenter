@@ -115,6 +115,9 @@ ru:
       add_order:
         text: "Создать заказ"
         tooltip: "Мастер создания заказа"
+      print:
+        text: "Печать"
+        tooltip: "Вывод документа на печать"
     forms:
       add_order:
         customer: "Заказчик"

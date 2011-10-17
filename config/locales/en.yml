@@ -3,3 +3,8 @@
 
 en:
   hello: "Hello world"
+  views:
+    actions:
+      print:
+        text: "Print"
+        tooltip: "Send this document to printer"

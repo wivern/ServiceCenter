@@ -71,8 +71,7 @@ class ServiceCenterApp < Netzke::Basepack::SimpleApp
             :lazy_loading => true,
             :title => Order.model_name.human,
             :persistence => true,
-            :bbar => [:add_order.action, '-', :search.action],
-            :context_menu => [:add_order.action],
+            #:bbar => [:add_order.action, '-', :search.action],
             :columns => [:repair_type__name, :number, :ticket, :applied_at, :plan_deliver_at, :customer__name,
               :manager__display_name, :actual_deliver_at, :status__name, :service_note]
 

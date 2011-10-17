@@ -11,16 +11,16 @@ class OrdersGrid < Netzke::Basepack::GridPanel
     {
         :text => I18n.t('views.actions.print.text'),
         :tooltip => I18n.t('views.actions.print.tooltip'),
-        :icon => :print
+        :icon => :printer
     }
   end
 
   def default_bbar
-    [:add_order.action, :print.action, "-", *super]
+    [:add_order.action, '-', :print.action]
   end
 
   def default_context_menu
-    [:add_order.action, :print.action, "-", *super]
+    [:add_order.action, :print.action] # *super
   end
 
   component :add_order_form do
