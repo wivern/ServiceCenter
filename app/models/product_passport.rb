@@ -2,6 +2,7 @@ class ProductPassport < ActiveRecord::Base
   belongs_to :producer
   belongs_to :product_name
   belongs_to :dealer
+  belongs_to :purchase_place
 
   attr_accessible :factory_number
 

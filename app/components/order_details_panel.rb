@@ -138,14 +138,14 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
     )
   end
 
-  def configure_bbar(c)
-    c[:bbar] = [:apply.action, :cancel.action]
-  end
+  #def configure_bbar(c)
+  #  c[:bbar] = [:apply.action, :cancel.action]
+  #end
 
-  js_method :on_cancel, <<-JS
-    function(){
-      this.getForm().reset();
-    }
-  JS
+  #js_method :on_cancel, <<-JS
+  #  function(){
+  #    this.getForm().reset();
+  #  }
+  #JS
 
 end

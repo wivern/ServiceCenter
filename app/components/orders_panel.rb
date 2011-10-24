@@ -57,7 +57,8 @@ class OrdersPanel < Netzke::Basepack::BorderLayoutPanel
   component :order_details_panel do
     {
         :class_name => "OrderDetailsPanel",
-        :record_id => component_session[:selected_order_id]
+        :record_id => component_session[:selected_order_id],
+        :mode => :lockable
     }
   end
 end

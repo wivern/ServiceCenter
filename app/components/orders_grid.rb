@@ -26,8 +26,9 @@ class OrdersGrid < Netzke::Basepack::GridPanel
   component :add_order_form do
     {
         :lazy_loading => true,
-        :class_name => "Netzke::Basepack::GridPanel::RecordFormWindow",
+        :class_name => "WideFormWindow",
         :title => "#{I18n.t('views.actions.add_order.text')}",
+        :width => 640,
         :button_align => "right",
         :items => [{
                        :class_name => "AddOrderForm",
@@ -41,7 +42,8 @@ class OrdersGrid < Netzke::Basepack::GridPanel
                        :mode => config[:mode],
                        :record => data_class.new(columns_default_values)
                    }.deep_merge(config[:add_form_config] || {})]
-    }.deep_merge(config[:add_form_window_config] || {})
+    }
+    #.deep_merge(config[:add_form_window_config] || {})
   end
 
   js_method :on_add_order, <<-JS
