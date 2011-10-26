@@ -8,6 +8,8 @@
 
 Ext.namespace('Ext.ux');
 
+Ext.QuickTips.init();
+
 Ext.define('Ext.ux.autosuggestField', {
     extend: 'Ext.form.field.ComboBox',
     alias: 'widget.autosuggest',

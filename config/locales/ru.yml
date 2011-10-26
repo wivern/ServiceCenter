@@ -36,6 +36,7 @@ ru:
         actual_deliver_at: "Дата выдачи (факт)"
         actual_defect: "Выявленная неисправность"
         repair_type__name: "Тип ремонта"
+        complect: "Комплект"
         customer__name: Заказчик
         customer__address: Адрес
         customer__phone: Телефон
@@ -46,6 +47,7 @@ ru:
         diag_price: Стоимость диагностики
         diag_ground: Основание проведения диагностики
         diagnosed_at: Дата проведения диагностики
+        external_state: "Внешнеее состояние"
         goal__name: Цель диагностики
         prior_cost: Предварительная стоимость
         maximum_cost: Максимальная стоимость

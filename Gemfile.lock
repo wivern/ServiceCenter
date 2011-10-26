@@ -1,17 +1,17 @@
 GIT
   remote: git://github.com/skozlov/netzke-basepack.git
-  revision: f8ca69ce6d4bc1bc25578923cb5519530044e59d
+  revision: 0af2cf1d01ea4bdc3ac672cd03a18bab4b19429e
   specs:
-    netzke-basepack (0.7.1)
+    netzke-basepack (0.7.3)
       acts_as_list (~> 0.1.4)
-      netzke-core (~> 0.7.0)
+      netzke-core (~> 0.7.4)
       will_paginate (~> 3.0.0)
 
 GIT
   remote: git://github.com/skozlov/netzke-core.git
-  revision: 63473d6896388165a9aaffbabd37fc8a6d068bba
+  revision: 253d1845196ecc5e808ca180ce703530231080aa
   specs:
-    netzke-core (0.7.3)
+    netzke-core (0.7.4)
       activesupport (>= 3.0.0)
 
 GEM

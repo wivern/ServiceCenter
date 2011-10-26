@@ -1,7 +1,7 @@
 #encoding: UTF-8
 class AddOrderForm < Netzke::Basepack::FormPanel
 
-  js_include "#{File.dirname(__FILE__)}/javascripts/lookup_field.js"
+  #js_include "#{File.dirname(__FILE__)}/javascripts/lookup_field.js"
   js_include "#{File.dirname(__FILE__)}/javascripts/autosuggest.js"
 
   endpoint :get_auto_suggest do |params|
@@ -28,7 +28,7 @@ class AddOrderForm < Netzke::Basepack::FormPanel
       configure_locked(s)
       configure_bbar(s)
       product_passport_fields = [
-          {:name => :product_passport__factory_number, :xtype => :autosuggest, :populate_related_fields => true},
+          {:name => :product_passport__factory_number, :xtype => :autosuggest, :populate_related_fields => true, :allow_blank => false},
           {:name => :product_passport__producer__name, :xtype => :autosuggest},
           {:name => :product_passport__product_name__name, :xtype => :autosuggest, :minChars => 1},
           {:name => :product_passport__guarantee_stub_number, :xtype => :textfield},
@@ -48,6 +48,8 @@ class AddOrderForm < Netzke::Basepack::FormPanel
               :border => false, :flex => 1, :plain => true,
               :items => [
                   {:name => :repair_type__name, :colspan => 2},
+                  {:name => :number, :xtype => :hiddenfield},
+                  {:name => :ticket, :xtype => :hiddenfield},
                   {
                       :xtype => :fieldset,
                       :title => I18n.t('views.forms.add_order.product_passport'),
@@ -71,8 +73,9 @@ class AddOrderForm < Netzke::Basepack::FormPanel
                               {# 1st column
                                :flex => 1, :defaults => {:anchor => '-8'},
                                :items => [
-                                   {:field_label => "Complect", :name => :complect__name, :xtype => :textarea},
-                                   {:field_label => "External state", :name => :external_state__name, :xtype => :textarea}
+                                   {:field_label => Order.human_attribute_name("applied_at"), :name => :applied_at, :xtype => :datefield, :value => Date.today},
+                                   {:field_label => Order.human_attribute_name("complect"), :name => :complect__name, :xtype => :textarea},
+                                   {:field_label => Order.human_attribute_name("external_state"), :name => :external_state__name, :xtype => :textarea}
                                ]
                               },
                               {# 2nd column
@@ -93,6 +96,8 @@ class AddOrderForm < Netzke::Basepack::FormPanel
     end
   end
 
+  js_mixin :add_order_form
+
   def normalize_field_with_suggest(field)
     field = normalize_field_without_suggest(field)
     field[:parent_id] = self.global_id if field[:xtype] == :autosuggest
@@ -103,10 +108,62 @@ class AddOrderForm < Netzke::Basepack::FormPanel
   alias_method_chain :normalize_field, :suggest
 
   def netzke_submit(params)
-    super
+    data = ActiveSupport::JSON.decode(params[:data])
+    passport = find_or_create(ProductPassport, get_search_options(data, "product_passport"), :factory_number)
+    customer = find_or_create(Customer, get_search_options(data, "customer"), :name)
+    data[:product_passport__factory_number] = passport.id if passport
+    data[:customer__name] = customer.id if customer
+    params[data] = data
+    super params
   end
 
   protected
+  
+  def find_or_create(model_class, search_options, id_name)
+    record = nil
+    return record if search_options.empty?
+    if is_digit?(search_options[id_name]) and model_class.exists?(:id => search_options[id_name])
+      #Passport is already exists, found by id
+      logger.debug "#{model_class.name} found by id with #{search_options.inspect}"
+      record = model_class.find(search_options[id_name])
+    elsif model_class.exists?(search_options)
+      #Passport is already exists, found by matching fields
+      logger.debug "#{model_class.name} found by options #{search_options.inspect}"
+      record = model_class.find(search_options)
+    else
+      #Create a new passport
+      logger.debug "Created new #{model_class.name}"
+      record = model_class.create(search_options)
+    end
+    record
+  end
+
+  def is_digit?(str)
+    if str
+      str.to_s.match(/^\d+$/)
+    else
+      false
+    end
+  end
+  
+  def get_search_options(data, prefix)
+    search_options = {}
+    data.select{|key, value| key.match /^#{prefix}/}.each{|k,v|
+      path = k.split('__')
+      if path.size == 2
+        key = path[1]
+        value = v.to_s
+      elsif path.size > 2
+        key = "#{path[path.size - 2]}_id"
+        data_class = Kernel.const_get(path[path.size - 2].camelize)
+        record = create_dict_if_needed(data_class, {:name => v})
+        value = record.id # ensure that it`s integer
+      end
+      search_options.merge!({key.to_sym => value}) if key
+    }
+    search_options
+  end
+  
   def all_association_syms(assoc)
     assoc.klass.reflect_on_all_associations.map{|k| k.name.to_sym}
   end
@@ -155,6 +212,15 @@ class AddOrderForm < Netzke::Basepack::FormPanel
       }
     end
     [assoc, assoc_method]
+  end
+
+  private
+  def create_dict_if_needed(klass, params)
+    dict = nil
+    dict = klass.find(params[:name]) if is_digit?(params[:name]) and klass.exists?(params[:name])
+    dict = klass.where(:name => params[:name]) unless dict
+    dict = klass.create(params) unless dict
+    dict
   end
 
 end

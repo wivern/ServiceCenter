@@ -4,7 +4,7 @@ class Numerator < ActiveRecord::Base
   def self::next_number(numerator_name = :number, order = nil)
     Numerator.transaction do
       if order.respond_to?(:repair_type)
-        numerator = Numerator.find_or_create_by_name_and_repair_type_id(numerator_name, order.repair_type)
+        numerator = Numerator.find_or_create_by_name_and_repair_type_id(numerator_name, order.repair_type.id)
       else
         numerator = Numerator.find_or_create_by_name(numerator_name)
       end
