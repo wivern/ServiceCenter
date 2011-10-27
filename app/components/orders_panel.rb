@@ -50,7 +50,8 @@ class OrdersPanel < Netzke::Basepack::BorderLayoutPanel
         :defaults => { :read_only => true },
         #:bbar => [:add_order.action, '-', :search.action],
         :columns => [:repair_type__name, :number, :ticket, :applied_at, :plan_deliver_at, :customer__name,
-                     :manager__display_name, :actual_deliver_at, :status__name, :service_note]
+                     :manager__display_name, :actual_deliver_at, :status__name, :service_note],
+        :prohibit => [:delete, :update, :create]
     }
   end
 

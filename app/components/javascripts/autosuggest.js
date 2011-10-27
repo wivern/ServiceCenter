@@ -10,8 +10,11 @@ Ext.namespace('Ext.ux');
 
 Ext.QuickTips.init();
 
-Ext.define('Ext.ux.autosuggestField', {
+Ext.define('Ext.ux.AutosuggestField', {
     extend: 'Ext.form.field.ComboBox',
+    mixins:{
+        storable: 'Ext.netzke.Storable'
+    },
     alias: 'widget.autosuggest',
     valueField: 'record_id',
     displayField: 'value',
@@ -25,54 +28,13 @@ Ext.define('Ext.ux.autosuggestField', {
     minChars: 3,
 
     initComponent: function() {
-        var modelName = this.parentId + "_" + this.name;
-
-        Ext.define(modelName, {
-            extend: 'Ext.data.Model',
-            fields: ['record_id', 'value']
-        });
-
-
-        var store = new Ext.data.Store({
-            model: modelName,
-            proxy: {
-                type: 'direct',
-                directFn: Netzke.providers[this.parentId].getAutoSuggest,
-                reader: {
-                    type: 'array',
-                    root: 'data'
-                }
-            }
-        });
-
-        store.on('beforeload', function(self, params) {
-            params.params.column = this.name;
-        }, this);
-
-        if (this.store) store.loadData({data: this.store});
-
-        this.store = store;
-
-        Ext.apply(this, { hiddenName : this.parentId + "_id" });
-
+        this.initStore();
         this.callParent();
     },
     collapse: function() {
         // HACK: do not hide dropdown menu while loading items
         if (!this.store.loading) this.callParent();
     },
-    /* Send both value id and display for field */
-//    getSubmitData: function(){
-//        var me = this, data = null;
-//        if (!me.disabled && me.submitValue && !me.isFileUpload()) {
-//            data = {};
-//            data[me.getName()] = '' + me.getValue();
-//            var path = me.getName().split('__');
-//            path[path.length - 1] = me.valueField;
-//            data[path.join('__')] = '' + me.getRawValue();
-//        }
-//        return data;
-//    },
     listeners: {
         'select': function(combo, records, options) {
             if (this.populateRelatedFields) {

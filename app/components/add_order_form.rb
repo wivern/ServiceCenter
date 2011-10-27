@@ -2,7 +2,10 @@
 class AddOrderForm < Netzke::Basepack::FormPanel
 
   #js_include "#{File.dirname(__FILE__)}/javascripts/lookup_field.js"
+  js_include "#{File.dirname(__FILE__)}/javascripts/netzke_storable.js" #TODO move to app global definitions
   js_include "#{File.dirname(__FILE__)}/javascripts/autosuggest.js"
+  js_include "#{File.dirname(__FILE__)}/javascripts/BoxSelect.js"
+  js_include "#{File.dirname(__FILE__)}/javascripts/NetzkeBoxSelect.js"
 
   endpoint :get_auto_suggest do |params|
     query = params[:query]
@@ -66,16 +69,18 @@ class AddOrderForm < Netzke::Basepack::FormPanel
                   {
                       :xtype => :fieldset,
                       :title => I18n.t('views.forms.add_order.order_details'),
+                      :grow => true,
                       :colspan => 2,
-                      :items => {
-                          :xtype => :panel, :layout => :hbox, :border => false, :defaults => {:border => false},
+                      :items => [{
+                          :layout => :hbox, :border => false, :defaults => {:border => false},
                           :items => [
                               {# 1st column
                                :flex => 1, :defaults => {:anchor => '-8'},
                                :items => [
                                    {:field_label => Order.human_attribute_name("applied_at"), :name => :applied_at, :xtype => :datefield, :value => Date.today},
-                                   {:field_label => Order.human_attribute_name("complect"), :name => :complect__name, :xtype => :textarea},
-                                   {:field_label => Order.human_attribute_name("external_state"), :name => :external_state__name, :xtype => :textarea}
+                                   {:field_label => Order.human_attribute_name("plan_deliver_at"), :name => :plan_deliver_at, :xtype => :datefield}, #TODO: add default delivery period
+                                   {:field_label => Order.human_attribute_name("complect"), :name => :complect__name, :xtype => :netzkeboxselect},
+                                   {:field_label => Order.human_attribute_name("external_state"), :name => :external_state__name, :min_grow => 210, :xtype => :textarea}
                                ]
                               },
                               {# 2nd column
@@ -88,7 +93,7 @@ class AddOrderForm < Netzke::Basepack::FormPanel
                                ]
                               }
                           ]
-                      }
+                      }]
                   }
               ]
           }
@@ -100,7 +105,7 @@ class AddOrderForm < Netzke::Basepack::FormPanel
 
   def normalize_field_with_suggest(field)
     field = normalize_field_without_suggest(field)
-    field[:parent_id] = self.global_id if field[:xtype] == :autosuggest
+    field[:parent_id] = self.global_id if [:autosuggest, :netzkeboxselect].include?(field[:xtype])
 
     field
   end
@@ -122,17 +127,17 @@ class AddOrderForm < Netzke::Basepack::FormPanel
   def find_or_create(model_class, search_options, id_name)
     record = nil
     return record if search_options.empty?
-    if is_digit?(search_options[id_name]) and model_class.exists?(:id => search_options[id_name])
-      #Passport is already exists, found by id
-      logger.debug "#{model_class.name} found by id with #{search_options.inspect}"
-      record = model_class.find(search_options[id_name])
-    elsif model_class.exists?(search_options)
-      #Passport is already exists, found by matching fields
+    if model_class.exists?(search_options)
+      #model is already exists, found by matching fields
       logger.debug "#{model_class.name} found by options #{search_options.inspect}"
       record = model_class.find(search_options)
+    elsif is_digit?(search_options[id_name]) and model_class.exists?(:id => search_options[id_name])
+      #model is already exists, found by id
+      logger.debug "#{model_class.name} found by id with #{search_options.inspect}"
+      record = model_class.find(search_options[id_name])
     else
-      #Create a new passport
-      logger.debug "Created new #{model_class.name}"
+      #Create a new model
+      logger.debug "Creating new #{model_class.name}"
       record = model_class.create(search_options)
     end
     record
