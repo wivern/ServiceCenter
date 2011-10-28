@@ -12,3 +12,6 @@ Currency.create([
     {:name => 'евро', :full_name => 'Европейское евро', :char_code => 'EUR', :num_code => 978},
     {:name => '$', :full_name => 'Доллар США', :char_code => 'USD', :num_code => 840}
                 ])
+
+Person.create({:username => 'admin', :name => 'Administrator', :email => 'admin@example.com',
+              :password => 'Admin123', :password_confirmation => 'Admin123'})

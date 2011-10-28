@@ -9,6 +9,8 @@ gem 'pg'
 gem 'netzke-core', :git => "git://github.com/skozlov/netzke-core.git"
 gem 'netzke-basepack', :git => "git://github.com/skozlov/netzke-basepack.git"
 
+
+gem 'devise'
 # Use unicorn as the web server
 # gem 'unicorn'
 

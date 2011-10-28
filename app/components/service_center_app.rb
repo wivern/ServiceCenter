@@ -2,7 +2,7 @@
 require 'yaml'
 
 
-class ServiceCenterApp < Netzke::Basepack::SimpleApp
+class ServiceCenterApp < Netzke::Basepack::AuthApp
 
   def configuration
     sup = super
@@ -87,7 +87,9 @@ class ServiceCenterApp < Netzke::Basepack::SimpleApp
   action :about, :icon => :information
 
   def menu
-    ["->", :about.action]
+    super.tap do |menu|
+      menu << "->" << :about.action
+    end
   end
 
   def dictionaries

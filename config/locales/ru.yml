@@ -125,6 +125,11 @@ ru:
         customer: "Заказчик"
         product_passport: "Паспорт изделия"
         order_details: "Атрибуты заказа"
+      login_form_panel:
+        actions:
+          login:
+            text: "Войти"
+            tooltip: "Войти с указанным именем и паролем"
     orders:
       title: Список заказов
     order_details:

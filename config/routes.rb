@@ -1,4 +1,11 @@
 ServiceCenter::Application.routes.draw do
+  devise_for :people do
+    match "/login" => "devise/sessions#new"
+    get "/logout" => "devise/sessions#destroy"
+  end
+
+  match '/people' => "welcome#index"
+
   get "welcome/index"
 
   netzke
