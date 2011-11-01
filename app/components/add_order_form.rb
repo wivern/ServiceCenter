@@ -79,7 +79,7 @@ class AddOrderForm < Netzke::Basepack::FormPanel
                                :items => [
                                    {:field_label => Order.human_attribute_name("applied_at"), :name => :applied_at, :xtype => :datefield, :value => Date.today},
                                    {:field_label => Order.human_attribute_name("plan_deliver_at"), :name => :plan_deliver_at, :xtype => :datefield}, #TODO: add default delivery period
-                                   {:field_label => Order.human_attribute_name("complect"), :name => :complect__name, :xtype => :netzkeboxselect},
+                                   {:field_label => Order.human_attribute_name("complect"), :name => :complect__name, :xtype => :textarea},
                                    {:field_label => Order.human_attribute_name("external_state"), :name => :external_state__name, :min_grow => 210, :xtype => :textarea}
                                ]
                               },
@@ -116,10 +116,29 @@ class AddOrderForm < Netzke::Basepack::FormPanel
     data = ActiveSupport::JSON.decode(params[:data])
     passport = find_or_create(ProductPassport, get_search_options(data, "product_passport"), :factory_number)
     customer = find_or_create(Customer, get_search_options(data, "customer"), :name)
-    data[:product_passport__factory_number] = passport.id if passport
-    data[:customer__name] = customer.id if customer
-    params[data] = data
-    super params
+    if passport
+      data.reject!{|k,v| k.to_s.match /^product_passport/}
+      data[:product_passport_id] = passport.id
+    end
+    if customer
+      data.reject!{|k,v| k.to_s.match /^customer/}
+      data[:customer_id] = customer.id
+    end
+    logger.debug "Current user #{Netzke::Core.current_user.inspect}"
+    data[:manager_id] = Netzke::Core.current_user.id
+    logger.debug "Data: #{data.inspect}"
+    params[:data] = ActiveSupport::JSON.encode data
+    begin
+      success = create_or_update_record data
+      if success
+        {:set_result => true, :set_form_values => {:number => record.number,
+                                                  :ticket => record.ticket, :_meta => meta_field}}
+      end
+      #super params
+    rescue => e
+      logger.error e
+      e.backtrace.each{|line| logger.error line}
+    end
   end
 
   protected

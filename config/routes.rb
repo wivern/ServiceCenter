@@ -1,6 +1,7 @@
 ServiceCenter::Application.routes.draw do
   devise_for :people do
-    match "/login" => "devise/sessions#new"
+    get "/login" => "devise/sessions#new"
+    post "/login" => "devise/sessions#create"
     get "/logout" => "devise/sessions#destroy"
   end
 

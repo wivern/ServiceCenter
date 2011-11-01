@@ -1,5 +1,8 @@
 class LoginFormPanel < Netzke::Basepack::FormPanel
 
+  js_property :url, "/person/sign_in"
+
+  js_mixin :login_form_panel
 
   action :login do
     {
@@ -30,8 +33,29 @@ class LoginFormPanel < Netzke::Basepack::FormPanel
 
   js_method :on_login, <<-JS
     function(e){
+      var values = this.getForm().getFieldValues();
       this.submit({
-        params: { format: 'json' }
+        params: {
+          format: 'json',
+          'person[username]': values.username,
+          'person[password]': values.password
+        },
+          method: 'POST',
+        success: function(form, action){
+          location.href = '/';
+        },
+        failure: function(form, action){
+          switch(action.failureType){
+            case Ext.form.action.Action.CLIENT_INVALID:
+                Ext.Msg.alert('Failure', 'Form fields may not be submitted with invalid values');
+                break;
+            case Ext.form.action.Action.CONNECT_FAILURE:
+                Ext.Msg.alert('Failure', 'Ajax communication failed');
+                break;
+            case Ext.form.action.Action.SERVER_INVALID:
+               Ext.Msg.alert('Failure', action.result.msg);
+          }
+        }
       });
     }
   JS

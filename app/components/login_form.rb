@@ -6,12 +6,13 @@ class LoginForm < Netzke::Base
 
   component :login_panel do
     {
-        :url => '/login.json',
+        :url => '/people/sign_in',
         :class_name => 'LoginFormPanel',
         :model => 'Person',
         :items => [
-            :username,
+            { :field_label => Person.human_attribute_name('username'), :name => :username},
             {
+                :field_label => Person.human_attribute_name('password'),
                 :name => :password,
                 :input_type => :password
             }

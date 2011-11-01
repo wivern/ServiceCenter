@@ -88,7 +88,7 @@ class ServiceCenterApp < Netzke::Basepack::AuthApp
 
   def menu
     super.tap do |menu|
-      menu << "->" << :about.action
+      menu << :about.action
     end
   end
 
