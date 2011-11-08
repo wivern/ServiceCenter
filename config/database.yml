@@ -40,7 +40,7 @@ test:
   database: ServiceCenter_test
   pool: 5
   username: ServiceCenter
-  password:
+  password: 123
 
 production:
   adapter: postgresql

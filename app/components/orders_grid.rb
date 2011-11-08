@@ -59,9 +59,15 @@ class OrdersGrid < Netzke::Basepack::GridPanel
     }
   JS
 
+  js_include :print
+
   js_method :on_print, <<-JS
     function (){
-      //TODO implement method
+      var selection = this.getSelectionModel().getLastSelected();
+      var orderId = selection.get('id');
+      //console.debug("Selected: " + selection.get('id'));
+      printForm.dom.action = "/print/ticket/"+orderId;
+      printForm.dom.submit();
     }
   JS
 

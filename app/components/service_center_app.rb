@@ -13,7 +13,7 @@ class ServiceCenterApp < Netzke::Basepack::AuthApp
                        :height => 35,
                        :html => %Q{
             <div style="margin:10px; color:#333; text-align:center; font-family: Helvetica; font-size: 150%;">
-              <a style="color:#B32D15; text-decoration: none" href="http://netzke.org">Сервис-центр</a>
+              <a style="color:#B32D15; text-decoration: none" href="/">Сервис-центр</a>
             </div>
             },
                        :bodyStyle => {:background => %Q(#FFF url("/images/header-deco.gif") top left repeat-x)},
@@ -151,6 +151,5 @@ class ServiceCenterApp < Netzke::Basepack::AuthApp
       this.callParent([token]);
     }
   JS
-
 
 end

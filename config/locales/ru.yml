@@ -75,6 +75,10 @@ ru:
         name: Наименование
       reason:
         name: Наименование
+      report:
+        name: Наименование
+        template_file: Файл шаблона
+        friendly_url: ЧПУ
       result:
         name: Наименование
       repair_type:
@@ -109,6 +113,7 @@ ru:
       product_name: Изделие
       purchase_place: Место покупки
       reason: Причина обращения
+      report: Печатная форма
       result: Результат диагностики
       repair_type: Тип ремонта
       status: Статус

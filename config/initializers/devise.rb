@@ -1,6 +1,72 @@
 # Use this hook to configure devise mailer, warden hooks and so forth. The first
 # four configuration values can also be set straight in your models.
 Devise.setup do |config|
+  # ==> Basic Active Directory Configuration 
+  
+  ## Active Directory server settings
+  config.ad_settings = {
+     :host => '10.10.10.8',
+     :base_dn => 'dc=pentar,dc=ru',
+     :port => 389,
+     #:encryption => :none,
+     :auth => {
+       :method => :simple
+     }
+  }
+
+
+  config.ad_attr_mapping = {
+  #Attribute mapping for user object
+     :Person => {
+       #Attributes are lowercase
+       :objectguid => :objectguid, #Required
+       :username => :sAMAccountName,
+       :dn => :dn,
+       :firstname => :givenName,
+       :lastname => :sn,
+       :whenchanged => :whenchanged,
+       :whencreated => :whencreated,
+     },
+
+  #Attribute mapping for group objects
+     :Group => {
+       #Attributes are lowercase
+       :objectguid => :objectguid, #Required
+       :dn => :dn,
+       :name => :name,
+       :description => :description,
+       :whencreated => :whencreated,
+       :whenchanged => :whenchanged,
+     }
+  }
+
+
+  ##Username attribute
+  ##Maps to :login_with in the devise configuration
+  config.ad_username = :userPrincipalName
+  #config.ad_username = :sAMAccountName
+
+  ##Create the user if they're not found
+  ##If this is false, you will need to create the user object before they will be allowed to login
+  config.ad_create_user = false
+
+  ##Log LDAP queries to the Rails logger
+  config.ad_logger = true
+
+  ##Update the user object from the AD
+  # config.ad_update_users = true
+
+  ##Update the group object from the AD
+  config.ad_update_groups = false
+
+  ##Update the group memberships from the AD, this uses the ancestory gem to store the hierarchy
+  config.ad_update_group_memberships = false
+
+  ##Update the user memberships from the AD
+  config.ad_update_user_memberships = false
+
+  ##Uses caching when doing AD queries for DNs.  This speeds things up significantly.
+  # config.ad_caching = true
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in DeviseMailer.
   config.mailer_sender = "please-change-me-at-config-initializers-devise@example.com"
@@ -22,7 +88,7 @@ Devise.setup do |config|
   # session. If you need permissions, you should implement that in a before filter.
   # You can also supply a hash where the value is a boolean determining whether
   # or not authentication should be aborted when the value is not present.
-  config.authentication_keys = [ :username ]
+  config.authentication_keys = [:username]
 
   # Configure parameters from the request object used for authentication. Each entry
   # given should be a request method and it will automatically be passed to the
@@ -34,12 +100,12 @@ Devise.setup do |config|
   # Configure which authentication keys should be case-insensitive.
   # These keys will be downcased upon creating or modifying a user and when used
   # to authenticate or find a user. Default is :email.
-  config.case_insensitive_keys = [ :email ]
-  
+  config.case_insensitive_keys = [:email]
+
   # Configure which authentication keys should have whitespace stripped.
   # These keys will have whitespace before and after removed upon creating or
   # modifying a user and when used to authenticate or find a user. Default is :email.
-  config.strip_whitespace_keys = [ :email ]
+  config.strip_whitespace_keys = [:email]
 
   # Tell if authentication through request.params is enabled. True by default.
   # config.params_authenticatable = true
@@ -98,7 +164,7 @@ Devise.setup do |config|
 
   # ==> Configuration for :validatable
   # Range for password length. Default is 6..128.
-  # config.password_length = 6..128
+  config.password_length = 6..128
 
   # Regex to use to validate the email address
   # config.email_regexp = /\A([\w\.%\+\-]+)@([\w\-]+\.)+([\w]{2,})\z/i
@@ -151,7 +217,7 @@ Devise.setup do |config|
 
   # ==> Configuration for :token_authenticatable
   # Defines name of the authentication token params key
-  # config.token_authentication_key = :auth_token
+  config.token_authentication_key = :auth_token
 
   # If true, authentication through token does not store user in session and needs
   # to be supplied on each request. Useful if you are using the token as API token.
@@ -166,6 +232,7 @@ Devise.setup do |config|
   # Configure the default scope given to Warden. By default it's the first
   # devise role declared in your routes (usually :user).
   # config.default_scope = :user
+  config.default_scope = :person
 
   # Configure sign_out behavior.
   # Sign_out action can be scoped (i.e. /users/sign_out affects only :user scope).
@@ -201,4 +268,6 @@ Devise.setup do |config|
   #   manager.intercept_401 = false
   #   manager.default_strategies(:scope => :user).unshift :some_external_strategy
   # end
+
+
 end

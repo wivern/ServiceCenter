@@ -9,8 +9,13 @@ gem 'pg'
 gem 'netzke-core', :git => "git://github.com/skozlov/netzke-core.git"
 gem 'netzke-basepack', :git => "git://github.com/skozlov/netzke-basepack.git"
 
-
+# authentication
 gem 'devise'
+gem 'omniauth', '0.3.2'
+gem 'devise_active_directory_authenticatable'
+#gem 'devise_active_directory_authenticatable'
+# docs reporting
+gem 'odf-report'
 # Use unicorn as the web server
 # gem 'unicorn'
 
@@ -33,5 +38,6 @@ gem 'devise'
  group :development, :test do
    gem 'thin'
    gem "rspec-rails", "~> 2.6"
+   gem 'factory_girl_rails'
 #   gem 'webrat'
  end

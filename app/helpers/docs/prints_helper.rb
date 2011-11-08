@@ -1,0 +1,2 @@
+module Docs::PrintsHelper
+end

@@ -1,4 +1,6 @@
 ServiceCenter::Application.routes.draw do
+  get "prints/print"
+
   devise_for :people do
     get "/login" => "devise/sessions#new"
     post "/login" => "devise/sessions#create"
@@ -6,6 +8,7 @@ ServiceCenter::Application.routes.draw do
   end
 
   match '/people' => "welcome#index"
+  match '/print/:report/:id' => "docs/prints#print"
 
   get "welcome/index"
 

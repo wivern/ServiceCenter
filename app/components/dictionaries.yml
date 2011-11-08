@@ -68,6 +68,10 @@ dictionaries:
     text: activerecord.models.currency
     leaf: true
     component: currency_component
+  report:
+    text: activerecord.models.report
+    leaf: true
+    component: report_component
 components:
   :status_component:
     :class_name: Basepack::GridPanel
@@ -163,4 +167,10 @@ components:
     :class_name: Basepack::GridPanel
     :model: Currency
     :lazy_loading: true
+    :persistance: true
+  report_component:
+    :class_name: Basepack::GridPanel
+    :model: Report
+    :lazy_loading: true
+    :title: Reports
     :persistance: true

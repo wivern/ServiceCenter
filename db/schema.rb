@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111028115735) do
+ActiveRecord::Schema.define(:version => 20111108102339) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -185,6 +185,14 @@ ActiveRecord::Schema.define(:version => 20111028115735) do
 
   create_table "repair_types", :force => true do |t|
     t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "reports", :force => true do |t|
+    t.string   "name"
+    t.string   "template_file"
+    t.string   "friendly_url"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
