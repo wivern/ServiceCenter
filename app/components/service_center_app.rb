@@ -84,6 +84,10 @@ class ServiceCenterApp < Netzke::Basepack::AuthApp
         :title => "Приемка",
         :persistance => false
 
+  component :order_details,
+      :class_name => "OrderDetailsPanel",
+      :title => "Карточка заказа"
+
   action :about, :icon => :information
 
   def menu
@@ -92,19 +96,36 @@ class ServiceCenterApp < Netzke::Basepack::AuthApp
     end
   end
 
+  endpoint :select_order do |params|
+    session[:selected_order_id] = params[:order_id]
+  end
+
+
   def dictionaries
     d = YAML.load_file(File.expand_path('../dictionaries.yml', __FILE__))
     puts d.inspect
     d['components'].each{ |name, options|
       options[:columns] = options[:columns].map{|k,v| v ? v : k} if options.has_key? :columns
-      options[:title] = options[:model].constantize.model_name.human unless options.has_key? :title
+      options[:title] = options[:model].constantize.model_name.human(:count => 2) unless options.has_key? :title
       ServiceCenterApp::component name, options
     }
-    d['dictionaries'].map{ |k, v|
+    proceed_children(d['dictionaries'])
+    #d['dictionaries'].map{ |k, v|
+    #  v['text'] = I18n.t(v['text'], :default => k.titleize) if v.has_key? 'text'
+    #  proceed_children(v['children']) if v.has_key? 'children'
+    #  v
+    #}
+  end
+
+  def proceed_children(items)
+    items.map{|k,v|
       v['text'] = I18n.t(v['text'], :default => k.titleize) if v.has_key? 'text'
+      v['children'] = proceed_children(v['children']) if v.has_key? 'children'
       v
     }
   end
+
+  js_mixin :service_center_app
 
   js_method :on_about, <<-JS
     function(e){
@@ -135,20 +156,7 @@ class ServiceCenterApp < Netzke::Basepack::AuthApp
         this.appLoadComponent(r.raw.component);
       }
       }, this);
-    }
-  JS
-  # Overrides SimpleApp#process_history, to initially select the node in the navigation tree
-  js_method :process_history, <<-JS
-    function(token){
-      if (token) {
-        var node = this.navigation.getStore().getRootNode().findChildBy(function(n){
-          return n.raw.component == token;
-        }, this, true);
-
-        if (node) this.navigation.getView().select(node);
-      }
-
-      this.callParent([token]);
+      //this.addEvents('beforeloadcomponent');
     }
   JS
 

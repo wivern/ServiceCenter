@@ -43,7 +43,7 @@ class OrdersGrid < Netzke::Basepack::GridPanel
                        :record => data_class.new(columns_default_values)
                    }.deep_merge(config[:add_form_config] || {})]
     }
-    #.deep_merge(config[:add_form_window_config] || {})
+    .deep_merge(config[:add_form_window_config] || {})
   end
 
   js_method :on_add_order, <<-JS

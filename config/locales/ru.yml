@@ -108,6 +108,7 @@ ru:
       goal: Цель диагностики
       ground: Основание диагностики
       order: Заказ
+      organization: Организация
       person: Сотрудник
       producer: Производитель
       product_name: Изделие
@@ -141,3 +142,4 @@ ru:
       title: Заказ
     navigation:
       title: Навигатор
+      settings: Настройки

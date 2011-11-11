@@ -64,14 +64,22 @@ dictionaries:
     text: activerecord.models.activity
     leaf: true
     component: activity_component
-  currency:
-    text: activerecord.models.currency
-    leaf: true
-    component: currency_component
-  report:
-    text: activerecord.models.report
-    leaf: true
-    component: report_component
+  settings:
+    text: views.navigation.settings
+    expanded: true
+    children:
+      organization:
+        text: activerecord.models.organization
+        leaf: true
+        component: organization_component
+      report:
+        text: activerecord.models.report
+        leaf: true
+        component: report_component
+      currency:
+        text: activerecord.models.currency
+        leaf: true
+        component: currency_component
 components:
   :status_component:
     :class_name: Basepack::GridPanel
@@ -173,4 +181,10 @@ components:
     :model: Report
     :lazy_loading: true
     :title: Reports
+    :persistance: true
+  organization_component:
+    :class_name: Basepack::GridPanel
+    :model: Organization
+    :lazy_loading: true
+    :title: Organizations
     :persistance: true

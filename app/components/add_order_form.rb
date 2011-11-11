@@ -47,10 +47,12 @@ class AddOrderForm < Netzke::Basepack::FormPanel
       s[:items] = [
           {
               :layout => {:type => 'table', :columns => 2}, :defaults => {:border => false},
+              :id => "addFormTable",
               :cls => "x-table-layout-cell-top",
               :border => false, :flex => 1, :plain => true,
               :items => [
                   {:name => :repair_type__name, :colspan => 2},
+                  {:name => :recordId, :xtype => :hiddenfield, :colspan => 2},
                   {:name => :number, :xtype => :hiddenfield},
                   {:name => :ticket, :xtype => :hiddenfield},
                   {
@@ -131,7 +133,7 @@ class AddOrderForm < Netzke::Basepack::FormPanel
     begin
       success = create_or_update_record data
       if success
-        {:set_result => true, :set_form_values => {:number => record.number,
+        {:set_result => true, :set_form_values => {:record_id => record.id, :number => record.number,
                                                   :ticket => record.ticket, :_meta => meta_field}}
       end
       #super params

@@ -3,6 +3,7 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
   def configuration
     super.merge(
       :model => "Order",
+      :record_id => session[:selected_order_id],
       :items => [
           {
               :xtype => :tabpanel, :flex => 1, :align => "stretch", :body_padding => 5, :plain => true, :active_tab => 0,
@@ -138,9 +139,18 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
     )
   end
 
-  #def configure_bbar(c)
-  #  c[:bbar] = [:apply.action, :cancel.action]
-  #end
+  action :print, :icon => :printer
+
+  js_mixin :order_details_panel
+
+  def configure_bbar(c)
+    c[:bbar] = [:apply.action, {:text => 'Печать', :icon => '/images/icons/printer.png', :name => 'print', :menu => []}]
+  end
+
+  endpoint :get_print_options do |params|
+    reports = Report.all.map{ |r|  {:text => r.name} }
+    {:set_result => reports}
+  end
 
   #js_method :on_cancel, <<-JS
   #  function(){
