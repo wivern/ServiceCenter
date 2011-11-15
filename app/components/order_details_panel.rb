@@ -143,12 +143,14 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
 
   js_mixin :order_details_panel
 
+  js_include "#{File.dirname(__FILE__)}/javascripts/print.js"
+
   def configure_bbar(c)
     c[:bbar] = [:apply.action, {:text => 'Печать', :icon => '/images/icons/printer.png', :name => 'print', :menu => []}]
   end
 
   endpoint :get_print_options do |params|
-    reports = Report.all.map{ |r|  {:text => r.name} }
+    reports = Report.all.map{ |r|  {:text => r.name, :reportId => r.friendly_url} }
     {:set_result => reports}
   end
 

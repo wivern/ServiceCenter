@@ -2,7 +2,8 @@
 require 'yaml'
 
 
-class ServiceCenterApp < Netzke::Basepack::AuthApp
+class ServiceCenterApp < TabbedApp
+    #Netzke::Basepack::AuthApp
 
   def configuration
     sup = super

@@ -39,7 +39,7 @@ class AddOrderForm < Netzke::Basepack::FormPanel
           {:name => :product_passport__purchased_at, :xtype => :datefield},
           {:name => :product_passport__dealer__name, :xtype => :autosuggest}]
       customer_fields = [
-          {:name => :customer__name, :xtype => :autosuggest, :populate_related_fields => true},
+          {:name => :customer__name, :xtype => :autosuggest, :populate_related_fields => true, :allow_blank => false},
           {:name => :customer__phone, :xtype => :textfield },
           {:name => :customer__email, :xtype => :textfield },
           {:name => :customer__passport, :xtype => :textfield }
@@ -51,7 +51,7 @@ class AddOrderForm < Netzke::Basepack::FormPanel
               :cls => "x-table-layout-cell-top",
               :border => false, :flex => 1, :plain => true,
               :items => [
-                  {:name => :repair_type__name, :colspan => 2},
+                  {:name => :repair_type__name, :colspan => 2, :editable => false, :allow_blank => false},
                   {:name => :recordId, :xtype => :hiddenfield, :colspan => 2},
                   {:name => :number, :xtype => :hiddenfield},
                   {:name => :ticket, :xtype => :hiddenfield},

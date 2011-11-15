@@ -1,3 +1,5 @@
 .x-table-layout-cell-top td.x-table-layout-cell{
     vertical-align: top;
 }
+
+.icon-tab{ background-image: url("/images/icons/page.png") !important; }
