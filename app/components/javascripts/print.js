@@ -5,6 +5,8 @@
  * Time: 14:01
  * To change this template use File | Settings | File Templates.
  */
+var printForm;
+
 Ext.onReady(function() {
     var body = Ext.getBody();
 
@@ -15,7 +17,7 @@ Ext.onReady(function() {
         ,name:'print-iframe'
     });
 
-    var printForm = body.createChild({
+    printForm = body.createChild({
         tag: 'form',
         cls: 'x-hidden',
         id: 'print-form',

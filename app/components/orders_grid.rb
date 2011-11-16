@@ -1,4 +1,8 @@
+#encoding: UTF-8
 class OrdersGrid < Netzke::Basepack::GridPanel
+
+  include ServiceCenter::Reportable
+
   action :add_order do
     {
         :text => I18n.t('views.actions.add_order.text'),
@@ -16,11 +20,11 @@ class OrdersGrid < Netzke::Basepack::GridPanel
   end
 
   def default_bbar
-    [:add_order.action, '-', :print.action]
+    [:add_order.action, '-', {:text => 'Печать', :icon => '/images/icons/printer.png', :name => 'print', :menu => []}]
   end
 
   def default_context_menu
-    [:add_order.action, :print.action] # *super
+    [:add_order.action, {:text => 'Печать', :icon => '/images/icons/printer.png', :name => 'print', :menu => []}] # *super
   end
 
   component :add_order_form do

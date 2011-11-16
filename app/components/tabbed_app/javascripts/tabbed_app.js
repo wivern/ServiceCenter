@@ -21,7 +21,7 @@
             } else {
                 tab = this.mainPanel.add({
     //                title: token,
-                    id: token + '_tab',
+                    id: token_id,
                     iconCls: 'icon-tab',
                     closable: true,
                     layout: 'fit'
