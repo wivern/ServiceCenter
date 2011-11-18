@@ -36,10 +36,10 @@ dictionaries:
     text: activerecord.models.producer
     leaf: true
     component: producer_component
-  product_name:
-    text: activerecord.models.product_name
+  product:
+    text: activerecord.models.product
     leaf: true
-    component: product_name_component
+    component: product_component
   purchase_place:
     text: activerecord.models.purchase_place
     leaf: true
@@ -130,9 +130,9 @@ components:
     :model: Producer
     :lazy_loading: true
     :persistance: true
-  product_name_component:
+  product_component:
     :class_name: Basepack::GridPanel
-    :model: ProductName
+    :model: Product
     :lazy_loading: true
     :persistance: true
   purchase_place_component:

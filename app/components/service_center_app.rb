@@ -2,8 +2,7 @@
 require 'yaml'
 
 
-class ServiceCenterApp < TabbedApp
-    #Netzke::Basepack::AuthApp
+class ServiceCenterApp < TabbedApp #Netzke::Basepack::AuthApp
 
   def configuration
     sup = super
@@ -72,6 +71,7 @@ class ServiceCenterApp < TabbedApp
             :lazy_loading => true,
             :title => Order.model_name.human,
             :persistence => true,
+            :prohibit_update => true,
             #:bbar => [:add_order.action, '-', :search.action],
             :columns => [:repair_type__name, :number, :ticket, :applied_at, :plan_deliver_at, :customer__name,
               :manager__display_name, :actual_deliver_at, :status__name, :service_note]
@@ -108,7 +108,7 @@ class ServiceCenterApp < TabbedApp
     d['components'].each{ |name, options|
       options[:columns] = options[:columns].map{|k,v| v ? v : k} if options.has_key? :columns
       options[:title] = options[:model].constantize.model_name.human(:count => 2) unless options.has_key? :title
-      ServiceCenterApp::component name, options
+      self.class.component name, options
     }
     proceed_children(d['dictionaries'])
     #d['dictionaries'].map{ |k, v|

@@ -26,6 +26,7 @@ Ext.define('Ext.ux.AutosuggestField', {
     hideTrigger: true,
     populateRelatedFields: false, //when true so fill other related fields with values
     minChars: 3,
+    allowNew: false, //Allow hand-type new items, not only found in list
 
     initComponent: function() {
         this.initStore();
@@ -34,6 +35,11 @@ Ext.define('Ext.ux.AutosuggestField', {
     collapse: function() {
         // HACK: do not hide dropdown menu while loading items
         if (!this.store.loading) this.callParent();
+    },
+    validator: function(v){
+       if (this.allowNew || /^\d+$/.test(this.getValue()))
+        return true;
+       else return "Выберите значение из списка";
     },
     listeners: {
         'select': function(combo, records, options) {

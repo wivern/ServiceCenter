@@ -60,7 +60,7 @@ ru:
         deliver_manager__name: Выдал
         product_passport__factory_number: "Заводской номер"
         product_passport__producer__name: "Производитель"
-        product_passport__product_name__name: "Наименование изделия"
+        product_passport__product__name: "Наименование изделия"
         product_passport__guarantee_stub_number: "Номер гарантийного талона"
         product_passport__purchase_place__name: "Место покупки"
         product_passport__purchased_at: "Дата покупки"
@@ -69,7 +69,7 @@ ru:
         name: Наименование
       producer:
         name: Наименование
-      product_name:
+      product:
         name: Наименование
       purchase_place:
         name: Наименование
@@ -111,7 +111,7 @@ ru:
       organization: Организация
       person: Сотрудник
       producer: Производитель
-      product_name: Изделие
+      product: Изделие
       purchase_place: Место покупки
       reason: Причина обращения
       report: Печатная форма

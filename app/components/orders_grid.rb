@@ -20,11 +20,11 @@ class OrdersGrid < Netzke::Basepack::GridPanel
   end
 
   def default_bbar
-    [:add_order.action, '-', {:text => 'Печать', :icon => '/images/icons/printer.png', :name => 'print', :menu => []}]
+    [{:text => 'Печать', :icon => '/images/icons/printer.png', :name => 'print', :menu => []}, :search.action]
   end
 
   def default_context_menu
-    [:add_order.action, {:text => 'Печать', :icon => '/images/icons/printer.png', :name => 'print', :menu => []}] # *super
+    [{:text => 'Печать', :icon => '/images/icons/printer.png', :name => 'print', :menu => []}] # *super
   end
 
   component :add_order_form do
@@ -34,6 +34,7 @@ class OrdersGrid < Netzke::Basepack::GridPanel
         :title => "#{I18n.t('views.actions.add_order.text')}",
         :width => 640,
         :button_align => "right",
+        :defaults => {:editable => false},
         :items => [{
                        :class_name => "AddOrderForm",
                        :model => config[:model],

@@ -7,6 +7,8 @@ class AddOrderForm < Netzke::Basepack::FormPanel
   js_include "#{File.dirname(__FILE__)}/javascripts/BoxSelect.js"
   js_include "#{File.dirname(__FILE__)}/javascripts/NetzkeBoxSelect.js"
 
+  js_include :validators
+
   endpoint :get_auto_suggest do |params|
     query = params[:query]
 
@@ -32,12 +34,12 @@ class AddOrderForm < Netzke::Basepack::FormPanel
       configure_bbar(s)
       product_passport_fields = [
           {:name => :product_passport__factory_number, :xtype => :autosuggest, :populate_related_fields => true, :allow_blank => false},
-          {:name => :product_passport__producer__name, :xtype => :autosuggest},
-          {:name => :product_passport__product_name__name, :xtype => :autosuggest, :minChars => 1},
+          {:name => :product_passport__producer__name, :xtype => :autosuggest, :minChars => 2},
+          {:name => :product_passport__product__name, :xtype => :autosuggest, :minChars => 2},
           {:name => :product_passport__guarantee_stub_number, :xtype => :textfield},
-          {:name => :product_passport__purchase_place__name, :xtype => :autosuggest},
+          {:name => :product_passport__purchase_place__name, :xtype => :autosuggest, :allowNew => true},
           {:name => :product_passport__purchased_at, :xtype => :datefield},
-          {:name => :product_passport__dealer__name, :xtype => :autosuggest}]
+          {:name => :product_passport__dealer__name, :xtype => :autosuggest, :allowNew => true}]
       customer_fields = [
           {:name => :customer__name, :xtype => :autosuggest, :populate_related_fields => true, :allow_blank => false},
           {:name => :customer__phone, :xtype => :textfield },
@@ -102,6 +104,17 @@ class AddOrderForm < Netzke::Basepack::FormPanel
       ]
     end
   end
+
+  ##
+  # Prevents of autocreation supposed dictionary class
+  #
+  def self.prevent_of_creation(klass)
+    @@prevent_creation_classes ||= []
+    @@prevent_creation_classes << klass
+  end
+
+  prevent_of_creation Producer
+  prevent_of_creation Product
 
   js_mixin :add_order_form
 
@@ -176,6 +189,7 @@ class AddOrderForm < Netzke::Basepack::FormPanel
     search_options = {}
     data.select{|key, value| key.match /^#{prefix}/}.each{|k,v|
       path = k.split('__')
+      value = nil
       if path.size == 2
         key = path[1]
         value = v.to_s
@@ -183,9 +197,9 @@ class AddOrderForm < Netzke::Basepack::FormPanel
         key = "#{path[path.size - 2]}_id"
         data_class = Kernel.const_get(path[path.size - 2].camelize)
         record = create_dict_if_needed(data_class, {:name => v})
-        value = record.id # ensure that it`s integer
+        value = record.id if record # ensure that it`s integer
       end
-      search_options.merge!({key.to_sym => value}) if key
+      search_options.merge!({key.to_sym => value}) if key and value
     }
     search_options
   end
@@ -242,10 +256,11 @@ class AddOrderForm < Netzke::Basepack::FormPanel
 
   private
   def create_dict_if_needed(klass, params)
+    logger.debug "Find or create #{klass.name} with #{params.inspect}"
     dict = nil
     dict = klass.find(params[:name]) if is_digit?(params[:name]) and klass.exists?(params[:name])
     dict = klass.where(:name => params[:name]) unless dict
-    dict = klass.create(params) unless dict
+    dict = klass.create(params) unless dict and not @@prevent_creation_classes.include? klass
     dict
   end
 

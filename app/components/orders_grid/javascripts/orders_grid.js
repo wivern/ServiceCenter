@@ -7,7 +7,14 @@
 
 {
     defaults: {
-        editable: false
+        readOnly: true
+    },
+    initComponent: function(){
+        this.callParent();
+        Ext.each(this.columns, function(c){
+            if (!c.meta)
+                c.editable = false;
+        });
     },
     openOrderDetails: function(orderId){
         this.getView().openOrderDetails(orderId);
@@ -28,17 +35,24 @@
       }
     },
     viewConfig:{
-        openOrderDetails: function(orderId){
-            var app = Ext.ComponentQuery.query('viewport')[0];
+        openOrderDetails: function(record){
+            var app = Ext.ComponentQuery.query('viewport')[0],
+                orderId = record.get('id'),
+                number = record.get('number');
             app.selectOrder({order_id: orderId});
-            app.appLoadComponent('order_details');
+            app.addTab('OrderDetailsPanel',{
+                config:{
+                    recordId: orderId,
+                    title: 'Заказ № ' + number
+                }
+            });
+//            app.appLoadComponent('order_details');
         },
         listeners:{
             itemdblclick: function(dataview, record, item, index, e){
                 console.debug('dblclick', dataview);
-                var orderId = record.get('id');
-                if (orderId){
-                    dataview.openOrderDetails(orderId);
+                if (record){
+                    dataview.openOrderDetails(record);
                     e.stopPropagation();
                 }
             }
