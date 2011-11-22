@@ -6,6 +6,7 @@ class AddOrderForm < Netzke::Basepack::FormPanel
   js_include "#{File.dirname(__FILE__)}/javascripts/autosuggest.js"
   js_include "#{File.dirname(__FILE__)}/javascripts/BoxSelect.js"
   js_include "#{File.dirname(__FILE__)}/javascripts/NetzkeBoxSelect.js"
+  js_include "#{File.dirname(__FILE__)}/dialog_trigger_field/javascripts/dialog_trigger_field.js"
 
   js_include :validators
 
@@ -24,6 +25,13 @@ class AddOrderForm < Netzke::Basepack::FormPanel
     { :set_result => load_assoc_record(field, record_id) }
   end
 
+  component :select_window do
+    {
+        :class_name => "DictionaryWindow",
+        :model => "Producer"
+    }
+  end
+
   def default_config
     super.merge(:model => "Order")
   end
@@ -34,8 +42,8 @@ class AddOrderForm < Netzke::Basepack::FormPanel
       configure_bbar(s)
       product_passport_fields = [
           {:name => :product_passport__factory_number, :xtype => :autosuggest, :populate_related_fields => true, :allow_blank => false},
-          {:name => :product_passport__producer__name, :xtype => :autosuggest, :minChars => 2},
-          {:name => :product_passport__product__name, :xtype => :autosuggest, :minChars => 2},
+          {:name => :product_passport__producer__name, :xtype => :selecttriggerfield},
+          {:name => :product_passport__product__name, :editable => false},
           {:name => :product_passport__guarantee_stub_number, :xtype => :textfield},
           {:name => :product_passport__purchase_place__name, :xtype => :autosuggest, :allowNew => true},
           {:name => :product_passport__purchased_at, :xtype => :datefield},
@@ -148,6 +156,11 @@ class AddOrderForm < Netzke::Basepack::FormPanel
       if success
         {:set_result => true, :set_form_values => {:record_id => record.id, :number => record.number,
                                                   :ticket => record.ticket, :_meta => meta_field}}
+      else
+        @record.errors.to_a.each do |msg|
+          flash :error => msg
+        end
+        {:netzke_feedback => @flash, :apply_form_errors => build_form_errors(record)}
       end
       #super params
     rescue => e

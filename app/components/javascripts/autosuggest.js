@@ -8,8 +8,6 @@
 
 Ext.namespace('Ext.ux');
 
-Ext.QuickTips.init();
-
 Ext.define('Ext.ux.AutosuggestField', {
     extend: 'Ext.form.field.ComboBox',
     mixins:{

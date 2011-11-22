@@ -126,6 +126,11 @@ ru:
       print:
         text: "Печать"
         tooltip: "Вывод документа на печать"
+      select:
+        text: "Выбрать"
+        tooltip: "Выбрать указанный элемент"
+      cancel:
+        text: "Отмена"
     forms:
       add_order:
         customer: "Заказчик"
@@ -143,3 +148,5 @@ ru:
     navigation:
       title: Навигатор
       settings: Настройки
+    dictionary_window:
+      title: "Выбор элемента"
