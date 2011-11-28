@@ -25,10 +25,36 @@ class AddOrderForm < Netzke::Basepack::FormPanel
     { :set_result => load_assoc_record(field, record_id) }
   end
 
+  endpoint :select_producer do |params|
+    logger.debug "Selected producer #{params[:producer]}"
+    component_session[:selected_producer] = params[:producer]
+    { :set_result => {:producer => params[:producer]}}
+  end
+
   component :select_window do
     {
         :class_name => "DictionaryWindow",
-        :model => "Producer"
+        :model => "Producer",
+        :initial_sort => ['name', 'ASC']
+    }
+  end
+
+  component :select_product_window do
+    {
+        :class_name => "DictionaryWindow",
+        :model => "Product",
+        :columns => [:name],
+        :scope => {:producer_id => component_session[:selected_producer]},
+        :initial_sort => ['name', 'ASC']
+    }
+  end
+
+  component :select_purchase_place do
+    {
+        :class_name => "DictionaryWindow",
+        :model => "PurchasePlace",
+        :columns => [:name],
+        :initial_sort => ['name', 'ASC']
     }
   end
 
@@ -43,13 +69,15 @@ class AddOrderForm < Netzke::Basepack::FormPanel
       product_passport_fields = [
           {:name => :product_passport__factory_number, :xtype => :autosuggest, :populate_related_fields => true, :allow_blank => false},
           {:name => :product_passport__producer__name, :xtype => :selecttriggerfield},
-          {:name => :product_passport__product__name, :editable => false},
+          {:name => :product_passport__product__name, :xtype => :selecttriggerfield,
+            :selection_component => :select_product_window},
           {:name => :product_passport__guarantee_stub_number, :xtype => :textfield},
-          {:name => :product_passport__purchase_place__name, :xtype => :autosuggest, :allowNew => true},
+          {:name => :product_passport__purchase_place__name, :xtype => :selecttriggerfield,
+             :selection_component => :select_purchase_place, :allowNew => true},
           {:name => :product_passport__purchased_at, :xtype => :datefield},
           {:name => :product_passport__dealer__name, :xtype => :autosuggest, :allowNew => true}]
       customer_fields = [
-          {:name => :customer__name, :xtype => :autosuggest, :populate_related_fields => true, :allow_blank => false},
+          {:name => :customer__name, :xtype => :autosuggest, :populate_related_fields => true, :allow_blank => false, :allow_new => true},
           {:name => :customer__phone, :xtype => :textfield },
           {:name => :customer__email, :xtype => :textfield },
           {:name => :customer__passport, :xtype => :textfield }
@@ -83,6 +111,7 @@ class AddOrderForm < Netzke::Basepack::FormPanel
                       :title => I18n.t('views.forms.add_order.order_details'),
                       :grow => true,
                       :colspan => 2,
+                      :collapsible => true,
                       :items => [{
                           :layout => :hbox, :border => false, :defaults => {:border => false},
                           :items => [
@@ -91,14 +120,16 @@ class AddOrderForm < Netzke::Basepack::FormPanel
                                :items => [
                                    {:field_label => Order.human_attribute_name("applied_at"), :name => :applied_at, :xtype => :datefield, :value => Date.today},
                                    {:field_label => Order.human_attribute_name("plan_deliver_at"), :name => :plan_deliver_at, :xtype => :datefield}, #TODO: add default delivery period
-                                   {:field_label => Order.human_attribute_name("complect"), :name => :complect__name, :xtype => :textarea},
+                                   {:field_label => Order.human_attribute_name("complect"), :name => :complect__name,
+                                      :xtype => :netzkeboxselect, :editable => false, :hide_trigger => true, :height => 110},
                                    {:field_label => Order.human_attribute_name("external_state"), :name => :external_state__name, :min_grow => 210, :xtype => :textarea}
                                ]
                               },
                               {# 2nd column
                                :flex => 1, :defaults => {:anchor => '100%'},
                                :items => [
-                                   {:field_label => Order.human_attribute_name("defect"), :name => :defect__name, :xtype => :textarea},
+                                   {:field_label => Order.human_attribute_name("defect"), :name => :defect__name, :xtype => :textarea,
+                                    :width => 320, :height => 140},
                                    {:field_label => Order.human_attribute_name("diag_price"), :name => :diag_price, :xtype => :numberfield},
                                    {:field_label => Order.human_attribute_name("prior_cost"), :name => :prior_cost, :xtype => :numberfield},
                                    {:field_label => Order.human_attribute_name('maximum_cost'), :name => :maximum_cost, :xtype => :numberfield}

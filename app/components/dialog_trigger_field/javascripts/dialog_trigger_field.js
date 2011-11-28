@@ -8,14 +8,20 @@
 
 Ext.define('Ext.ux.SelectTriggerField',
 {
-    extend: "Ext.form.field.Trigger",
+    extend: "Ext.form.field.ComboBox",
     alias: "widget.selecttriggerfield",
-    valueField: 'record_id',
-    displayField: 'value',
+    valueField: 'id',
+    displayField: 'name',
     editable: false,
     selectionComponent: 'select_window',
+    triggerCls: 'x-form-browse-trigger',
 
     initComponent: function(){
+        this.store = new Ext.data.ArrayStore({
+            id: 0,
+            fields: [this.valueField, this.displayField],
+            data: []
+        });
         this.callParent();
     },
     onTriggerClick: function(){
@@ -27,9 +33,20 @@ Ext.define('Ext.ux.SelectTriggerField',
                console.debug('found: ', p);
                 return typeof(p.getForm) == 'function';
             });
+            var self = this;
             parent.loadNetzkeComponent({name: this.selectionComponent, callback: function(win){
-                this.selectWindow = win;
-                this.selectWindow.show();
+                self.selectWindow = win;
+                self.selectWindow.show();
+                win.on('hide', function(){
+                    var selected = win.selection;
+                    if (win.closeResult == 'select'){
+                        console.debug(selected);
+//                        this.store.removeAll(true);
+                        this.store.add(selected.data);
+                        this.setValue(selected.get(this.valueField));
+                        console.debug(this.store);
+                    }
+                }, self);
             }});
         }
     }

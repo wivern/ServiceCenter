@@ -2,4 +2,8 @@
     vertical-align: top;
 }
 
-.icon-tab{ background-image: url("/images/icons/page.png") !important; }
+.icon-tab{ background-image: url(/images/icons/page.png) !important; }
+
+.x-form-browse-trigger{
+    background-image: url(/images/trigger-browse.gif);
+}

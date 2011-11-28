@@ -161,7 +161,7 @@ ActiveRecord::Schema.define(:version => 20111118122713) do
 
   create_table "product_passports", :force => true do |t|
     t.integer  "producer_id"
-    t.integer  "product_name_id"
+    t.integer  "product_id"
     t.string   "factory_number"
     t.string   "guarantee_stub_number"
     t.integer  "purchase_place_id"

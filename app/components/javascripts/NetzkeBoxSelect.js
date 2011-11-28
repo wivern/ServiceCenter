@@ -8,17 +8,14 @@
 Ext.define('Ext.netzke.BoxSelect',{
     extend: 'Ext.ux.form.field.BoxSelect',
     alias: 'widget.netzkeboxselect',
-    growMin: 75,
-    growMax: 75,
     createNewOnEnter: true,
     createNewOnBlur: true,
     forceSelection: false,
-    hideTrigger: true,
+    hideTrigger: false,
     minChars: 1,
     delimiter: ',',
     valueField: 'value',
     displayField: 'value',
-    emptyText: 'Type a name of component',
     mixins: {
       storable: 'Ext.netzke.Storable'
     },

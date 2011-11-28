@@ -55,16 +55,23 @@ Ext.define('Ext.ux.AutosuggestField', {
                     Ext.each(fields, function(field) {
                         if (field.name.substring(0, domain.length) == domain && this.name != field.name) {
                             var columns = field.name.split("__");
+                            var value = eval("record_store." + columns.join('.'));
                             //add record to suggest store
-                            if (field.xtype == "autosuggest"){
+                            if (field.xtype == "autosuggest" || field.xtype == "selecttriggerfield"){
                                 var path = columns.slice(0, columns.length - 1);
                                 var record_id = eval("record_store." + path.join('.') + ".id");
-                                var data = { record_id : record_id,
-                                    value: eval("record_store." + columns.join('.')) }
-                                field.store.add(data);
-                                field.setValue(record_id);
+                                //var data = { record_id : record_id, value: value };
+                                if (record_id){
+                                    var data = new Object();
+                                    eval('data.' + field.valueField + '=' + record_id + ';');
+                                    eval('data.' + field.displayField + '= "' + value + '";');
+                                    console.debug(data);
+                                    field.store.removeAll();
+                                    field.store.add(data);
+                                    field.setValue(record_id);
+                                } else field.reset();
                             } else
-                                field.setValue(eval("record_store." + columns.join('.')));
+                                field.setValue(value);
                         }
                     }, this);
                 }, this);
