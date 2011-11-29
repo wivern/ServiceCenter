@@ -12,9 +12,10 @@ Ext.define('Ext.netzke.Storable',{
    initStore: function(){
        var modelName = this.parentId + "_" + this.name;
 
+       console.log( this.name + ' fields',this.valueField, this.displayField);
        Ext.define(modelName, {
            extend: 'Ext.data.Model',
-           fields: ['record_id', 'value']
+           fields: [this.valueField, this.displayField]
        });
 
 

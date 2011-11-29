@@ -64,6 +64,18 @@ class ServiceCenterApp < TabbedApp #Netzke::Basepack::AuthApp
     )
   end
 
+  Dir.glob(File.join(File.dirname(__FILE__),"javascripts", "*.js")).sort.each{ |f|
+    ::Rails.logger.debug("include #{f}")
+    js_include f unless /mixin/ =~ f
+  }
+
+  #js_include "#{File.dirname(__FILE__)}/javascripts/netzke_storable.js" #TODO move to app global definitions
+  #js_include "#{File.dirname(__FILE__)}/javascripts/autosuggest.js"
+  #js_include "#{File.dirname(__FILE__)}/javascripts/BoxSelect.js"
+  #js_include "#{File.dirname(__FILE__)}/javascripts/NetzkeBoxSelect.js"
+  js_include "#{File.dirname(__FILE__)}/dialog_trigger_field/javascripts/dialog_trigger_field.js"
+  #js_include "#{File.dirname(__FILE__)}/javascripts/currency.js"
+
   #Components
   component :orders,
             :class_name => "OrdersGrid",

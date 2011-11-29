@@ -2,11 +2,6 @@
 class AddOrderForm < Netzke::Basepack::FormPanel
 
   #js_include "#{File.dirname(__FILE__)}/javascripts/lookup_field.js"
-  js_include "#{File.dirname(__FILE__)}/javascripts/netzke_storable.js" #TODO move to app global definitions
-  js_include "#{File.dirname(__FILE__)}/javascripts/autosuggest.js"
-  js_include "#{File.dirname(__FILE__)}/javascripts/BoxSelect.js"
-  js_include "#{File.dirname(__FILE__)}/javascripts/NetzkeBoxSelect.js"
-  js_include "#{File.dirname(__FILE__)}/dialog_trigger_field/javascripts/dialog_trigger_field.js"
 
   js_include :validators
 
@@ -54,6 +49,23 @@ class AddOrderForm < Netzke::Basepack::FormPanel
         :class_name => "DictionaryWindow",
         :model => "PurchasePlace",
         :columns => [:name],
+        :initial_sort => ['name', 'ASC']
+    }
+  end
+
+  component :select_defect do
+    {
+        :class_name => "DictionaryWindow",
+        :model => "Defect",
+        :columns => [:name],
+        :initial_sort => ['name', 'ASC']
+    }
+  end
+
+  component :select_external do
+    {
+        :class_name => "DictionaryWindow",
+        :model => "ExternalState",
         :initial_sort => ['name', 'ASC']
     }
   end
@@ -122,17 +134,22 @@ class AddOrderForm < Netzke::Basepack::FormPanel
                                    {:field_label => Order.human_attribute_name("plan_deliver_at"), :name => :plan_deliver_at, :xtype => :datefield}, #TODO: add default delivery period
                                    {:field_label => Order.human_attribute_name("complect"), :name => :complect__name,
                                       :xtype => :netzkeboxselect, :editable => false, :hide_trigger => true, :height => 110},
-                                   {:field_label => Order.human_attribute_name("external_state"), :name => :external_state__name, :min_grow => 210, :xtype => :textarea}
+                                   {:field_label => Order.human_attribute_name("external_state"), :name => :external_state__name, :xtype => :netzkepopupselect,
+                                    :selection_component => :select_external, :height => 140}
                                ]
                               },
                               {# 2nd column
                                :flex => 1, :defaults => {:anchor => '100%'},
                                :items => [
-                                   {:field_label => Order.human_attribute_name("defect"), :name => :defect__name, :xtype => :textarea,
-                                    :width => 320, :height => 140},
-                                   {:field_label => Order.human_attribute_name("diag_price"), :name => :diag_price, :xtype => :numberfield},
-                                   {:field_label => Order.human_attribute_name("prior_cost"), :name => :prior_cost, :xtype => :numberfield},
-                                   {:field_label => Order.human_attribute_name('maximum_cost'), :name => :maximum_cost, :xtype => :numberfield}
+                                   {:field_label => Order.human_attribute_name("defect"), :name => :defect__name, :xtype => :netzkepopupselect,
+                                    :width => 320, :height => 140, :selection_component => :select_defect},
+                                   {:field_label => Order.human_attribute_name("diag_price"), :name => :diag_price,
+                                      :xtype => :numericfield, :currency_symbol => 'руб.', :currency_at_end => true,
+                                      :allow_negative => false, :step => 10},
+                                   {:field_label => Order.human_attribute_name("prior_cost"), :name => :prior_cost,
+                                      :xtype => :numericfield, :currency_at_end => true, :currency_symbol => 'руб.', :step => 10},
+                                   {:field_label => Order.human_attribute_name('maximum_cost'), :name => :maximum_cost,
+                                      :xtype => :numericfield, :currency_at_end => true, :currency_symbol => 'руб.', :step => 10}
                                ]
                               }
                           ]
@@ -159,7 +176,7 @@ class AddOrderForm < Netzke::Basepack::FormPanel
 
   def normalize_field_with_suggest(field)
     field = normalize_field_without_suggest(field)
-    field[:parent_id] = self.global_id if [:autosuggest, :netzkeboxselect].include?(field[:xtype])
+    field[:parent_id] = self.global_id if [:autosuggest, :netzkeboxselect, :netzkepopupselect].include?(field[:xtype])
 
     field
   end
