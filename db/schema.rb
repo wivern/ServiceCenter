@@ -81,6 +81,9 @@ ActiveRecord::Schema.define(:version => 20111118122713) do
     t.datetime "updated_at"
   end
 
+  create_table "netzke_temp_table", :force => true do |t|
+  end
+
   create_table "numerators", :force => true do |t|
     t.string  "name",                          :null => false
     t.integer "repair_type_id"
@@ -161,7 +164,7 @@ ActiveRecord::Schema.define(:version => 20111118122713) do
 
   create_table "product_passports", :force => true do |t|
     t.integer  "producer_id"
-    t.integer  "product_id"
+    t.integer  "products_id"
     t.string   "factory_number"
     t.string   "guarantee_stub_number"
     t.integer  "purchase_place_id"

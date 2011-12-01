@@ -1,6 +1,6 @@
 class CreateProductNames < ActiveRecord::Migration
   def self.up
-    create_table :product_names do |t|
+    create_table :products do |t|
       t.string :name
 
       t.timestamps
@@ -8,6 +8,6 @@ class CreateProductNames < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :product_names
+    drop_table :products
   end
 end

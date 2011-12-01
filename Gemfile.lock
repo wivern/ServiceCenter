@@ -53,7 +53,27 @@ GEM
     arel (2.0.10)
     bcrypt-ruby (3.0.1)
     builder (2.1.2)
+    capybara (1.1.2)
+      mime-types (>= 1.16)
+      nokogiri (>= 1.3.3)
+      rack (>= 1.0.0)
+      rack-test (>= 0.5.4)
+      selenium-webdriver (~> 2.0)
+      xpath (~> 0.1.4)
+    childprocess (0.2.3)
+      ffi (~> 1.0.6)
+    cucumber (1.1.3)
+      builder (>= 2.1.2)
+      diff-lcs (>= 1.1.2)
+      gherkin (~> 2.6.7)
+      json (>= 1.4.6)
+      term-ansicolor (>= 1.0.6)
+    cucumber-rails (1.2.0)
+      capybara (>= 1.1.1)
+      cucumber (>= 1.1.1)
+      nokogiri (>= 1.5.0)
     daemons (1.1.4)
+    database_cleaner (0.7.0)
     devise (1.4.9)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.0.3)
@@ -74,7 +94,14 @@ GEM
       addressable (~> 2.2.6)
       multipart-post (~> 1.1.3)
       rack (< 2, >= 1.1.0)
+    ffi (1.0.11)
+    gherkin (2.6.8)
+      json (>= 1.4.6)
     i18n (0.5.0)
+    json (1.6.2)
+    json_pure (1.6.2)
+    launchy (2.0.5)
+      addressable (~> 2.2.6)
     log4r (1.1.9)
     macaddr (1.5.0)
       systemu (>= 2.4.0)
@@ -184,7 +211,13 @@ GEM
       ruby-openid (>= 2.1.7)
     rubyntlm (0.1.1)
     rubyzip (0.9.4)
+    selenium-webdriver (2.13.0)
+      childprocess (>= 0.2.1)
+      ffi (~> 1.0.9)
+      json_pure
+      rubyzip
     systemu (2.4.0)
+    term-ansicolor (1.0.7)
     thin (1.2.11)
       daemons (>= 1.0.9)
       eventmachine (>= 0.12.6)
@@ -199,14 +232,20 @@ GEM
     warden (1.0.6)
       rack (>= 1.0)
     will_paginate (3.0.2)
+    xpath (0.1.4)
+      nokogiri (~> 1.3)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  capybara
+  cucumber-rails
+  database_cleaner
   devise
   devise_active_directory_authenticatable
   factory_girl_rails
+  launchy
   netzke-basepack!
   netzke-communitypack
   netzke-core!
@@ -216,4 +255,5 @@ DEPENDENCIES
   rails (= 3.0.9)
   rails-i18n
   rspec-rails (~> 2.6)
+  selenium-webdriver
   thin

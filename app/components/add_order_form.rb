@@ -26,7 +26,7 @@ class AddOrderForm < Netzke::Basepack::FormPanel
     { :set_result => {:producer => params[:producer]}}
   end
 
-  component :select_window do
+  component :select_producer do
     {
         :class_name => "DictionaryWindow",
         :model => "Producer",
@@ -34,7 +34,7 @@ class AddOrderForm < Netzke::Basepack::FormPanel
     }
   end
 
-  component :select_product_window do
+  component :select_product do
     {
         :class_name => "DictionaryWindow",
         :model => "Product",
@@ -62,7 +62,7 @@ class AddOrderForm < Netzke::Basepack::FormPanel
     }
   end
 
-  component :select_external do
+  component :select_external_state do
     {
         :class_name => "DictionaryWindow",
         :model => "ExternalState",
@@ -80,9 +80,10 @@ class AddOrderForm < Netzke::Basepack::FormPanel
       configure_bbar(s)
       product_passport_fields = [
           {:name => :product_passport__factory_number, :xtype => :autosuggest, :populate_related_fields => true, :allow_blank => false},
-          {:name => :product_passport__producer__name, :xtype => :selecttriggerfield},
+          {:name => :product_passport__producer__name, :xtype => :selecttriggerfield,
+            :selection_component => :select_producer},
           {:name => :product_passport__product__name, :xtype => :selecttriggerfield,
-            :selection_component => :select_product_window},
+            :selection_component => :select_product},
           {:name => :product_passport__guarantee_stub_number, :xtype => :textfield},
           {:name => :product_passport__purchase_place__name, :xtype => :selecttriggerfield,
              :selection_component => :select_purchase_place, :allowNew => true},
@@ -135,7 +136,7 @@ class AddOrderForm < Netzke::Basepack::FormPanel
                                    {:field_label => Order.human_attribute_name("complect"), :name => :complect__name,
                                       :xtype => :netzkeboxselect, :editable => false, :hide_trigger => true, :height => 110},
                                    {:field_label => Order.human_attribute_name("external_state"), :name => :external_state__name, :xtype => :netzkepopupselect,
-                                    :selection_component => :select_external, :height => 140}
+                                    :selection_component => :select_external_state, :height => 140}
                                ]
                               },
                               {# 2nd column

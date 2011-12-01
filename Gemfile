@@ -41,5 +41,13 @@ gem 'odf-report'
    gem 'thin'
    gem "rspec-rails", "~> 2.6"
    gem 'factory_girl_rails'
+   gem 'cucumber-rails'
 #   gem 'webrat'
  end
+
+group :test do
+  gem 'capybara'
+  gem 'launchy'
+  gem 'database_cleaner'
+  gem 'selenium-webdriver'
+end

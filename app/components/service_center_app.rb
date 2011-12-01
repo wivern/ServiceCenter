@@ -116,7 +116,6 @@ class ServiceCenterApp < TabbedApp #Netzke::Basepack::AuthApp
 
   def dictionaries
     d = YAML.load_file(File.expand_path('../dictionaries.yml', __FILE__))
-    puts d.inspect
     d['components'].each{ |name, options|
       options[:columns] = options[:columns].map{|k,v| v ? v : k} if options.has_key? :columns
       options[:title] = options[:model].constantize.model_name.human(:count => 2) unless options.has_key? :title
