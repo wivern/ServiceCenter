@@ -1,5 +1,6 @@
 #encoding: utf-8
 #language: ru
+@ru
 Функционал: Вход пользователя
 
   @javascript
