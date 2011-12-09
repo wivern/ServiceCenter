@@ -1,5 +1,8 @@
 #encoding: UTF-8
 class OrderDetailsPanel < Netzke::Basepack::FormPanel
+
+  include ServiceCenter::ExtendedForm
+
   def configuration
     super.merge(
       :model => "Order",
@@ -39,7 +42,8 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
                                           {
                                               :flex => 1, :defaults => {:anchor => "-8"},
                                               :items => [
-                                                  {:name => :complect__name},
+                                                  {:name => :complects__name, :xtype => :netzkeboxselect, :editable => false,
+                                                    :hide_trigger => true, :height => 110, :auto_load_store => true},
                                                   {:name => :reason__name, :xtype => :textarea},
                                                   {:name => :internal_state__name, :xtype => :textarea},
                                                   {:name => :external_state__name, :xtype => :textarea}

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111118122713) do
+ActiveRecord::Schema.define(:version => 20111208133413) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -25,6 +25,13 @@ ActiveRecord::Schema.define(:version => 20111118122713) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "complects_orders", :id => false, :force => true do |t|
+    t.integer "order_id"
+    t.integer "complect_id"
+  end
+
+  add_index "complects_orders", ["complect_id", "order_id"], :name => "index_complects_orders_on_complect_id_and_order_id", :unique => true
 
   create_table "currencies", :force => true do |t|
     t.string   "name"
@@ -81,9 +88,6 @@ ActiveRecord::Schema.define(:version => 20111118122713) do
     t.datetime "updated_at"
   end
 
-  create_table "netzke_temp_table", :force => true do |t|
-  end
-
   create_table "numerators", :force => true do |t|
     t.string  "name",                          :null => false
     t.integer "repair_type_id"
@@ -116,7 +120,6 @@ ActiveRecord::Schema.define(:version => 20111118122713) do
     t.text     "service_state"
     t.text     "service_note"
     t.text     "service_phone_agreement"
-    t.integer  "complect_id"
     t.integer  "repair_type_id"
     t.integer  "external_state_id"
     t.integer  "internal_state_id"
@@ -164,7 +167,7 @@ ActiveRecord::Schema.define(:version => 20111118122713) do
 
   create_table "product_passports", :force => true do |t|
     t.integer  "producer_id"
-    t.integer  "products_id"
+    t.integer  "product_id"
     t.string   "factory_number"
     t.string   "guarantee_stub_number"
     t.integer  "purchase_place_id"

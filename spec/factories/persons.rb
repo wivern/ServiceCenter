@@ -4,8 +4,4 @@ FactoryGirl.define do
     email 'admin@pentar.ru'
     password 'Admin123'
   end
-  factory :fail_person do
-    name 'admin'
-    password '123'
-  end
 end

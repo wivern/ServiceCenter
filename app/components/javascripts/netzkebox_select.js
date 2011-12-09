@@ -20,7 +20,10 @@ Ext.define('Ext.netzke.BoxSelect', {
     initComponent: function() {
         this.initStore();
         this.callParent(arguments);
-    }
+        console.debug(this.autoLoadStore, this.store);
+            if (this.autoLoadStore && this.store.count() == 0)
+                this.store.load();
+    },
 });
 
 Ext.define('Ext.netzke.PopupSelect', {

@@ -7,12 +7,12 @@ class Order < ActiveRecord::Base
   belongs_to :customer
   belongs_to :manager, :class_name => "Person"
   belongs_to :repair_type
-  belongs_to :complect
   belongs_to :engineer, :class_name => "Person"   #Сервис-инженер проводивший ремонт
   belongs_to :status
   belongs_to :deliver_manager, :class_name => "Person"
   belongs_to :product_passport, :autosave => true
   belongs_to :result
+  has_and_belongs_to_many :complects
 
   before_create :update_number_and_ticket
 

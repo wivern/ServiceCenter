@@ -9,6 +9,8 @@ Ext.define('Ext.netzke.Storable',{
    valueField: 'record_id',
    displayField: 'value',
    queryMode: 'remote',
+   autoLoadStore: false,
+
    initStore: function(){
        var modelName = this.parentId + "_" + this.name;
 
@@ -31,12 +33,16 @@ Ext.define('Ext.netzke.Storable',{
            }
        });
 
-       store.on('beforeload', function(self, params) {
-           params.params.column = this.name;
-       }, this);
+       store.getProxy().extraParams.column = this.name;
+
+//       store.on('beforeload', function(self, operation) {
+//           console.debug(operation);
+//           operation.extraParams.column = this.name;
+//       }, this);
 
        if (this.store) store.loadData({data: this.store});
 
        this.store = store;
+
    }
 });

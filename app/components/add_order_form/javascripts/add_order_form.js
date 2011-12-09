@@ -1,10 +1,11 @@
 {
     initComponent: function(){
+        var self = this;
         this.on('submitsuccess', function(){
-           console.debug('submit success');
             var self = this;
-            var number = this.record.number; //this.getForm().findField('number').getValue();
-            var recordId =  this.record.id;//this.getForm().findField('recordId').getValue();
+            console.debug('submit success', self);
+            var number = this.getForm().findField('number').getValue();
+            var recordId = this.getForm().findField('recordId').getValue();
             var app = Ext.ComponentQuery.query('viewport')[0];
             app.selectOrder({order_id: recordId});
             app.appLoadComponent('order_details');

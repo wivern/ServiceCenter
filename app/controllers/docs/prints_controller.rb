@@ -6,7 +6,7 @@ class Docs::PrintsController < ApplicationController
       @order.attributes.each { |attr, value|
         logger.debug "Adding field #{attr} with #{value}"
         r.add_field(attr, value.to_s) }
-      @order.class.reflect_on_all_associations.each { |ref| add_reflection(r, ref, @order.send(ref.name)) if ref.macro != :has_many }
+      @order.class.reflect_on_all_associations.each { |ref| add_reflection(r, ref, @order.send(ref.name)) unless [:has_many, :has_and_belongs_to_many].include? ref.macro }
     end
     report_file_name = report.generate
     send_file(report_file_name)
@@ -22,7 +22,7 @@ class Docs::PrintsController < ApplicationController
         report.add_field(field_name, value)
       end
     } if data
-    reflection.klass.reflect_on_all_associations.each{ |ref| add_reflection(report, ref, data.send(ref.name)) if ref.macro != :has_many }
+    reflection.klass.reflect_on_all_associations.each{ |ref| add_reflection(report, ref, data.send(ref.name))  unless [:has_many, :has_and_belongs_to_many].include? ref.macro}
   end
 
 end
