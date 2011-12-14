@@ -1,11 +1,14 @@
 class DictionaryWindow < Netzke::Basepack::Window
 
+  class_config_option :prohibit_modify, true
+
   js_properties :width => "50%",
                 :height => "50%",
                 :close_action => "hide",
                 :buttons => [:select.action, :cancel.action],
                 :modal => true,
-                :autofill_column => "name"
+                :autofill_column => "name",
+                :prohibit_modify => true
 
   action :select do
     { :text => I18n.t('views.actions.select.text') }
@@ -19,6 +22,7 @@ class DictionaryWindow < Netzke::Basepack::Window
     super.tap do |s|
       s[:items] = [:grid_panel.component(:prevent_header => true)]
       s[:title] = I18n.t('views.dictionary_window.title')
+      s[:prohibit_modify] ||= self.class.read_inheritable_attribute(:prohibit_modify)
     end
   end
 
@@ -28,9 +32,12 @@ class DictionaryWindow < Netzke::Basepack::Window
         :model => config[:model],
         :columns => config[:columns],
         :scope => config[:scope],
-        :prohibit_update => true,
-        :prohibit_delete => true,
-        :bbar => nil,
+        :prohibit_update => config[:prohibit_modify],
+        :prohibit_delete => config[:prohibit_modify],
+        :prohibit_create => config[:prohibit_modify],
+        :enable_edit_in_form => false,
+        :enable_extended_search => false,
+        #:bbar => nil,
         :lazy_loading => false
     }
   end

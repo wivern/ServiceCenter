@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111208133413) do
+ActiveRecord::Schema.define(:version => 20111214134204) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -64,11 +64,25 @@ ActiveRecord::Schema.define(:version => 20111208133413) do
     t.datetime "updated_at"
   end
 
+  create_table "defects_orders", :id => false, :force => true do |t|
+    t.integer "defect_id"
+    t.integer "order_id"
+  end
+
+  add_index "defects_orders", ["defect_id", "order_id"], :name => "index_defects_orders_on_defect_id_and_order_id", :unique => true
+
   create_table "external_states", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "external_states_orders", :id => false, :force => true do |t|
+    t.integer "external_state_id"
+    t.integer "order_id"
+  end
+
+  add_index "external_states_orders", ["external_state_id", "order_id"], :name => "index_external_states_orders_on_external_state_id_and_order_id", :unique => true
 
   create_table "goals", :force => true do |t|
     t.string   "name"
@@ -99,7 +113,6 @@ ActiveRecord::Schema.define(:version => 20111208133413) do
     t.integer  "ticket"
     t.text     "diag_result"
     t.text     "diag_ground"
-    t.text     "actual_defect"
     t.integer  "diag_manager_id"
     t.decimal  "diag_price",              :precision => 8, :scale => 2
     t.integer  "customer_id"
@@ -121,7 +134,6 @@ ActiveRecord::Schema.define(:version => 20111208133413) do
     t.text     "service_note"
     t.text     "service_phone_agreement"
     t.integer  "repair_type_id"
-    t.integer  "external_state_id"
     t.integer  "internal_state_id"
     t.integer  "reason_id"
     t.integer  "goal_id"

@@ -36,6 +36,33 @@ Ext.define('Ext.netzke.PopupSelect', {
     mixins: {
         storable: 'Ext.netzke.Storable'
     },
+    initStore: function(){
+        if (this.autoLoadStore)
+            this.callParent();
+        else
+            this.initInMemoryStore();
+    },
+    initInMemoryStore: function(){
+        var modelName = this.parentId + "_" + this.name;
+
+        console.log( this.name + ' fields',this.valueField, this.displayField);
+        Ext.define(modelName, {
+            extend: 'Ext.data.Model',
+            fields: [this.valueField, this.displayField]
+        });
+
+        var store = new Ext.data.Store({
+            model: modelName,
+            proxy: {
+                type: 'memory',
+                reader: {
+                    type: 'array',
+                    root: 'data'
+                }
+            }
+        });
+        this.store = store;
+    },
     onTriggerClick: function() {
         if (this.selectWindow) {
             this.selectWindow.show();
@@ -54,8 +81,8 @@ Ext.define('Ext.netzke.PopupSelect', {
                         if (win.closeResult == 'select') {
                             console.debug(selected);
 //                        this.store.removeAll(true);
-//                            this.store.add(selected.data);
-                            this.addValue(selected.get(this.displayField));
+                            this.store.add(selected);
+                            this.addValue(selected.get(this.valueField));
                             console.log('added', this.getSubmitData());
                         }
                     }, self);

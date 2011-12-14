@@ -4,8 +4,8 @@ class ProductPassport < ActiveRecord::Base
   belongs_to :dealer
   belongs_to :purchase_place
 
-  attr_accessible :factory_number, :product, :dealer, :purchase_place,
-                  :product_id
+  attr_accessible :factory_number, :product, :producer, :dealer, :purchase_place,
+                  :product_id, :producer_id
 
-  validates_presence_of :factory_number, :product
+  validates_presence_of :factory_number, :product, :producer
 end

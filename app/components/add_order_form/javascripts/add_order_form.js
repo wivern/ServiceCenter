@@ -9,6 +9,7 @@
             var app = Ext.ComponentQuery.query('viewport')[0];
             app.selectOrder({order_id: recordId});
             app.appLoadComponent('order_details');
+            this.getForm().reset();
         }, this);
         console.debug(this);
 

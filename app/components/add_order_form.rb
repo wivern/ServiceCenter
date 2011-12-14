@@ -45,6 +45,7 @@ class AddOrderForm < Netzke::Basepack::FormPanel
         :class_name => "DictionaryWindow",
         :model => "Defect",
         :columns => [:name],
+        :prohibit_modify => false,
         :initial_sort => ['name', 'ASC']
     }
   end
@@ -53,6 +54,7 @@ class AddOrderForm < Netzke::Basepack::FormPanel
     {
         :class_name => "DictionaryWindow",
         :model => "ExternalState",
+        :prohibit_modify => true,
         :initial_sort => ['name', 'ASC']
     }
   end
@@ -66,7 +68,8 @@ class AddOrderForm < Netzke::Basepack::FormPanel
       configure_locked(s)
       configure_bbar(s)
       product_passport_fields = [
-          {:name => :product_passport__factory_number, :xtype => :autosuggest, :populate_related_fields => true, :allow_blank => false},
+          {:name => :product_passport__factory_number, :xtype => :autosuggest, :populate_related_fields => true, :allow_blank => false,
+            :allow_new => true},
           {:name => :product_passport__producer__name, :xtype => :selecttriggerfield,
             :selection_component => :select_producer},
           {:name => :product_passport__product__name, :xtype => :selecttriggerfield,
@@ -118,18 +121,20 @@ class AddOrderForm < Netzke::Basepack::FormPanel
                               {# 1st column
                                :flex => 1, :defaults => {:anchor => '-8'},
                                :items => [
-                                   {:field_label => Order.human_attribute_name("applied_at"), :name => :applied_at, :xtype => :datefield, :value => Date.today},
-                                   {:field_label => Order.human_attribute_name("plan_deliver_at"), :name => :plan_deliver_at, :xtype => :datefield}, #TODO: add default delivery period
+                                   {:field_label => Order.human_attribute_name("applied_at"), :name => :applied_at,
+                                      :format => "d.m.y", :xtype => :datefield, :value => Date.today}, #TODO get date format from locale
+                                   {:field_label => Order.human_attribute_name("plan_deliver_at"), :name => :plan_deliver_at,
+                                      :xtype => :datefield, :format => "d.m.y"}, #TODO: add default delivery period
                                    {:field_label => Order.human_attribute_name("complect"), :name => :complects__name,
                                       :xtype => :netzkeboxselect, :editable => false, :hide_trigger => true, :height => 110},
-                                   {:field_label => Order.human_attribute_name("external_state"), :name => :external_state__name, :xtype => :netzkepopupselect,
-                                    :selection_component => :select_external_state, :height => 140}
+                                   {:field_label => Order.human_attribute_name("external_state"), :name => :external_states__name,
+                                    :xtype => :netzkepopupselect, :selection_component => :select_external_state, :height => 140}
                                ]
                               },
                               {# 2nd column
                                :flex => 1, :defaults => {:anchor => '100%'},
                                :items => [
-                                   {:field_label => Order.human_attribute_name("defect"), :name => :defect__name, :xtype => :netzkepopupselect,
+                                   {:field_label => Order.human_attribute_name("defect"), :name => :defects__name, :xtype => :netzkepopupselect,
                                     :width => 320, :height => 140, :selection_component => :select_defect},
                                    {:field_label => Order.human_attribute_name("diag_price"), :name => :diag_price,
                                       :xtype => :numericfield, :currency_symbol => 'руб.', :currency_at_end => true,
@@ -173,11 +178,12 @@ class AddOrderForm < Netzke::Basepack::FormPanel
 
   def netzke_submit(params)
     data = ActiveSupport::JSON.decode(params[:data])
-    passport = find_or_create(ProductPassport, get_search_options(data, "product_passport"), :factory_number)
+    passport = find_or_create(ProductPassport, get_search_options(data, "product_passport"),
+                              :factory_number)
     customer = find_or_create(Customer, get_search_options(data, "customer"), :name)
     if passport
       data.reject!{|k,v| k.to_s.match /^product_passport/}
-      data[:product_passport_id] = passport.id
+      data[:product_passport_id] = passport.quoted_id
     end
     if customer
       data.reject!{|k,v| k.to_s.match /^customer/}
@@ -188,15 +194,21 @@ class AddOrderForm < Netzke::Basepack::FormPanel
     logger.debug "Data: #{data.inspect}"
     params[:data] = ActiveSupport::JSON.encode data
     begin
-      success = create_or_update_record data
+      success = create_or_update_record(data) and passport.valid? and customer.valid?
       if success
         {:set_result => true, :set_form_values => {:record_id => record.id, :number => record.number,
                                                   :ticket => record.ticket, :_meta => meta_field}}
       else
-        @record.errors.to_a.each do |msg|
+        logger.debug "Customer: #{customer.inspect}\n Passport: #{passport.inspect}"
+        logger.debug "Passport errors: #{passport.errors.inspect}"
+        errors = []
+        errors += @record.errors.to_a
+        errors += passport.errors.to_a if passport
+        errors += customer.errors.to_a if customer
+        errors.each do |msg|
           flash :error => msg
         end
-        {:netzke_feedback => @flash, :apply_form_errors => build_form_errors(record)}
+        {:set_result => false, :netzke_feedback => @flash, :apply_form_errors => build_form_errors(record)}
       end
       #super params
     rescue => e
@@ -213,15 +225,15 @@ class AddOrderForm < Netzke::Basepack::FormPanel
     if model_class.exists?(search_options)
       #model is already exists, found by matching fields
       logger.debug "#{model_class.name} found by options #{search_options.inspect}"
-      record = model_class.find(search_options)
+      record = model_class.where(search_options).first
     elsif is_digit?(search_options[id_name]) and model_class.exists?(:id => search_options[id_name])
       #model is already exists, found by id
       logger.debug "#{model_class.name} found by id with #{search_options.inspect}"
       record = model_class.find(search_options[id_name])
     else
       #Create a new model
-      logger.debug "Creating new #{model_class.name}"
       record = model_class.create(search_options)
+      logger.debug "New #{model_class.name} created #{record.inspect}"
     end
     record
   end

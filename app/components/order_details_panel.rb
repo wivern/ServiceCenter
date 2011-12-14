@@ -3,6 +3,25 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
 
   include ServiceCenter::ExtendedForm
 
+  component :select_external_state do
+    {
+        :class_name => "DictionaryWindow",
+        :model => "ExternalState",
+        :prohibit_modify => true,
+        :initial_sort => ['name', 'ASC']
+    }
+  end
+
+  component :select_defect do
+    {
+        :class_name => "DictionaryWindow",
+        :model => "Defect",
+        :columns => [:name],
+        :prohibit_modify => false,
+        :initial_sort => ['name', 'ASC']
+    }
+  end
+
   def configuration
     super.merge(
       :model => "Order",
@@ -46,7 +65,8 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
                                                     :hide_trigger => true, :height => 110, :auto_load_store => true},
                                                   {:name => :reason__name, :xtype => :textarea},
                                                   {:name => :internal_state__name, :xtype => :textarea},
-                                                  {:name => :external_state__name, :xtype => :textarea}
+                                                  {:name => :external_states__name, :xtype => :netzkepopupselect, :height => 140,
+                                                    :auto_load_store => true, :selection_component => :select_external_state}
                                               ]
                                           },
                                           {
@@ -88,7 +108,8 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
                                         {:name => :diag_price},
                                         {:name => :diag_ground},
                                         {:name => :diagnosed_at},
-                                        {:name => :actual_defect, :flex => 2, :xtype => :textarea}
+                                        {:name => :defects__name, :flex => 2, :xtype => :netzkepopupselect,
+                                          :height => 140, :select_component => :select_defect}
                                     ]
                                 },
                                 {
