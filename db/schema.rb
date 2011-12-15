@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111214134204) do
+ActiveRecord::Schema.define(:version => 20111215135806) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -90,11 +90,25 @@ ActiveRecord::Schema.define(:version => 20111214134204) do
     t.datetime "updated_at"
   end
 
+  create_table "goals_orders", :id => false, :force => true do |t|
+    t.integer "goal_id"
+    t.integer "order_id"
+  end
+
+  add_index "goals_orders", ["goal_id", "order_id"], :name => "index_goals_orders_on_goal_id_and_order_id", :unique => true
+
   create_table "grounds", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "grounds_orders", :id => false, :force => true do |t|
+    t.integer "ground_id"
+    t.integer "order_id"
+  end
+
+  add_index "grounds_orders", ["ground_id", "order_id"], :name => "index_grounds_orders_on_ground_id_and_order_id", :unique => true
 
   create_table "internal_states", :force => true do |t|
     t.string   "name"
@@ -102,11 +116,28 @@ ActiveRecord::Schema.define(:version => 20111214134204) do
     t.datetime "updated_at"
   end
 
+  create_table "internal_states_orders", :id => false, :force => true do |t|
+    t.integer "internal_state_id"
+    t.integer "order_id"
+  end
+
+  add_index "internal_states_orders", ["internal_state_id", "order_id"], :name => "index_internal_states_orders_on_internal_state_id_and_order_id", :unique => true
+
   create_table "numerators", :force => true do |t|
     t.string  "name",                          :null => false
     t.integer "repair_type_id"
     t.integer "current_value",  :default => 0
   end
+
+  create_table "order_activities", :force => true do |t|
+    t.integer  "order_id"
+    t.integer  "activity_id"
+    t.date     "performed_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "order_activities", ["order_id", "activity_id"], :name => "index_order_activities_on_order_id_and_activity_id", :unique => true
 
   create_table "orders", :force => true do |t|
     t.integer  "number"
@@ -134,14 +165,13 @@ ActiveRecord::Schema.define(:version => 20111214134204) do
     t.text     "service_note"
     t.text     "service_phone_agreement"
     t.integer  "repair_type_id"
-    t.integer  "internal_state_id"
     t.integer  "reason_id"
-    t.integer  "goal_id"
     t.integer  "status_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "product_passport_id"
-    t.integer  "result_id"
+    t.text     "result"
+    t.text     "actual_defect"
   end
 
   create_table "organizations", :force => true do |t|

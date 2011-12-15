@@ -11,16 +11,19 @@ class Order < ActiveRecord::Base
   belongs_to :status
   belongs_to :deliver_manager, :class_name => "Person"
   belongs_to :product_passport, :autosave => true
-  belongs_to :result
   has_and_belongs_to_many :complects
   has_and_belongs_to_many :external_states
   has_and_belongs_to_many :defects
+  has_and_belongs_to_many :internal_states
+  has_and_belongs_to_many :grounds
+  has_and_belongs_to_many :goals
+  has_many :activities, :through => :order_activities
 
   before_create :update_number_and_ticket
 
   netzke_exclude_attributes :created_at, :updated_at
 
-  accepts_nested_attributes_for :customer, :reason, :external_state, :internal_state, :product_passport
+  accepts_nested_attributes_for :customer, :reason, :product_passport
   validates_presence_of :repair_type, :customer, :product_passport, :complects, :external_states, :defects
 
   private

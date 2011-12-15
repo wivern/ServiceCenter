@@ -3,6 +3,9 @@ ru:
   activerecord:
     attributes:
       name: Наименование
+      activity:
+        name: Наименование
+        price: Стоимость
       complect:
         name: Наименование
       customer:
@@ -36,22 +39,23 @@ ru:
         actual_deliver_at: "Дата выдачи (факт)"
         actual_defect: "Выявленная неисправность"
         repair_type__name: "Тип ремонта"
-        complect: "Комплект"
+        complects__name: "Комплект"
         customer__name: Заказчик
         customer__address: Адрес
         customer__phone: Телефон
         customer__email: Эл.почта
         customer__passport: Паспорт
-        defect: Заявленная неисправность
+        defects__name: Заявленная неисправность
         diag_manager__name: Диагностику провел
         diag_price: Стоимость диагностики
-        diag_ground: Основание проведения диагностики
         diagnosed_at: Дата проведения диагностики
-        external_state: "Внешнеее состояние"
-        goal__name: Цель диагностики
+        external_states__name: "Внешнее состояние"
+        internal_states__name: "Внутреннее состояние"
+        goals__name: Цель диагностики
+        grounds__name: "Основание для проведения диагностики"
         prior_cost: Предварительная стоимость
         maximum_cost: Максимальная стоимость
-        result__name: Результат диагностики
+        result: Результат диагностики
         manager__name: Приемщик
         manager__display_name: Принят
         status__name: Статус
@@ -65,6 +69,10 @@ ru:
         product_passport__purchase_place__name: "Место покупки"
         product_passport__purchased_at: "Дата покупки"
         product_passport__dealer__name: "Поступило от дилера"
+      order_activity:
+        activity__name: Наименование
+        activity__price: Стоимость
+        performed_at: Дата выполнения
       person:
         name: Наименование
       producer:
@@ -150,3 +158,4 @@ ru:
       settings: Настройки
     dictionary_window:
       title: "Выбор элемента"
+  form_saved: "Данные сохранены"

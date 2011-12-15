@@ -14,6 +14,10 @@
             this.updateTitle();
         }
     },
+    trackResetOnLoad: true,
+    initialConfig:{
+        trackResetOnLoad: true
+    },
     updateTitle: function(){
         var number = this.record.number;
         this.setTitle('Карточка заказа № ' + number);

@@ -22,6 +22,50 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
     }
   end
 
+  component :select_internal_state do
+    {
+        :class_name => "DictionaryWindow",
+        :model => "InternalState",
+        :columns => [:name],
+        :prohibit_modify => true,
+        :initial_sort => ['name', 'ASC']
+    }
+  end
+
+  component :select_ground do
+    {
+        :class_name => "DictionaryWindow",
+        :model => "Ground",
+        :columns => [:name],
+        :prohibit_modify => false,
+        :initial_sort => ['name', 'ASC']
+    }
+  end
+
+  component :select_goal do
+    {
+        :class_name => "DictionaryWindow",
+        :model => "Goal",
+        :columns => [:name],
+        :prohibit_modify => false,
+        :initial_sort => ['name', 'ASC']
+    }
+  end
+
+  component :activities do
+    {
+        :class_name => "Netzke::Basepack::GridPanel",
+        :model => "OrderActivity",
+        :columns => [:activity__name,
+                     {:name => :activity__price},
+                     :performed_at],
+        :order_id => session[:selected_order_id],
+        :prevent_header => true,
+        :min_height => 300,
+        :force_fit => true
+    }
+  end
+
   def configuration
     super.merge(
       :model => "Order",
@@ -44,13 +88,13 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
                               ]},
                               { :title => "Паспорт изделия", :defaults => {:read_only => true, :xtype => :textfield},
                                 :items => [
-                                    {:name => :product_passport__producer__name},
-                                    {:name => :product_passport__product_name__name},
-                                    {:name => :product_passport__factory_number},
-                                    {:name => :product_passport__guarantee_stub_number},
-                                    {:name => :product_passport__purchase_place__name},
+                                    {:name => :product_passport__producer__name, :read_only => true},
+                                    {:name => :product_passport__product__name, :read_only => true},
+                                    {:name => :product_passport__factory_number, :read_only => true},
+                                    {:name => :product_passport__guarantee_stub_number, :read_only => true},
+                                    {:name => :product_passport__purchase_place__name, :read_only => true},
                                     {:name => :product_passport__purchased_at, :xtype => :datefield, :read_only => true},
-                                    {:name => :product_passport__dealer__name}
+                                    {:name => :product_passport__dealer__name, :read_only => true}
                                 ]
                               },
                               {
@@ -61,10 +105,12 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
                                           {
                                               :flex => 1, :defaults => {:anchor => "-8"},
                                               :items => [
-                                                  {:name => :complects__name, :xtype => :netzkeboxselect, :editable => false,
+                                                  {:name => :complects__name, :xtype => :netzkeboxselect, :read_only => true,
                                                     :hide_trigger => true, :height => 110, :auto_load_store => true},
-                                                  {:name => :reason__name, :xtype => :textarea},
-                                                  {:name => :internal_state__name, :xtype => :textarea},
+                                                  {:name => :defects__name, :xtype => :netzkeboxselect, :read_only => true,
+                                                    :hide_trigger => true, :height => 140, :auto_load_store => true},
+                                                  {:name => :internal_states__name, :xtype => :netzkepopupselect, :height => 140,
+                                                    :auto_load_store => true, :selection_component => :select_internal_state},
                                                   {:name => :external_states__name, :xtype => :netzkepopupselect, :height => 140,
                                                     :auto_load_store => true, :selection_component => :select_external_state}
                                               ]
@@ -86,11 +132,11 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
                                   :flex => 1,
                                   :title => "Заказчик",
                                   :items => [
-                                      { :name => :customer__name, :xtype => :displayfield },
-                                      { :name => :customer__address, :xtype => :displayfield },
-                                      { :name => :customer__phone, :xtype => :displayfield },
-                                      { :name => :customer__email, :xtype => :displayfield },
-                                      { :name => :customer__passport, :xtype => :displayfield }
+                                      { :name => :customer__name, :read_only => true },
+                                      { :name => :customer__address, :read_only => true },
+                                      { :name => :customer__phone, :read_only => true },
+                                      { :name => :customer__email, :read_only => true },
+                                      { :name => :customer__passport, :read_only => true }
                                   ]
                               }
                           ]}
@@ -105,27 +151,27 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
                                     :flex => 1, :border => false, :defaults => {:anchor => "-8"},
                                     :items => [
                                         {:name => :diag_manager__name},
-                                        {:name => :diag_price},
-                                        {:name => :diag_ground},
+                                        {:name => :diag_price, :xtype => :numericfield, :currency_at_end => true,
+                                          :currency_symbol => 'руб.', :step => 10}, #TODO get currency from current locale
+                                        {:name => :grounds__name, :xtype => :netzkepopupselect, :height => 140,
+                                          :selection_component => :select_ground, :auto_load_store => true},
                                         {:name => :diagnosed_at},
-                                        {:name => :defects__name, :flex => 2, :xtype => :netzkepopupselect,
-                                          :height => 140, :select_component => :select_defect}
+                                        {:name => :actual_defect, :xtype => :textarea, :height => 140}
                                     ]
                                 },
                                 {
                                     :flex => 1, :border => false, :defaults => {:anchor => "100%"},
                                     :items => [
-                                        {:name => :goal__name, :xtype => :textarea},
-                                        {:name => :result__name, :xtype => :textarea}
+                                        {:name => :goals__name, :xtype => :netzkepopupselect, :height => 140,
+                                          :selection_component => :select_goal, :auto_load_store => true},
+                                        {:name => :result, :xtype => :textarea, :height => 160}
                                     ]
                                 }
                             ]
                           }
                       ]
                   },
-                  {
-                      :title => "Работы"
-                  },
+                      :activities.component(:title => "Работы"),
                   {
                       :title => "Детали"
                   },
@@ -178,15 +224,28 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
     c[:bbar] = [:apply.action, {:text => 'Печать', :icon => '/images/icons/printer.png', :name => 'print', :menu => []}]
   end
 
-  #endpoint :get_print_options do |params|
-  #  reports = Report.all.map{ |r|  {:text => r.name, :reportId => r.friendly_url} }
-  #  {:set_result => reports}
-  #end
+  def netzke_submit(params)
+    data = ActiveSupport::JSON.decode(params[:data])
 
-  #js_method :on_cancel, <<-JS
-  #  function(){
-  #    this.getForm().reset();
-  #  }
-  #JS
+    # File uploads are in raw params instead of "data" hash, so, mix them in into "data"
+    if config[:file_upload]
+      Netzke::Core.controller.params.each_pair do |k,v|
+        data[k] = v if v.is_a?(ActionDispatch::Http::UploadedFile)
+      end
+    end
+
+    success = create_or_update_record(data)
+
+    if success
+      flash :notice => I18n.t("form_saved")
+      {:set_form_values => js_record_data, :netzke_feedback => @flash, :set_result => true}
+    else
+      # flash eventual errors
+      @record.errors.to_a.each do |msg|
+        flash :error => msg
+      end
+      {:netzke_feedback => @flash, :apply_form_errors => build_form_errors(record)}
+    end
+  end
 
 end
