@@ -54,22 +54,18 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
 
   component :activities do
     {
-        :class_name => "Netzke::Basepack::GridPanel",
-        :model => "OrderActivity",
-        :columns => [:activity__name,
-                     {:name => :activity__price},
-                     :performed_at],
-        :order_id => session[:selected_order_id],
+        :class_name => "ActivitiesGrid",
+        :strong_default_attrs => {:order_id => config[:record_id]},
+        :scope => ["order_id = ?", config[:record_id]],
         :prevent_header => true,
-        :min_height => 300,
-        :force_fit => true
+        :min_height => 300
     }
   end
 
   def configuration
     super.merge(
       :model => "Order",
-      :record_id => session[:selected_order_id],
+      #:record_id => session[:selected_order_id],
       :items => [
           {
               :xtype => :tabpanel, :flex => 1, :align => "stretch", :body_padding => 5, :plain => true, :active_tab => 0,

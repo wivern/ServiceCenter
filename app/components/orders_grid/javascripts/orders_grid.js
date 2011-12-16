@@ -42,7 +42,7 @@
             app.selectOrder({order_id: orderId});
             app.addTab('OrderDetailsPanel',{
                 config:{
-                    recordId: orderId,
+                    record_id: orderId,
                     title: 'Заказ № ' + number
                 }
             });
