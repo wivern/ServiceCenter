@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111216111918) do
+ActiveRecord::Schema.define(:version => 20111220112517) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -138,6 +138,15 @@ ActiveRecord::Schema.define(:version => 20111216111918) do
   end
 
   add_index "order_activities", ["order_id", "activity_id"], :name => "index_order_activities_on_order_id_and_activity_id", :unique => true
+
+  create_table "order_spare_parts", :force => true do |t|
+    t.integer  "order_id"
+    t.integer  "spare_part_id"
+    t.integer  "currency_id"
+    t.decimal  "price",         :precision => 9, :scale => 2
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "orders", :force => true do |t|
     t.integer  "number"
@@ -267,6 +276,17 @@ ActiveRecord::Schema.define(:version => 20111216111918) do
 
   add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
+
+  create_table "spare_parts", :force => true do |t|
+    t.string   "name"
+    t.string   "part_number"
+    t.decimal  "price",       :precision => 9, :scale => 2
+    t.integer  "currency_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "spare_parts", ["part_number"], :name => "index_spare_parts_on_part_number", :unique => true
 
   create_table "statuses", :force => true do |t|
     t.string   "name"

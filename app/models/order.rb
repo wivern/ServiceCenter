@@ -18,6 +18,7 @@ class Order < ActiveRecord::Base
   has_and_belongs_to_many :grounds
   has_and_belongs_to_many :goals
   has_many :activities, :through => :order_activities
+  has_many :spare_parts, :through => :order_spare_parts
 
   before_create :update_number_and_ticket
 

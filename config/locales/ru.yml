@@ -73,6 +73,11 @@ ru:
         activity__name: Наименование
         activity__price: Стоимость
         performed_at: Дата выполнения
+      order_spare_part:
+        spare_part__name: Название
+        spare_part__part_number: Код
+        price: Цена
+        currency__name: Валюта
       person:
         name: Наименование
       producer:
@@ -91,6 +96,12 @@ ru:
         name: Наименование
       repair_type:
         name: Наименование
+      spare_part:
+        name: Название
+        part_number: Код изделия
+        price: Цена
+        currency: Валюта
+        currency__name: Валюта
       status:
         name: Наименование
     errors:
@@ -116,6 +127,7 @@ ru:
       goal: Цель диагностики
       ground: Основание диагностики
       order: Заказ
+      order_spare_part: Деталь
       organization: Организация
       person: Сотрудник
       producer: Производитель
@@ -125,6 +137,7 @@ ru:
       report: Печатная форма
       result: Результат диагностики
       repair_type: Тип ремонта
+      spare_part: Запчасти
       status: Статус
   views:
     actions:

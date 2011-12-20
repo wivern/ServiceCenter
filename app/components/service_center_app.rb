@@ -48,11 +48,6 @@ class ServiceCenterApp < TabbedApp #Netzke::Basepack::AuthApp
                                           :component => :orders
                                       },
                                       {
-                                          :text => "Заказы с формой",
-                                          :leaf => true,
-                                          :component => :orders_panel
-                                      },
-                                      {
                                           :text => "Справочники",
                                           :expanded => true,
                                           :children => dictionaries
@@ -69,12 +64,7 @@ class ServiceCenterApp < TabbedApp #Netzke::Basepack::AuthApp
     js_include f unless /mixin/ =~ f
   }
 
-  #js_include "#{File.dirname(__FILE__)}/javascripts/netzke_storable.js" #TODO move to app global definitions
-  #js_include "#{File.dirname(__FILE__)}/javascripts/autosuggest.js"
-  #js_include "#{File.dirname(__FILE__)}/javascripts/BoxSelect.js"
-  #js_include "#{File.dirname(__FILE__)}/javascripts/NetzkeBoxSelect.js"
   js_include "#{File.dirname(__FILE__)}/dialog_trigger_field/javascripts/dialog_trigger_field.js"
-  #js_include "#{File.dirname(__FILE__)}/javascripts/currency.js"
 
   #Components
   component :orders,
@@ -87,9 +77,6 @@ class ServiceCenterApp < TabbedApp #Netzke::Basepack::AuthApp
             #:bbar => [:add_order.action, '-', :search.action],
             :columns => [:repair_type__name, :number, :ticket, :applied_at, :plan_deliver_at, :customer__name,
               :manager__display_name, :actual_deliver_at, :status__name, :service_note]
-
-  component :orders_panel,
-      :lazy_loading => true
 
   component :order_form,
         :class_name => "AddOrderForm",

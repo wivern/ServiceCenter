@@ -62,6 +62,15 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
     }
   end
 
+  component :parts do
+    {
+        :class_name => "PartsGrid",
+        :strong_default_attrs => {:order_id => config[:record_id]},
+        :scope => ["order_id = ?", config[:record_id]],
+        :prevent_header => true
+    }
+  end
+
   def configuration
     super.merge(
       :model => "Order",
@@ -168,9 +177,7 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
                       ]
                   },
                       :activities.component(:title => "Работы"),
-                  {
-                      :title => "Детали"
-                  },
+                      :parts.component(:title => I18n.t('activerecord.models.spare_part')),
                   {
                       :title => "Скидка"
                   },

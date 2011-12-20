@@ -40,6 +40,10 @@ dictionaries:
     text: activerecord.models.product
     leaf: true
     component: product_component
+  spare_part:
+    text: activerecord.models.spare_part
+    leaf: true
+    component: part_component
   purchase_place:
     text: activerecord.models.purchase_place
     leaf: true
@@ -86,6 +90,7 @@ components:
     :model: Status
     :lazy_loading: true
     :persistance: true
+    :force_fit: true
     :columns:
       :name: !!null 
   complect_component:
@@ -93,6 +98,7 @@ components:
     :model: Complect
     :lazy_loading: true
     :persistance: true
+    :force_fit: true
     :columns:
       :name: !!null 
   dealer_component:
@@ -100,66 +106,79 @@ components:
     :model: Dealer
     :lazy_loading: true
     :persistance: true
+    :force_fit: true
   defect_component:
     :class_name: Basepack::GridPanel
     :model: Defect
     :lazy_loading: true
     :persistance: true
+    :force_fit: true
   external_state_component:
     :class_name: Basepack::GridPanel
     :model: ExternalState
     :lazy_loading: true
     :persistance: true
+    :force_fit: true
   goal_component:
     :class_name: Basepack::GridPanel
     :model: Goal
     :lazy_loading: true
     :persistance: true
+    :force_fit: true
   ground_component:
     :class_name: Basepack::GridPanel
     :model: Ground
     :lazy_loading: true
     :persistance: true
+    :force_fit: true
   internal_state_component:
     :class_name: Basepack::GridPanel
     :model: InternalState
     :lazy_loading: true
     :persistance: true
+    :force_fit: true
   producer_component:
     :class_name: Basepack::GridPanel
     :model: Producer
     :lazy_loading: true
     :persistance: true
+    :force_fit: true
   product_component:
     :class_name: Basepack::GridPanel
     :model: Product
     :lazy_loading: true
     :persistance: true
+    :force_fit: true
   purchase_place_component:
     :class_name: Basepack::GridPanel
     :model: PurchasePlace
     :lazy_loading: true
     :persistance: true
+    :force_fit: true
   reason_component:
     :class_name: Basepack::GridPanel
     :model: Reason
     :lazy_loading: true
     :persistance: true
+    :force_fit: true
   result_component:
     :class_name: Basepack::GridPanel
     :model: Result
     :lazy_loading: true
     :persistance: true
+    :force_fit: true
   repair_type_component:
     :class_name: Basepack::GridPanel
     :model: RepairType
     :lazy_loading: true
     :persistance: true
+    :force_fit: true
   customer_component:
     :class_name: Basepack::GridPanel
     :model: Customer
     :lazy_loading: true
     :persistance: true
+    :force_fit: true
     :columns:
       :name: !!null 
       :address: !!null 
@@ -171,20 +190,30 @@ components:
     :model: Activity
     :lazy_loading: true
     :persistance: true
+    :force_fit: true
   currency_component:
     :class_name: Basepack::GridPanel
     :model: Currency
     :lazy_loading: true
     :persistance: true
+    :force_fit: true
   report_component:
     :class_name: Basepack::GridPanel
     :model: Report
     :lazy_loading: true
     :title: Reports
     :persistance: true
+    :force_fit: true
   organization_component:
     :class_name: Basepack::GridPanel
     :model: Organization
     :lazy_loading: true
     :title: Organizations
     :persistance: true
+    :force_fit: true
+  part_component:
+    :class_name: Basepack::GridPanel
+    :model: SparePart
+    :lazy_loading: true
+    :persistance: true
+    :force_fit: true
