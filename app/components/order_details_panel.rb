@@ -67,6 +67,7 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
         :class_name => "PartsGrid",
         :strong_default_attrs => {:order_id => config[:record_id]},
         :scope => ["order_id = ?", config[:record_id]],
+        :order_id => config[:record_id],
         :prevent_header => true
     }
   end

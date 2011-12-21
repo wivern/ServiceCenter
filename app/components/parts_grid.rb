@@ -3,6 +3,18 @@ class PartsGrid  < Netzke::Basepack::GridPanel
 
   js_include "#{File.dirname(__FILE__)}/dialog_trigger_field/javascripts/dialog_trigger_field.js"
 
+  js_mixin :parts_grid
+
+  component :select_spare_part do
+    {
+        :class_name => "AddPartWindow",
+        :model => "SparePart",
+        :columns => [:part_number, :name, :price, :currency__name],
+        :initial_sort => ['part_number', 'ASC'],
+        :order_id => config[:order_id]
+    }
+  end
+
   def configuration
     super.merge(
         :class_name => "Netzke::Basepack::GridPanel",
@@ -18,7 +30,7 @@ class PartsGrid  < Netzke::Basepack::GridPanel
   end
 
   def editor_for_association
-    {:xtype => :selecttriggerfield, :parent_id => self.global_id}
+    {:xtype => :selecttriggerfield, :assoc => true, :parent_id => self.global_id}
   end
 
   #TODO get currency format from current locale

@@ -17,6 +17,8 @@ Ext.define('Ext.ux.SelectTriggerField',
     triggerCls: 'x-form-browse-trigger',
 
     initComponent: function(){
+        var names = this.name.split('__');
+        this.selectionComponent = "select_" + names[0];
         this.store = new Ext.data.ArrayStore({
             id: 0,
             fields: [this.valueField, this.displayField],
@@ -29,25 +31,30 @@ Ext.define('Ext.ux.SelectTriggerField',
         if (this.selectWindow){
             this.selectWindow.show();
         } else {
-            var parent = this.findParentBy(function(p){
-               console.debug('found: ', p);
-                return typeof(p.getForm) == 'function';
-            });
-            var self = this;
-            parent.loadNetzkeComponent({name: this.selectionComponent, callback: function(win){
-                self.selectWindow = win;
-                self.selectWindow.show();
-                win.on('hide', function(){
-                    var selected = win.selection;
-                    if (win.closeResult == 'select'){
-                        console.debug(selected);
-//                        this.store.removeAll(true);
-                        this.store.add(selected.data);
-                        this.setValue(selected.get(this.valueField));
-                        console.debug(this.store);
-                    }
-                }, self);
-            }});
+            var parent = Ext.getCmp(this.parentId), self = this;
+            if (!parent)
+                parent = this.findParentBy(function(p){
+                   console.debug('found: ', p);
+                    return typeof(p.getForm) == 'function';
+                });
+            console.debug('Parent',parent);
+            if (parent)
+                parent.loadNetzkeComponent({name: this.selectionComponent, callback: function(win){
+                    self.selectWindow = win;
+                    self.selectWindow.show();
+                    win.on('hide', function(){
+                        console.log('closing');
+                        var selected = win.selection;
+                        if (win.closeResult == 'select'){
+                            console.debug(selected);
+    //                        this.store.removeAll(true);
+                            self.store.add(selected.data);
+                            self.setValue(selected.get(this.valueField));
+                            parent.refresh && parent.refresh();
+                            console.debug('self.store', self);
+                        }
+                    }, self);
+                }});
         }
     }
 });
