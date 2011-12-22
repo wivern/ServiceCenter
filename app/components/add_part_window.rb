@@ -1,4 +1,7 @@
 class AddPartWindow < DictionaryWindow
+
+  js_mixin :add_part_window
+
   endpoint :add_part do |params|
     order_id = params[:order_id]
     part_id = params[:part_id]
@@ -18,7 +21,11 @@ class AddPartWindow < DictionaryWindow
       console.debug('selection', this.selection);
       this.closeResult = 'select';
       this.hide();
-      this.addPart({order_id: this.orderId, part_id: this.selection.data.id });
+      this.addPart({order_id: this.orderId, part_id: this.selection.data.id },
+        function(){
+          this.fireEvent('partsadded', this);
+        }
+      );
     }
   JS
   
