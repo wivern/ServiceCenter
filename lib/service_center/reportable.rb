@@ -7,7 +7,10 @@ module ServiceCenter
       js_include "#{File.dirname(__FILE__)}/../../app/components/javascripts/print.js"
 
       endpoint :get_print_options do |params|
-        reports = Report.all.map { |r| {:text => r.name, :reportId => r.friendly_url, :orderId => params[:orderId]} }
+        order = Order.find(params[:orderId])
+        reports = order.repair_type.reports.map{ |r|
+          {:text => r.name, :reportId => r.friendly_url, :orderId => params[:orderId]}
+        }
         {:set_result => reports}
       end
     end

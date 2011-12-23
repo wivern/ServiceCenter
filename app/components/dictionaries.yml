@@ -201,14 +201,12 @@ components:
     :class_name: Basepack::GridPanel
     :model: Report
     :lazy_loading: true
-    :title: Reports
     :persistance: true
     :force_fit: true
   organization_component:
     :class_name: Basepack::GridPanel
     :model: Organization
     :lazy_loading: true
-    :title: Organizations
     :persistance: true
     :force_fit: true
   part_component:

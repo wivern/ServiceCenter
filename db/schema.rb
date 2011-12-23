@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111220112517) do
+ActiveRecord::Schema.define(:version => 20111223112823) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -146,6 +146,7 @@ ActiveRecord::Schema.define(:version => 20111220112517) do
     t.decimal  "price",         :precision => 9, :scale => 2
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "quantity",                                    :default => 1, :null => false
   end
 
   create_table "orders", :force => true do |t|
@@ -252,6 +253,13 @@ ActiveRecord::Schema.define(:version => 20111220112517) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "repair_types_reports", :id => false, :force => true do |t|
+    t.integer "repair_type_id", :null => false
+    t.integer "report_id",      :null => false
+  end
+
+  add_index "repair_types_reports", ["repair_type_id", "report_id"], :name => "index_repair_types_reports_on_repair_type_id_and_report_id", :unique => true
 
   create_table "reports", :force => true do |t|
     t.string   "name"

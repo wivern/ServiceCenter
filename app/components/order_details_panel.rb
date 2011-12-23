@@ -79,6 +79,7 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
       :items => [
           {
               :xtype => :tabpanel, :flex => 1, :align => "stretch", :body_padding => 5, :plain => true, :active_tab => 0,
+              :layout => :fit,
               :items => [
                   {
                       :title => "Сведения",
@@ -180,7 +181,13 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
                       :activities.component(:title => "Работы"),
                       :parts.component(:title => I18n.t('activerecord.models.spare_part')),
                   {
-                      :title => "Скидка"
+                      :title => "Скидка",
+                      :items => [
+                        {:name => :discount, :xtype => :numericfield},
+                        {:name => :discount_type, :xtype => :combo,
+                          :store => Order.discount_types.map{ |k,v| [k,v]}},
+                        {:name => :discount_ground, :xtype => :textarea}
+                      ]
                   },
                   {
                       :title => "Сервис",

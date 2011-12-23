@@ -20,18 +20,21 @@ class PartsGrid  < Netzke::Basepack::GridPanel
         :class_name => "Netzke::Basepack::GridPanel",
         :model => "OrderSparePart",
         :columns => [
-            {:name => :spare_part__name},
+            {:name => :spare_part__name, :read_only => true},
             {:name => :spare_part__part_number, :read_only => true},
             {:name => :price, :read_only => true, :align => :right, :renderer => 'this.currencyRenderer'},
+            {:name => :quantity, :align => :right},
+            {:name => :amount, :read_only => true, :align => :right, :renderer => 'this.currencyRenderer'},
             {:name => :currency__name, :read_only => true}
         ],
-        :force_fit => true
+        :force_fit => true,
+        :prohibit_update => false
     )
   end
 
-  def editor_for_association
-    {:xtype => :selecttriggerfield, :assoc => true, :parent_id => self.global_id}
-  end
+  #def editor_for_association
+  #  {:xtype => :selecttriggerfield, :assoc => true, :parent_id => self.global_id}
+  #end
 
   #TODO get currency format from current locale
   js_method :currency_renderer, <<-JS

@@ -1,8 +1,6 @@
+#encoding: UTF-8
 class Order < ActiveRecord::Base
-  belongs_to :external_state
-  belongs_to :internal_state
   belongs_to :reason          #Основание диагностики
-  belongs_to :goal            #Цель диагностики
   belongs_to :diag_manager, :class_name => "Person"
   belongs_to :customer
   belongs_to :manager, :class_name => "Person"
@@ -17,7 +15,9 @@ class Order < ActiveRecord::Base
   has_and_belongs_to_many :internal_states
   has_and_belongs_to_many :grounds
   has_and_belongs_to_many :goals
+  has_many :order_activities
   has_many :activities, :through => :order_activities
+  has_many :order_spare_parts
   has_many :spare_parts, :through => :order_spare_parts
 
   before_create :update_number_and_ticket
@@ -27,7 +27,65 @@ class Order < ActiveRecord::Base
   accepts_nested_attributes_for :customer, :reason, :product_passport
   validates_presence_of :repair_type, :customer, :product_passport, :complects, :external_states, :defects
 
+  cattr_accessor :discount_types
+  @@discount_types = {
+      :disabled => "Нет скидки",
+      :percent  => "Процент",
+      :amount   => "Сумма"
+  }
+
+  def activities_amount
+    activities.inject(0){|sum, a| sum + a.price}
+  end
+
+  def discount_amount
+    case discount_type
+      when :amount
+        discount
+      when :percent
+        total_amount * discount / 100
+      else
+        0
+    end
+  end
+
+  def total_amount_with_discount
+    total_amount - discount_amount
+  end
+
+  def spare_parts_amount
+    order_spare_parts.inject(0){|sum, sp| sum + sp.amount}
+  end
+
+  def total_amount
+    activities_amount + spare_parts_amount
+  end
+
+  def complect
+    collection_printable :complects
+  end
+
+  def diag_goal
+    collection_printable(:goals)
+  end
+
+  def defect
+    collection_printable(:defects)
+  end
+
+  def external_state
+    collection_printable(:external_states)
+  end
+
+  def internal_state
+    collection_printable(:internal_states)
+  end
+
   private
+
+  def collection_printable(association, attribute = :name, separator = ', ')
+    self.send(association.to_sym).map{|i| i.send(attribute.to_sym)}.join(separator)
+  end
 
   def update_number_and_ticket
     self.number = Numerator.next_number(:number, self)

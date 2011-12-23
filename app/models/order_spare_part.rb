@@ -6,6 +6,10 @@ class OrderSparePart < ActiveRecord::Base
 
   before_create :checkout_price
 
+  def amount
+    quantity * price
+  end
+
   protected
   def checkout_price
     if spare_part
