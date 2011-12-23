@@ -15,12 +15,24 @@ class OrdersGrid < Netzke::Basepack::GridPanel
     {
         :text => I18n.t('views.actions.print.text'),
         :tooltip => I18n.t('views.actions.print.tooltip'),
-        :icon => :printer
+        :icon => :printer,
+        :disabled => true
+    }
+  end
+
+  action :open do
+    {
+        :text => I18n.t('views.actions.open.text'),
+        :tooltip => I18n.t('views.actions.open.tooltip'),
+        :icon => :page_go,
+        :disabled => true
     }
   end
 
   def default_bbar
-    [{:text => 'Печать', :icon => '/images/icons/printer.png', :name => 'print', :menu => []}, :search.action]
+    [ :search.action, "-", :open.action,
+      {:text => 'Печать', :icon => '/images/icons/printer.png', :name => 'print', :menu => []},
+      :edit.action, :apply.action]
   end
 
   def default_context_menu

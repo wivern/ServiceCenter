@@ -163,6 +163,9 @@ ru:
         tooltip: "Выбрать указанный элемент"
       cancel:
         text: "Отмена"
+      open:
+        text: "Открыть"
+        tooltip: "Открыть выбранный заказ"
     forms:
       add_order:
         customer: "Заказчик"

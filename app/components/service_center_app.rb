@@ -73,10 +73,17 @@ class ServiceCenterApp < TabbedApp #Netzke::Basepack::AuthApp
             :lazy_loading => true,
             :title => Order.model_name.human,
             :persistence => true,
-            :prohibit_update => true,
+            :prohibit_create => true,
             #:bbar => [:add_order.action, '-', :search.action],
-            :columns => [:repair_type__name, :number, :ticket, :applied_at, :plan_deliver_at, :customer__name,
-              :manager__display_name, :actual_deliver_at, :status__name, :service_note]
+            :columns => [
+              {:name => :repair_type__name, :read_only => true},
+              {:name => :number, :read_only => true},
+              {:name => :ticket, :read_only => true},
+              {:name => :applied_at, :read_only => true},
+              {:name => :plan_deliver_at},
+              {:name => :customer__name, :read_only => true},
+              {:name => :manager__display_name, :read_only => true},
+              :actual_deliver_at, :status__name, :service_note]
 
   component :order_form,
         :class_name => "AddOrderForm",

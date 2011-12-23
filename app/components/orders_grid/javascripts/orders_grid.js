@@ -15,6 +15,12 @@
             if (!c.meta)
                 c.editable = false;
         });
+        this.getSelectionModel().on('selectionchange', function(selModel, selected){
+           var disabled = selected.length === 0;
+           if (!disabled && selected[0].isNew) disabled = true;
+           this.actions.open.setDisabled(disabled);
+           this.actions.print.setDisabled(disabled);
+        }, this);
     },
     openOrderDetails: function(orderId){
         this.getView().openOrderDetails(orderId);
@@ -34,6 +40,11 @@
           }
       }
     },
+    onOpen: function(){
+       if (this.getView().getSelectionModel().getSelection().length > 0){
+           this.getView().openOrderDetails(this.getView().getSelectionModel().getSelection()[0]);
+       }
+    },
     viewConfig:{
         openOrderDetails: function(record){
             var app = Ext.ComponentQuery.query('viewport')[0],
@@ -47,15 +58,6 @@
                 }
             });
 //            app.appLoadComponent('order_details');
-        },
-        listeners:{
-            itemdblclick: function(dataview, record, item, index, e){
-                console.debug('dblclick', dataview);
-                if (record){
-                    dataview.openOrderDetails(record);
-                    e.stopPropagation();
-                }
-            }
         }
     }
 }
