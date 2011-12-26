@@ -52,6 +52,16 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
     }
   end
 
+  component :select_person do
+    {
+        :class_name => "DictionaryWindow",
+        :model => "Person",
+        :columns => [:name, :login],
+        :prohibit_modify => false,
+        :initial_sort => ['name', 'ASC']
+    }
+  end
+
   component :activities do
     {
         :class_name => "ActivitiesGrid",
@@ -178,8 +188,25 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
                           }
                       ]
                   },
-                      :activities.component(:title => "Работы"),
-                      :parts.component(:title => I18n.t('activerecord.models.spare_part')),
+                  {
+                      :title => I18n.t('activerecord.models.activity'),
+                      :items => [
+                          :activities.component(:title => "Работы"),
+                          { :layout => :fit, :border => false,
+                            :bodyPadding => "10 0 0 0",
+                            :items => [
+                              {:name => :work_performed_at, :format => "d.m.y"},
+                              {:name => :engineer, :xtype => :selecttriggerfield,
+                                :selection_component => :select_person, :auto_load_store => true},
+                              {:name => :prior_cost, :xtype => :numericfield, :currency_symbol => 'руб.', :currency_at_end => true,
+                                      :allow_negative => false, :step => 10},
+                              {:name => :maximum_cost, :xtype => :numericfield, :currency_symbol => 'руб.', :currency_at_end => true,
+                                      :allow_negative => false, :step => 10}
+                            ]
+                          }
+                      ]
+                  },
+                  :parts.component(:title => I18n.t('activerecord.models.spare_part')),
                   {
                       :title => "Скидка",
                       :items => [

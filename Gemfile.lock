@@ -211,6 +211,8 @@ GEM
       ruby-openid (>= 2.1.7)
     rubyntlm (0.1.1)
     rubyzip (0.9.4)
+    russian (0.6.0)
+      i18n (>= 0.5.0)
     selenium-webdriver (2.13.0)
       childprocess (>= 0.2.1)
       ffi (~> 1.0.9)
@@ -255,5 +257,6 @@ DEPENDENCIES
   rails (= 3.0.9)
   rails-i18n
   rspec-rails (~> 2.6)
+  russian (~> 0.6.0)
   selenium-webdriver
   thin

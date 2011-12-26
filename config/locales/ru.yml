@@ -52,6 +52,7 @@ ru:
         discount: Скидка
         discount_type: Тип скидки
         discount_ground: Основание
+        engineer: Сервси-инженер, выполнивший работы
         external_states__name: "Внешнее состояние"
         internal_states__name: "Внутреннее состояние"
         goals__name: Цель диагностики
@@ -76,6 +77,7 @@ ru:
         service_info: Информация
         service_note: Примечание
         service_phone_agreement: Согласование по телефону
+        work_performed_at: Работа произведена
       order_activity:
         activity__name: Наименование
         activity__price: Стоимость
@@ -90,6 +92,15 @@ ru:
       organization:
         name: Наименование
       person:
+        name: Имя
+        username: Уч.запись
+        email: Эл.почта
+        organization__name: Организация
+        position__name: Должность
+        last_sign_in_at: Последний вход
+        password: Пароль
+        password_confirmation: Подтверждение пароля
+      position:
         name: Наименование
       producer:
         name: Наименование
@@ -141,6 +152,7 @@ ru:
       order_spare_part: Деталь
       organization: Организация
       person: Сотрудник
+      position: Должность
       producer: Производитель
       product: Изделие
       purchase_place: Место покупки
@@ -158,6 +170,9 @@ ru:
       print:
         text: "Печать"
         tooltip: "Вывод документа на печать"
+      reset_password:
+        text: "Сменить пароль"
+        tooltip: "Сменить пароль"
       select:
         text: "Выбрать"
         tooltip: "Выбрать указанный элемент"

@@ -76,6 +76,10 @@ dictionaries:
         text: activerecord.models.organization
         leaf: true
         component: organization_component
+      person:
+        text: activerecord.models.person
+        leaf: true
+        component: person_component
       report:
         text: activerecord.models.report
         leaf: true
@@ -84,6 +88,10 @@ dictionaries:
         text: activerecord.models.currency
         leaf: true
         component: currency_component
+      position:
+        text: activerecord.models.position
+        leaf: true
+        component: position_component
 components:
   :status_component:
     :class_name: Basepack::GridPanel
@@ -215,3 +223,15 @@ components:
     :lazy_loading: true
     :persistance: true
     :force_fit: true
+  person_component:
+    :class_name: PersonsGrid
+    :model: Person
+    :lazy_loading: true
+    :persistance: true
+    :force_fit: true
+  position_component:
+    :class_name: Basepack::GridPanel
+    :model: Position
+    :lazy_loading: true
+    :title: Positions
+    :persistance: true

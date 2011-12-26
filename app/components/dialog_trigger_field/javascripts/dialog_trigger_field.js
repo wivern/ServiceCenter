@@ -13,12 +13,14 @@ Ext.define('Ext.ux.SelectTriggerField',
     valueField: 'id',
     displayField: 'name',
     editable: false,
-    selectionComponent: 'select_window',
+    selectionComponent: false,
     triggerCls: 'x-form-browse-trigger',
 
     initComponent: function(){
-        var names = this.name.split('__');
-        this.selectionComponent = "select_" + names[0];
+        if (! this.selectionComponent){
+            var names = this.name.split('__');
+            this.selectionComponent = "select_" + names[0];
+        }
         this.store = new Ext.data.ArrayStore({
             id: 0,
             fields: [this.valueField, this.displayField],

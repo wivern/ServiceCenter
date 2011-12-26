@@ -5,8 +5,10 @@ class Person < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :name, :username, :email, :password, :password_confirmation, :remember_me
-  validates_presence_of :name
-  netzke_exclude_attributes :created_at, :updated_at
+  validates_presence_of :name, :organization
+  netzke_exclude_attributes :created_at, :updated_at, :password, :password_confirmation
+  belongs_to :position
+  belongs_to :organization
 
   def display_name
     name_parts = name.split

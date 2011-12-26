@@ -18,6 +18,8 @@ gem 'devise_active_directory_authenticatable'
 #gem 'devise_active_directory_authenticatable'
 # docs reporting
 gem 'odf-report'
+
+gem 'russian', '~> 0.6.0'
 # Use unicorn as the web server
 # gem 'unicorn'
 

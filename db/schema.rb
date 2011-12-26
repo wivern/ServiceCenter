@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111223112823) do
+ActiveRecord::Schema.define(:version => 20111226130415) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -182,6 +182,7 @@ ActiveRecord::Schema.define(:version => 20111223112823) do
     t.integer  "product_passport_id"
     t.text     "result"
     t.text     "actual_defect"
+    t.integer  "engineer_id"
   end
 
   create_table "organizations", :force => true do |t|
@@ -192,7 +193,6 @@ ActiveRecord::Schema.define(:version => 20111223112823) do
 
   create_table "people", :force => true do |t|
     t.string   "name"
-    t.string   "position"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "username"
@@ -206,10 +206,18 @@ ActiveRecord::Schema.define(:version => 20111223112823) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
+    t.integer  "organization_id"
+    t.integer  "position_id"
   end
 
   add_index "people", ["reset_password_token"], :name => "index_people_on_reset_password_token", :unique => true
   add_index "people", ["username"], :name => "index_people_on_username", :unique => true
+
+  create_table "positions", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "producers", :force => true do |t|
     t.string   "name"
