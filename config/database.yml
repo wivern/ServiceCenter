@@ -45,10 +45,10 @@ test: &test
 production:
   adapter: postgresql
   encoding: unicode
-  database: ServiceCenter_production
+  database: ServiceCenter
   pool: 5
   username: ServiceCenter
-  password:
+  password: sc
 
 cucumber:
   <<: *test

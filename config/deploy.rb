@@ -1,15 +1,20 @@
 set :application, "service_center"
-set :repository,  "set your repository location here"
 
-require "targets"
+$LOAD_PATH.unshift File.expand_path('./lib',ENV['rvm_path'])
+require 'rvm/capistrano'
+require 'bundler/capistrano'
+load File.join(File.dirname(__FILE__),"deploy/targets.rb")
+
+set :rvm_ruby_string, '1.9.2'
+set :rvm_type, :user
 
 default_run_options[:pty] = true  # Must be set for the password prompt from git to work
 set :repository, "git@github.com:wivern/ServiceCenter.git"  # Your clone URL
 set :scm, "git"
-set :user, "wivern"  # The server's user for deploys
 # Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `perforce`, `subversion` or `none`
 
 set :branch, "master"
+set :use_sudo, false
 
 set :scm_verbose, true
 set :deploy_via, :remote_cache

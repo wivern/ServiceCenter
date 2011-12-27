@@ -13,5 +13,8 @@ Currency.create([
     {:name => '$', :full_name => 'Доллар США', :char_code => 'USD', :num_code => 840}
                 ])
 
+organizations = Organization.create([{:name => 'Наша организация'}])
+
 Person.create({:username => 'admin', :name => 'Administrator', :email => 'admin@example.com',
-              :password => 'Admin123', :password_confirmation => 'Admin123'})
+              :password => 'Admin123', :password_confirmation => 'Admin123',
+              :organization => organizations.first})
