@@ -32,6 +32,7 @@ set :deploy_via, :remote_cache
 namespace :deploy do
 
   after "deploy:setup", "deploy:resources:setup"
+  after "deploy:symlink", "deploy:resources:symlinks"
 
   task :start do
     ;
@@ -52,8 +53,8 @@ namespace :deploy do
     desc "makes symbolic links to shared"
     task :symlinks do
       run "#{try_sudo} cd #{current_path}/public; ln -s #{shared_path}/system/assets assets"
-      run "#{try_sudo} cd #{current_path}/public; ln -s #{shared_path}/system/images/icons images/icons"
-      run "#{try_sudo} cd #{current_path}/public; ln -s #{shared_path}/system/javascripts/ext-4.0.7-gpl extjs"
+      run "#{try_sudo} cd #{current_path}/public; rm -f images/icons; ln -s #{shared_path}/system/icons images/icons"
+      run "#{try_sudo} cd #{current_path}/public; rm -f extjs; ln -s #{shared_path}/system/javascripts/ext-4.0.7-gpl extjs"
     end
   end
 end

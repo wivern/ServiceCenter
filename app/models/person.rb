@@ -4,7 +4,8 @@ class Person < ActiveRecord::Base
   devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :name, :username, :email, :password, :password_confirmation, :remember_me
+  attr_accessible :name, :username, :email, :password, :password_confirmation, :remember_me, :organization,
+        :position
   validates_presence_of :name, :organization
   netzke_exclude_attributes :created_at, :updated_at, :password, :password_confirmation
   belongs_to :position
