@@ -4,3 +4,4 @@ log/*.log
 tmp/
 public/extjs/
 public/images/icons/
+config/targets.rb
