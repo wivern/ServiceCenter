@@ -5,8 +5,9 @@ GIT
     netzke-core (0.7.4)
       activesupport (>= 3.0.0)
 
-PATH
-  remote: /home/vitaly/RubymineProjects/netzke-basepack
+GIT
+  remote: git@github.com:wivern/netzke-basepack.git
+  revision: 4447d8b307c4dbc73512caa2d8b69fada0837c23
   specs:
     netzke-basepack (0.7.3)
       acts_as_list (~> 0.1.4)
