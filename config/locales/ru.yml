@@ -52,7 +52,7 @@ ru:
         discount: Скидка
         discount_type: Тип скидки
         discount_ground: Основание
-        engineer: Сервси-инженер, выполнивший работы
+        engineer: Сервис-инженер, выполнивший работы
         external_states__name: "Внешнее состояние"
         internal_states__name: "Внутреннее состояние"
         goals__name: Цель диагностики

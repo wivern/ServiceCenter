@@ -1,18 +1,17 @@
 GIT
-  remote: git://github.com/skozlov/netzke-basepack.git
-  revision: 0af2cf1d01ea4bdc3ac672cd03a18bab4b19429e
+  remote: git://github.com/skozlov/netzke-core.git
+  revision: 1c1ccc31355b97a735e25d8068931e6142b62b44
+  specs:
+    netzke-core (0.7.4)
+      activesupport (>= 3.0.0)
+
+PATH
+  remote: /home/vitaly/RubymineProjects/netzke-basepack
   specs:
     netzke-basepack (0.7.3)
       acts_as_list (~> 0.1.4)
       netzke-core (~> 0.7.4)
       will_paginate (~> 3.0.0)
-
-GIT
-  remote: git://github.com/skozlov/netzke-core.git
-  revision: 253d1845196ecc5e808ca180ce703530231080aa
-  specs:
-    netzke-core (0.7.4)
-      activesupport (>= 3.0.0)
 
 GEM
   remote: http://rubygems.org/

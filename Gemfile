@@ -8,7 +8,11 @@ gem 'rails-i18n'
 
 gem 'pg'
 gem 'netzke-core', :git => "git://github.com/skozlov/netzke-core.git"
-gem 'netzke-basepack', :git => "git://github.com/skozlov/netzke-basepack.git"
+if File.directory?("/home/vitaly/RubymineProjects/netzke-basepack")
+  gem 'netzke-basepack', :path => "/home/vitaly/RubymineProjects/netzke-basepack", :group => [:development, :test]
+else
+  gem 'netzke-basepack', :git => "git@github.com:wivern/netzke-basepack.git", :group => :production
+end
 gem 'netzke-communitypack'
 
 # authentication

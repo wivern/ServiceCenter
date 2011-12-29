@@ -94,7 +94,7 @@ dictionaries:
         component: position_component
 components:
   :status_component:
-    :class_name: Basepack::GridPanel
+    :class_name: Netzke::Basepack::GridPanel
     :model: Status
     :lazy_loading: true
     :persistance: true
@@ -102,7 +102,7 @@ components:
     :columns:
       :name: !!null 
   complect_component:
-    :class_name: Basepack::GridPanel
+    :class_name: Netzke::Basepack::GridPanel
     :model: Complect
     :lazy_loading: true
     :persistance: true
@@ -110,79 +110,79 @@ components:
     :columns:
       :name: !!null 
   dealer_component:
-    :class_name: Basepack::GridPanel
+    :class_name: Netzke::Basepack::GridPanel
     :model: Dealer
     :lazy_loading: true
     :persistance: true
     :force_fit: true
   defect_component:
-    :class_name: Basepack::GridPanel
+    :class_name: Netzke::Basepack::GridPanel
     :model: Defect
     :lazy_loading: true
     :persistance: true
     :force_fit: true
   external_state_component:
-    :class_name: Basepack::GridPanel
+    :class_name: Netzke::Basepack::GridPanel
     :model: ExternalState
     :lazy_loading: true
     :persistance: true
     :force_fit: true
   goal_component:
-    :class_name: Basepack::GridPanel
+    :class_name: Netzke::Basepack::GridPanel
     :model: Goal
     :lazy_loading: true
     :persistance: true
     :force_fit: true
   ground_component:
-    :class_name: Basepack::GridPanel
+    :class_name: Netzke::Basepack::GridPanel
     :model: Ground
     :lazy_loading: true
     :persistance: true
     :force_fit: true
   internal_state_component:
-    :class_name: Basepack::GridPanel
+    :class_name: Netzke::Basepack::GridPanel
     :model: InternalState
     :lazy_loading: true
     :persistance: true
     :force_fit: true
   producer_component:
-    :class_name: Basepack::GridPanel
+    :class_name: Netzke::Basepack::GridPanel
     :model: Producer
     :lazy_loading: true
     :persistance: true
     :force_fit: true
   product_component:
-    :class_name: Basepack::GridPanel
+    :class_name: Netzke::Basepack::GridPanel
     :model: Product
     :lazy_loading: true
     :persistance: true
     :force_fit: true
   purchase_place_component:
-    :class_name: Basepack::GridPanel
+    :class_name: Netzke::Basepack::GridPanel
     :model: PurchasePlace
     :lazy_loading: true
     :persistance: true
     :force_fit: true
   reason_component:
-    :class_name: Basepack::GridPanel
+    :class_name: Netzke::Basepack::GridPanel
     :model: Reason
     :lazy_loading: true
     :persistance: true
     :force_fit: true
   result_component:
-    :class_name: Basepack::GridPanel
+    :class_name: Netzke::Basepack::GridPanel
     :model: Result
     :lazy_loading: true
     :persistance: true
     :force_fit: true
   repair_type_component:
-    :class_name: Basepack::GridPanel
+    :class_name: Netzke::Basepack::GridPanel
     :model: RepairType
     :lazy_loading: true
     :persistance: true
     :force_fit: true
   customer_component:
-    :class_name: Basepack::GridPanel
+    :class_name: Netzke::Basepack::GridPanel
     :model: Customer
     :lazy_loading: true
     :persistance: true
@@ -194,31 +194,31 @@ components:
       :phone: !!null 
       :passport: !!null 
   activity_component:
-    :class_name: Basepack::GridPanel
+    :class_name: Netzke::Basepack::GridPanel
     :model: Activity
     :lazy_loading: true
     :persistance: true
     :force_fit: true
   currency_component:
-    :class_name: Basepack::GridPanel
+    :class_name: Netzke::Basepack::GridPanel
     :model: Currency
     :lazy_loading: true
     :persistance: true
     :force_fit: true
   report_component:
-    :class_name: Basepack::GridPanel
+    :class_name: Netzke::Basepack::GridPanel
     :model: Report
     :lazy_loading: true
     :persistance: true
     :force_fit: true
   organization_component:
-    :class_name: Basepack::GridPanel
+    :class_name: Netzke::Basepack::GridPanel
     :model: Organization
     :lazy_loading: true
     :persistance: true
     :force_fit: true
   part_component:
-    :class_name: Basepack::GridPanel
+    :class_name: Netzke::Basepack::GridPanel
     :model: SparePart
     :lazy_loading: true
     :persistance: true
@@ -230,7 +230,7 @@ components:
     :persistance: true
     :force_fit: true
   position_component:
-    :class_name: Basepack::GridPanel
+    :class_name: Netzke::Basepack::GridPanel
     :model: Position
     :lazy_loading: true
     :title: Positions

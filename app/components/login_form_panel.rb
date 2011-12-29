@@ -1,6 +1,7 @@
 class LoginFormPanel < Netzke::Basepack::FormPanel
 
   js_property :url, "/person/sign_in"
+  js_property :title, "Авторизация"
 
   js_mixin :login_form_panel
 
@@ -50,7 +51,7 @@ class LoginFormPanel < Netzke::Basepack::FormPanel
                 Ext.Msg.alert('Failure', 'Form fields may not be submitted with invalid values');
                 break;
             case Ext.form.action.Action.CONNECT_FAILURE:
-                Ext.Msg.alert('Failure', 'Ajax communication failed');
+                Ext.Msg.alert('Failure', 'Неверное имя или пароль');
                 break;
             case Ext.form.action.Action.SERVER_INVALID:
                Ext.Msg.alert('Failure', action.result.msg);
