@@ -80,6 +80,7 @@ class ServiceCenterApp < TabbedApp #Netzke::Basepack::AuthApp
               {:name => :number, :read_only => true},
               {:name => :ticket, :read_only => true},
               {:name => :applied_at, :read_only => true},
+              {:name => :product_passport__factory_number, :read_only => true},
               {:name => :plan_deliver_at},
               {:name => :customer__name, :read_only => true},
               {:name => :manager__display_name, :read_only => true},
@@ -112,7 +113,7 @@ class ServiceCenterApp < TabbedApp #Netzke::Basepack::AuthApp
     d = YAML.load_file(File.expand_path('../dictionaries.yml', __FILE__))
     d['components'].each{ |name, options|
       options[:columns] = options[:columns].map{|k,v| v ? v : k} if options.has_key? :columns
-      options[:title] = options[:model].constantize.model_name.pluralize unless options.has_key? :title
+      options[:title] = options[:model].constantize.model_name.human unless options.has_key? :title
       self.class.component name, options
     }
     proceed_children(d['dictionaries'])

@@ -39,12 +39,14 @@ ru:
         actual_deliver_at: "Дата выдачи (факт)"
         actual_defect: "Выявленная неисправность"
         repair_type__name: "Тип ремонта"
+        complect: Комплект
         complects__name: "Комплект"
         customer__name: Заказчик
         customer__address: Адрес
         customer__phone: Телефон
         customer__email: Эл.почта
         customer__passport: Паспорт
+        defect: "Заявленная неисправность"
         defects__name: Заявленная неисправность
         diag_manager__name: Диагностику провел
         diag_price: Стоимость диагностики
@@ -53,7 +55,9 @@ ru:
         discount_type: Тип скидки
         discount_ground: Основание
         engineer: Сервис-инженер, выполнивший работы
+        external_state: "Внешнее состояние"
         external_states__name: "Внешнее состояние"
+        internal_state: "Внутреннее состояние"
         internal_states__name: "Внутреннее состояние"
         goals__name: Цель диагностики
         grounds__name: "Основание для проведения диагностики"
@@ -181,6 +185,9 @@ ru:
       open:
         text: "Открыть"
         tooltip: "Открыть выбранный заказ"
+      merge:
+        text: "Объединить"
+        tooltip: "Объединить выбранные элементы"
     forms:
       add_order:
         customer: "Заказчик"

@@ -7,7 +7,7 @@ GIT
 
 GIT
   remote: git@github.com:wivern/netzke-basepack.git
-  revision: 4447d8b307c4dbc73512caa2d8b69fada0837c23
+  revision: 80937c9724ad8af31cf95fd093622e23b544b390
   specs:
     netzke-basepack (0.7.3)
       acts_as_list (~> 0.1.4)

@@ -71,7 +71,9 @@ class Docs::PrintsController < ApplicationController
         report.add_field(field_name, value)
       end
     }
-    reflection.klass.reflect_on_all_associations.each{ |ref| add_reflection(report, ref, data.send(ref.name))  unless [:has_many, :has_and_belongs_to_many].include? ref.macro}
+    if data
+      reflection.klass.reflect_on_all_associations.each{ |ref| add_reflection(report, ref, data.send(ref.name))  unless [:has_many, :has_and_belongs_to_many].include? ref.macro}
+    end
   end
 
 end

@@ -1,3 +1,4 @@
+#encoding: UTF-8
 class LoginFormPanel < Netzke::Basepack::FormPanel
 
   js_property :url, "/person/sign_in"

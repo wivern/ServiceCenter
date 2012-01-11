@@ -66,7 +66,7 @@ Ext.define('Ext.ux.AutosuggestField', {
                                 if (record_id && value){
                                     var data = new Object();
                                     eval('data.' + field.valueField + '=' + record_id + ';');
-                                    eval('data.' + field.displayField + '= "' + value + '";');
+                                    eval('data.' + field.displayField + ' = "' + value + '";');
                                     console.debug(data);
                                     field.store.removeAll();
                                     field.store.add(data);

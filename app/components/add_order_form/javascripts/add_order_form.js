@@ -8,7 +8,13 @@
             var recordId = this.getForm().findField('recordId').getValue();
             var app = Ext.ComponentQuery.query('viewport')[0];
             app.selectOrder({order_id: recordId});
-            app.appLoadComponent('order_details');
+            app.addTab('OrderDetailsPanel', {
+               config:{
+                   record_id: recordId,
+                   title: "Заказ № " + number
+               }
+            });
+//            app.appLoadComponent('order_details');
             this.getForm().reset();
         }, this);
         console.debug(this);
