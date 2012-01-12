@@ -110,6 +110,7 @@ ru:
         name: Наименование
       product:
         name: Наименование
+        producer__name: Производитель
       purchase_place:
         name: Наименование
       reason:
@@ -166,6 +167,9 @@ ru:
       repair_type: Тип ремонта
       spare_part: Запчасти
       status: Статус
+  dictionary_grid_panel:
+    confirmation: Подтверждение
+    sure_to_merge_items: "Вы хотите объединить выбранные элементы?"
   views:
     actions:
       add_order:

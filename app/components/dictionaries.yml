@@ -94,7 +94,8 @@ dictionaries:
         component: position_component
 components:
   :status_component:
-    :class_name: Netzke::Basepack::GridPanel
+    :class_name: DictionaryGridPanel
+    :enable_edit_in_form: false
     :model: Status
     :lazy_loading: true
     :persistance: true
@@ -102,7 +103,8 @@ components:
     :columns:
       :name: !!null 
   complect_component:
-    :class_name: Netzke::Basepack::GridPanel
+    :class_name: DictionaryGridPanel
+    :enable_edit_in_form: false
     :model: Complect
     :lazy_loading: true
     :persistance: true
@@ -116,50 +118,58 @@ components:
     :persistance: true
     :force_fit: true
   defect_component:
-    :class_name: Netzke::Basepack::GridPanel
+    :class_name: DictionaryGridPanel
+    :enable_edit_in_form: false
     :model: Defect
     :lazy_loading: true
     :persistance: true
     :force_fit: true
   external_state_component:
-    :class_name: Netzke::Basepack::GridPanel
+    :class_name: DictionaryGridPanel
     :model: ExternalState
+    :enable_edit_in_form: false
     :lazy_loading: true
     :persistance: true
     :force_fit: true
   goal_component:
-    :class_name: Netzke::Basepack::GridPanel
+    :class_name: DictionaryGridPanel
     :model: Goal
+    :enable_edit_in_form: false
     :lazy_loading: true
     :persistance: true
     :force_fit: true
   ground_component:
-    :class_name: Netzke::Basepack::GridPanel
+    :class_name: DictionaryGridPanel
     :model: Ground
+    :enable_edit_in_form: false
     :lazy_loading: true
     :persistance: true
     :force_fit: true
   internal_state_component:
-    :class_name: Netzke::Basepack::GridPanel
+    :class_name: DictionaryGridPanel
     :model: InternalState
+    :enable_edit_in_form: false
     :lazy_loading: true
     :persistance: true
     :force_fit: true
   producer_component:
-    :class_name: Netzke::Basepack::GridPanel
+    :class_name: DictionaryGridPanel
     :model: Producer
+    :enable_edit_in_form: false
     :lazy_loading: true
     :persistance: true
     :force_fit: true
   product_component:
-    :class_name: Netzke::Basepack::GridPanel
+    :class_name: DictionaryGridPanel
     :model: Product
+    :enable_edit_in_form: false
     :lazy_loading: true
     :persistance: true
     :force_fit: true
   purchase_place_component:
-    :class_name: Netzke::Basepack::GridPanel
+    :class_name: DictionaryGridPanel
     :model: PurchasePlace
+    :enable_edit_in_form: false
     :lazy_loading: true
     :persistance: true
     :force_fit: true
