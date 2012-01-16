@@ -8,8 +8,10 @@
     initComponent: function(){
         this.callParent();
         if (this.actions.merge) this.actions.merge.setDisabled(true);
+        if (this.actions.split) this.actions.split.setDisabled(true);
         this.getSelectionModel().on('selectionchange', function(selModel){
             if (this.actions.merge) this.actions.merge.setDisabled(selModel.getCount() < 2);
+            if (this.actions.split) this.actions.split.setDisabled(1 != selModel.getCount());
         }, this);
     },
 
@@ -25,6 +27,16 @@
                         this.onRefresh();
                     }, this);
                 }
+            }
+        }, this);
+    },
+    onSplit: function(){
+        Ext.Msg.confirm(this.i18n.confirmation, this.i18n.sureToSplitItem, function(btn){
+            if (btn === 'yes'){
+                var itemId = this.getSelectionModel().selected.first().getId();
+                this.splitItem({item: itemId}, function(){
+                    this.onRefresh();
+                }, this);
             }
         }, this);
     }

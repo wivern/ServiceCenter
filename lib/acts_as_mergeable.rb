@@ -1,11 +1,17 @@
 module Mergeable
+  extend ActiveSupport::Concern
+
   def self.included(base)
     base.send :extend, ClassMethods
   end
 
   module ClassMethods
-    def acts_as_mergeable
+    def acts_as_mergeable(options={})
       send :extend, MergeMethods
+      cattr_accessor :split_on_field
+      self.split_on_field = (options[:split_on] || :name).to_s
+      cattr_accessor :split_regexp
+      self.split_regexp = options[:split_regexp] || /[\.,]/
     end
   end
 
@@ -35,12 +41,38 @@ module Mergeable
       end if items.size > 1
     end
 
+    #def split_item(item = nil)
+    #  if item
+    #    logger.debug("splitting")
+    #    self.transaction do
+    #      item = self.find(item) unless item.kind_of? ActiveRecord::Base
+    #      branched = []
+    #      branch_names = item.send(self.split_on_field.to_sym).split(self.split_regexp).each(&:strip!)
+    #      branch_names.each { |name|
+    #        logger.debug "creating #{name}"
+    #        branch = item.clone
+    #        branch.send("#{self.split_on_field}=".to_sym, name)
+    #        branch.save
+    #        branched << branch
+    #      }
+    #      associations = self.reflect_on_all_associations
+    #      associations.each { |assoc|
+    #        case assoc.macro
+    #          when :has_and_belongs_to_many
+    #            then
+    #            collection = item.send(assoc.name)
+    #        end
+    #      }
+    #    end
+    #  end
+    #end
+
     protected
     def foreign_key_for reflection
       return nil if !reflection
       return reflection.foreign_key if reflection.respond_to?(:foreign_key)
       return reflection.options[:foreign_key] if reflection.respond_to?(:options) and reflection.options.has_key?(:foreign_key)
-      "#{reflection.name}_id"
+      "#{reflection.name.to_s.singularize}_id"
     end
   end
 end
