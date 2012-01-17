@@ -18,6 +18,7 @@ class PersonsGrid < Netzke::Basepack::GridPanel
             {:name => :name},
             {:name => :email, :xtype => :hiddenfield},
             {:name => :username, :xtype => :hiddenfield},
+            {:name => :organization__name, :xtype => :hiddenfield},
             {:name => :password, :input_type => :password},
             {:name => :password_confirmation, :input_type => :password}
         ],
@@ -31,6 +32,11 @@ class PersonsGrid < Netzke::Basepack::GridPanel
       :button_align => "right",
       :items => [form_config]
     }.deep_merge(config[:edit_form_window_config] || {})
+  end
+
+  def deliver_component_endpoint(params)
+    components[:reset_password_form][:items].first.merge!(:record_id => params[:record_id].to_i) if params[:name] == 'reset_password_form'
+    super
   end
 
   def default_context_menu
