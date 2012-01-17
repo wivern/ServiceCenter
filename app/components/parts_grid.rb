@@ -28,7 +28,8 @@ class PartsGrid  < Netzke::Basepack::GridPanel
             {:name => :currency__name, :read_only => true}
         ],
         :force_fit => true,
-        :prohibit_update => false
+        :prohibit_update => false,
+        :enable_edit_in_form => false
     )
   end
 
