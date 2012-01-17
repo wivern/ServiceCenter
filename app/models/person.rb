@@ -10,6 +10,7 @@ class Person < ActiveRecord::Base
   netzke_exclude_attributes :created_at, :updated_at, :password, :password_confirmation
   belongs_to :position
   belongs_to :organization
+  belongs_to :person_status
 
   def display_name
     name_parts = name.split

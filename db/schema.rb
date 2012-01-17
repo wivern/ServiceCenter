@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120111081856) do
+ActiveRecord::Schema.define(:version => 20120117101923) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -208,10 +208,17 @@ ActiveRecord::Schema.define(:version => 20120111081856) do
     t.string   "last_sign_in_ip"
     t.integer  "organization_id"
     t.integer  "position_id"
+    t.integer  "person_status_id"
   end
 
   add_index "people", ["reset_password_token"], :name => "index_people_on_reset_password_token", :unique => true
   add_index "people", ["username"], :name => "index_people_on_username", :unique => true
+
+  create_table "person_statuses", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "positions", :force => true do |t|
     t.string   "name"

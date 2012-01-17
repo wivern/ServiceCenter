@@ -55,6 +55,7 @@ class PersonsGrid < Netzke::Basepack::GridPanel
           {:name => :email},
           {:name => :organization__name},
           {:name => :position__name},
+          {:name => :person_status__name},
           {:name => :last_sign_in_at, :read_only => true}
       ],
       :add_form_config => {
@@ -69,6 +70,7 @@ class PersonsGrid < Netzke::Basepack::GridPanel
     )
   end
 
+  js_mixin :persons_grid
   js_mixin :reset_password
 
 end

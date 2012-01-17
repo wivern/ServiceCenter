@@ -104,6 +104,7 @@ ru:
         last_sign_in_at: Последний вход
         password: Пароль
         password_confirmation: Подтверждение пароля
+        person_status__name: Статус
       position:
         name: Наименование
       producer:
@@ -157,6 +158,7 @@ ru:
       order_spare_part: Деталь
       organization: Организация
       person: Сотрудник
+      person_status: Статус сотрудника
       position: Должность
       producer: Производитель
       product: Изделие
@@ -219,3 +221,4 @@ ru:
   date:
     formats:
       medium: "%d.%m.%Y"
+  fired: Уволен

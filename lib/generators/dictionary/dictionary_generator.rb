@@ -13,10 +13,9 @@ class DictionaryGenerator < Rails::Generators::NamedBase
                                                   'component' => "#{file_name}_component" } })
     dict.merge! 'components' => {} unless dict.has_key? 'components'
     dict['components'].merge!({ "#{file_name}_component" => {
-        :class_name => "Basepack::GridPanel",
+        :class_name => "Netzke::Basepack::GridPanel",
         :model => file_name.underscore.titleize,
         :lazy_loading => true,
-        :title => file_name.underscore.humanize.pluralize,
         :persistance => true
     }})
     File.open("#{RAILS_ROOT}/app/components/dictionaries.yml", 'w'){ |f|

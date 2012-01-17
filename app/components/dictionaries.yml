@@ -92,6 +92,10 @@ dictionaries:
         text: activerecord.models.position
         leaf: true
         component: position_component
+      person_status:
+        text: activerecord.models.person_status
+        leaf: true
+        component: person_status_component
 components:
   :status_component:
     :class_name: DictionaryGridPanel
@@ -112,8 +116,9 @@ components:
     :columns:
       :name: !!null 
   dealer_component:
-    :class_name: Netzke::Basepack::GridPanel
+    :class_name: DictionaryGridPanel
     :model: Dealer
+    :enable_edit_in_form: false
     :lazy_loading: true
     :persistance: true
     :force_fit: true
@@ -243,5 +248,9 @@ components:
     :class_name: Netzke::Basepack::GridPanel
     :model: Position
     :lazy_loading: true
-    :title: Positions
+    :persistance: true
+  person_status_component:
+    :class_name: Netzke::Basepack::GridPanel
+    :model: PersonStatus
+    :lazy_loading: true
     :persistance: true
