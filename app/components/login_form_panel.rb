@@ -35,8 +35,12 @@ class LoginFormPanel < Netzke::Basepack::FormPanel
 
   js_method :on_login, <<-JS
     function(e){
+      if (Ext.ieIE){
+        Ext.Msg.alert('Info', 'Browser IE' + Ext.ieVersion);
+      }
       var values = this.getForm().getFieldValues();
       this.submit({
+        url: '/people/sign_in',
         params: {
           format: 'json',
           'person[username]': values.username,

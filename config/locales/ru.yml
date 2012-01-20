@@ -107,6 +107,8 @@ ru:
         person_status__name: Статус
       position:
         name: Наименование
+        roles_names: Роли
+        roles: Роль
       producer:
         name: Наименование
       product:
@@ -214,6 +216,7 @@ ru:
       title: Заказ
     navigation:
       title: Навигатор
+      products: Изделия
       settings: Настройки
     dictionary_window:
       title: "Выбор элемента"
@@ -222,3 +225,9 @@ ru:
     formats:
       medium: "%d.%m.%Y"
   fired: Уволен
+  roles:
+    engineer: "Сервис-инженер"
+    inspector: "Приемщик"
+    administrator: "Администратор"
+    director: "Директор"
+    manager: "Менеджер"

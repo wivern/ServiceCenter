@@ -74,6 +74,7 @@ class ServiceCenterApp < TabbedApp #Netzke::Basepack::AuthApp
             :title => Order.model_name.human,
             :persistence => true,
             :prohibit_create => true,
+            :scope => :by_organization,
             #:bbar => [:add_order.action, '-', :search.action],
             :columns => [
               {:name => :repair_type__name, :read_only => true},

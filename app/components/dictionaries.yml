@@ -32,14 +32,6 @@ dictionaries:
     text: activerecord.models.internal_state
     leaf: true
     component: internal_state_component
-  producer:
-    text: activerecord.models.producer
-    leaf: true
-    component: producer_component
-  product:
-    text: activerecord.models.product
-    leaf: true
-    component: product_component
   spare_part:
     text: activerecord.models.spare_part
     leaf: true
@@ -68,6 +60,18 @@ dictionaries:
     text: activerecord.models.activity
     leaf: true
     component: activity_component
+  products:
+    text: views.navigation.products
+    expanded: true
+    children:
+      producer:
+        text: activerecord.models.producer
+        leaf: true
+        component: producer_component
+      product:
+        text: activerecord.models.product
+        leaf: true
+        component: product_component
   settings:
     text: views.navigation.settings
     expanded: true
@@ -245,12 +249,17 @@ components:
     :persistance: true
     :force_fit: true
   position_component:
-    :class_name: Netzke::Basepack::GridPanel
+    :class_name: PositionsGrid
     :model: Position
     :lazy_loading: true
     :persistance: true
+    :force_fit: true
+    :columns:
+      :name: !!null
+      :roles_names:
   person_status_component:
     :class_name: Netzke::Basepack::GridPanel
     :model: PersonStatus
     :lazy_loading: true
     :persistance: true
+    :force_fit: true

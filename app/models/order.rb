@@ -9,6 +9,7 @@ class Order < ActiveRecord::Base
   belongs_to :status
   belongs_to :deliver_manager, :class_name => "Person"
   belongs_to :product_passport, :autosave => true
+  belongs_to :organization
   has_and_belongs_to_many :complects
   has_and_belongs_to_many :external_states
   has_and_belongs_to_many :defects
@@ -21,11 +22,16 @@ class Order < ActiveRecord::Base
   has_many :spare_parts, :through => :order_spare_parts
 
   before_create :update_number_and_ticket
+  before_create :update_organization
 
   netzke_exclude_attributes :created_at, :updated_at
 
   accepts_nested_attributes_for :customer, :reason, :product_passport
   validates_presence_of :repair_type, :customer, :product_passport, :complects, :external_states, :defects
+
+  scope :by_organization, lambda{
+    where("organization_id = ?", Netzke::Core.current_user.organization)
+  }
 
   cattr_accessor :discount_types
   @@discount_types = {
@@ -90,5 +96,10 @@ class Order < ActiveRecord::Base
   def update_number_and_ticket
     self.number = Numerator.next_number(:number, self)
     self.ticket = Numerator.next_number(:ticket)
+  end
+
+  def update_organization
+    current_user = Netzke::Core.current_user
+    self.organization = current_user.organization if current_user
   end
 end

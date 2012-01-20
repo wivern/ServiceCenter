@@ -6,11 +6,19 @@ class Person < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :name, :username, :email, :password, :password_confirmation, :remember_me, :organization,
         :position
-  validates_presence_of :name, :organization
+  validates_presence_of :name, :organization, :position
   netzke_exclude_attributes :created_at, :updated_at, :password, :password_confirmation
   belongs_to :position
   belongs_to :organization
   belongs_to :person_status
+
+  delegate :roles, :to => :position
+
+  tango_user
+
+  def roles_list
+    self.roles
+  end
 
   def display_name
     name_parts = name.split
