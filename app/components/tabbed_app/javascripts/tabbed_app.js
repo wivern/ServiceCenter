@@ -11,14 +11,14 @@
         cmpName = "tab" + (tabCount + 1);
         params = {component: cmp};
         params.config = options.config;
-        tab = this.mainPanel.add({
-//                title: token,
-            id: cmpName,
-            iconCls: 'icon-tab',
-            closable: true,
-            layout: 'fit'
-        });
         this.loadNetzkeComponent({name: cmpName, params: params, callback: function(comp){
+            var tab = this.mainPanel.add({
+//                title: token,
+                id: cmpName,
+                iconCls: 'icon-tab',
+                closable: true,
+                layout: 'fit'
+            });
             tab.setTitle(comp.title);
             comp.preventHeader = true;
             tab.add(comp);
@@ -51,14 +51,14 @@
             if (tab){
                 this.mainPanel.setActiveTab(tab);
             } else {
-                tab = this.mainPanel.add({
-    //                title: token,
-                    id: token_id,
-                    iconCls: 'icon-tab',
-                    closable: true,
-                    layout: 'fit'
-                });
                 this.loadNetzkeComponent({name: token, callback: function(comp){
+                   var tab = this.mainPanel.add({
+        //                title: token,
+                        id: token_id,
+                        iconCls: 'icon-tab',
+                        closable: true,
+                        layout: 'fit'
+                    });
                     tab.setTitle(comp.title);
                     comp.preventHeader = true;
                     tab.add(comp);

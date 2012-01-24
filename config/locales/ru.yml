@@ -231,3 +231,10 @@ ru:
     administrator: "Администратор"
     director: "Директор"
     manager: "Менеджер"
+  tabbed_app:
+    actions:
+      reset_password: Сменить пароль
+  service_center_app:
+    actions:
+      reset_password: Сменить пароль
+      logout: Выход

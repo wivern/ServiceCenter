@@ -16,7 +16,7 @@ gem 'netzke-communitypack'
 gem 'devise'
 gem 'omniauth', '0.3.2'
 gem 'devise_active_directory_authenticatable'
-gem 'cantango'
+gem 'cancan'
 #gem 'devise_active_directory_authenticatable'
 # docs reporting
 gem 'odf-report'

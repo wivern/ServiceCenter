@@ -41,14 +41,19 @@ class PersonsGrid < Netzke::Basepack::GridPanel
 
   def default_context_menu
     res = super
-    res << "-" << :reset_password.action #if administrator
+    res << "-" << :reset_password.action if @ability.can? :reset_password, Person
     res
   end
 
   def configuration
+    @ability = Ability.new Netzke::Core.current_user
     super.merge(
       :model => "Person",
       :title => Person.model_name.human({:count => 5}),
+      :prohibit_create => @ability.cannot?(:create, Person),
+      :prohibit_update => @ability.cannot?(:update, Person),
+      :prohibit_delete => @ability.cannot?(:delete, Person),
+      :enable_edit_in_form => @ability.can?(:create, Person),
       :columns => [
           {:name => :name},
           {:name => :username},

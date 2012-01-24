@@ -1,6 +1,9 @@
 ru:
   netzke:
     basepack:
+      auth_app:
+        actions:
+          logout: Выход
       grid_panel:
         actions:
           add: Добавить

@@ -35,8 +35,16 @@ class DictionaryGridPanel < Netzke::Basepack::GridPanel
 
   def default_bbar
     res = super
-    res << "-" << :merge.action
+    res << "-" << :merge.action if @ability.can?(:merge, config[:model].constantize)
     res
+  end
+
+  def configuration
+    @ability = Ability.new Netzke::Core.current_user
+     super.tap do |c|
+        c[:prohibit_create] = @ability.cannot?(:create, c[:model].constantize)
+        c[:prohibit_update] = @ability.cannot?(:update, c[:model].constantize)
+    end
   end
 
 end

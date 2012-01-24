@@ -5,6 +5,7 @@ require 'yaml'
 class ServiceCenterApp < TabbedApp #Netzke::Basepack::AuthApp
 
   def configuration
+    @ability = Ability.new Netzke::Core.current_user
     sup = super
     sup.merge(
         :items => [{
@@ -36,22 +37,7 @@ class ServiceCenterApp < TabbedApp #Netzke::Basepack::AuthApp
                     :root => {
                         :text => 'Navigation',
                         :expanded => true,
-                        :children => [{
-                                          :text => "Приемка",
-                                          :leaf => true,
-                                          :component => :order_form,
-                                          :icon => uri_to_icon(:application_form_add)
-                                      },
-                                      {
-                                          :text => "Заказы",
-                                          :leaf => true,
-                                          :component => :orders
-                                      },
-                                      {
-                                          :text => "Справочники",
-                                          :expanded => true,
-                                          :children => dictionaries
-                            }]
+                        :children => root_items
                     }
                 }]
             }]
@@ -59,7 +45,7 @@ class ServiceCenterApp < TabbedApp #Netzke::Basepack::AuthApp
     )
   end
 
-  Dir.glob(File.join(File.dirname(__FILE__),"javascripts", "*.js")).sort.each{ |f|
+  Dir.glob(File.join(File.dirname(__FILE__), "javascripts", "*.js")).sort.each { |f|
     ::Rails.logger.debug("include #{f}")
     js_include f unless /mixin/ =~ f
   }
@@ -67,6 +53,32 @@ class ServiceCenterApp < TabbedApp #Netzke::Basepack::AuthApp
   js_include "#{File.dirname(__FILE__)}/dialog_trigger_field/javascripts/dialog_trigger_field.js"
 
   #Components
+  component :reset_password_form do
+    form_config = {
+        :class_name => "Netzke::Basepack::FormPanel",
+        :model => "Person",
+        :prevent_header => true,
+        :bbar => false,
+        :items => [
+            {:name => :name},
+            {:name => :email, :xtype => :hiddenfield},
+            {:name => :username, :xtype => :hiddenfield},
+            {:name => :organization__name, :xtype => :hiddenfield},
+            {:name => :password, :input_type => :password},
+            {:name => :password_confirmation, :input_type => :password}
+        ],
+        :title => I18n.t('views.actions.reset_password.text')
+    }
+
+    {
+      :lazy_loading => true,
+      :class_name => "Netzke::Basepack::GridPanel::RecordFormWindow",
+      :title => I18n.t('views.actions.reset_password.text'),
+      :button_align => "right",
+      :items => [form_config]
+    }.deep_merge(config[:edit_form_window_config] || {})
+  end
+
   component :orders,
             :class_name => "OrdersGrid",
             :model => "Order",
@@ -77,25 +89,25 @@ class ServiceCenterApp < TabbedApp #Netzke::Basepack::AuthApp
             :scope => :by_organization,
             #:bbar => [:add_order.action, '-', :search.action],
             :columns => [
-              {:name => :repair_type__name, :read_only => true},
-              {:name => :number, :read_only => true},
-              {:name => :ticket, :read_only => true},
-              {:name => :applied_at, :read_only => true},
-              {:name => :product_passport__factory_number, :read_only => true},
-              {:name => :plan_deliver_at},
-              {:name => :customer__name, :read_only => true},
-              {:name => :manager__display_name, :read_only => true},
-              :actual_deliver_at, :status__name, :service_note]
+                {:name => :repair_type__name, :read_only => true},
+                {:name => :number, :read_only => true},
+                {:name => :ticket, :read_only => true},
+                {:name => :applied_at, :read_only => true},
+                {:name => :product_passport__factory_number, :read_only => true},
+                {:name => :plan_deliver_at},
+                {:name => :customer__name, :read_only => true},
+                {:name => :manager__display_name, :read_only => true},
+                :actual_deliver_at, :status__name, :service_note]
 
   component :order_form,
-        :class_name => "AddOrderForm",
-        :model => "Order",
-        :title => "Приемка",
-        :persistance => false
+            :class_name => "AddOrderForm",
+            :model => "Order",
+            :title => "Приемка",
+            :persistance => false
 
   component :order_details,
-      :class_name => "OrderDetailsPanel",
-      :title => "Карточка заказа"
+            :class_name => "OrderDetailsPanel",
+            :title => "Карточка заказа"
 
   action :about, :icon => :information
 
@@ -109,27 +121,42 @@ class ServiceCenterApp < TabbedApp #Netzke::Basepack::AuthApp
     session[:selected_order_id] = params[:order_id]
   end
 
+  def deliver_component_endpoint(params)
+    components[:reset_password_form][:items].first.merge!(:record_id => params[:record_id].to_i) if params[:name] == 'reset_password_form'
+    component_name = params[:name].underscore.to_sym
+    logger.debug "Checking access to #{component_name}"
+    if @ability.can?(:deliver, component_name)
+      super
+    else
+      {:component_delivery_failed => {:component_name => component_name, :msg => "Access denied to component '#{component_name}'"}}
+    end
+  end
 
   def dictionaries
     d = YAML.load_file(File.expand_path('../dictionaries.yml', __FILE__))
-    d['components'].each{ |name, options|
-      options[:columns] = options[:columns].map{|k,v| v ? v : k} if options.has_key? :columns
+    d['components'].each { |name, options|
+      options[:columns] = options[:columns].map { |k, v| v ? v : k } if options.has_key? :columns
       options[:title] = options[:model].constantize.model_name.human unless options.has_key? :title
       self.class.component name, options
     }
-    proceed_children(d['dictionaries'])
-    #d['dictionaries'].map{ |k, v|
-    #  v['text'] = I18n.t(v['text'], :default => k.titleize) if v.has_key? 'text'
-    #  proceed_children(v['children']) if v.has_key? 'children'
-    #  v
-    #}
+    proceed_children(d['dictionaries'], d['components'])
   end
 
-  def proceed_children(items)
-    items.map{|k,v|
+  def proceed_children(items, components = {})
+    items.select{|k, v|
+      if (v['leaf'])
+        cmp = components[v['component']]
+        logger.debug "Checking #{cmp.inspect}"
+        @ability.can? :read, cmp[:model].constantize if cmp && cmp.has_key?(:model)
+      else
+        true
+      end
+    }.map { |k, v|
       v['text'] = I18n.t(v['text'], :default => k.titleize) if v.has_key? 'text'
-      v['children'] = proceed_children(v['children']) if v.has_key? 'children'
+      v['children'] = proceed_children(v['children'], components) if v.has_key? 'children'
       v
+    }.select{ |v|
+      v['leaf'] or (v.has_key?('children') and not v['children'].empty?)
     }
   end
 
@@ -167,5 +194,52 @@ class ServiceCenterApp < TabbedApp #Netzke::Basepack::AuthApp
       //this.addEvents('beforeloadcomponent');
     }
   JS
+
+  js_method :on_reset_password, <<-JS
+    function(){
+        var recordId = #{Netzke::Core.current_user.id};
+        this.loadNetzkeComponent({
+           name: 'reset_password_form',
+           params: {record_id: recordId},
+           callback: function(w){
+               w.show();
+               w.on('close', function(){
+                  if (w.closeRes === "ok"){
+                      //some message
+                      Ext.MessageBox.show({
+                          title: "Смена пароля",
+                          msg: "Пароль успешно изменен!",
+                          buttons: Ext.MessageBox.OK,
+                          icon: Ext.MessageBox.INFO
+                      });
+                  }
+               }, this);
+           },
+           scope: this });
+    }
+  JS
+
+  protected
+
+  def root_items
+    items = []
+    items << {
+        :text => "Приемка",
+        :leaf => true,
+        :component => :order_form,
+        :icon => uri_to_icon(:application_form_add)
+    } if @ability.can?(:create, Order)
+    items << {
+        :text => "Заказы",
+        :leaf => true,
+        :component => :orders
+    } if @ability.can?(:read, Order)
+    items << {
+            :text => "Справочники",
+            :expanded => true,
+            :children => dictionaries
+    }
+    items
+  end
 
 end

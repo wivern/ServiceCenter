@@ -29,14 +29,20 @@ class OrdersGrid < Netzke::Basepack::GridPanel
     }
   end
 
+  def configuration
+    @ability = Ability.new Netzke::Core.current_user
+    super
+  end
+
   def default_bbar
-    [ :search.action, "-", :open.action,
-      {:text => 'Печать', :icon => '/images/icons/printer.png', :name => 'print', :menu => []},
-      :edit.action, :apply.action]
+    bbar = [ :search.action, "-", :open.action,
+      {:text => 'Печать', :icon => '/images/icons/printer.png', :name => 'print', :menu => []}]
+    bbar << "-" <<  :edit.action << :apply.action if @ability.can?(:update, Order)
+    bbar
   end
 
   def default_context_menu
-    [{:text => 'Печать', :icon => '/images/icons/printer.png', :name => 'print', :menu => []}] # *super
+    [:open.action, {:text => 'Печать', :icon => '/images/icons/printer.png', :name => 'print', :menu => []}] # *super
   end
 
   component :add_order_form do

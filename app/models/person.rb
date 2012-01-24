@@ -14,12 +14,6 @@ class Person < ActiveRecord::Base
 
   delegate :roles, :to => :position
 
-  tango_user
-
-  def roles_list
-    self.roles
-  end
-
   def display_name
     name_parts = name.split
     if name_parts.size < 3
@@ -27,6 +21,27 @@ class Person < ActiveRecord::Base
     else
       "#{name_parts[0]}, #{name_parts[1]} #{name_parts[2][0]}."
     end
+  end
+
+  def method_missing(method_name, *args)
+    if match = matches_dynamic_role_check?(method_name)
+      tokenize_roles(match.captures.first).each{|role|
+          logger.debug "checking #{role} in #{roles.inspect}"
+          return true if roles.include?(role.downcase.to_s)
+      }
+      return false
+    else
+      super
+    end
+  end
+
+  #private
+  def matches_dynamic_role_check?(method_name)
+    /^has_role_([a-zA-Z]\w*)\?$/.match(method_name.to_s)
+  end
+
+  def tokenize_roles(roles_candidates)
+    roles_candidates.split(/_or_/)
   end
 
 end

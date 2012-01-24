@@ -11,6 +11,13 @@ class TabbedApp < Netzke::Basepack::AuthApp
     }.merge(overrides)
   end
 
+  action :reset_password do
+    {
+        :tooltip => I18n.t('views.actions.reset_password.tooltip'),
+        :icon => :lock_edit
+    }
+  end
+
   js_mixin :tabbed_app
 
   def components
@@ -37,6 +44,10 @@ class TabbedApp < Netzke::Basepack::AuthApp
       logger.debug "Component: #{components[cmp_name.to_sym]}"
     end
     super(params)
+  end
+
+  def user_menu
+    [:reset_password.action, :logout.action]
   end
 
   endpoint :server_remove_tab do |params|
