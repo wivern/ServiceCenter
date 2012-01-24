@@ -6,6 +6,7 @@ ru:
       activity:
         name: Наименование
         price: Стоимость
+        currency__name: Валюта
       complect:
         name: Наименование
       customer:

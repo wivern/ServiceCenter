@@ -113,6 +113,12 @@ class ServiceCenterApp < TabbedApp #Netzke::Basepack::AuthApp
 
   def menu
     super.tap do |menu|
+      user = Netzke::Core.current_user
+      if user
+        menu << {
+            :text => user.organization.name
+        }
+      end
       menu << :about.action
     end
   end
