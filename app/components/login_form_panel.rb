@@ -35,9 +35,6 @@ class LoginFormPanel < Netzke::Basepack::FormPanel
 
   js_method :on_login, <<-JS
     function(e){
-      if (Ext.ieIE){
-        Ext.Msg.alert('Info', 'Browser IE' + Ext.ieVersion);
-      }
       var values = this.getForm().getFieldValues();
       this.submit({
         url: '/people/sign_in',
@@ -46,21 +43,37 @@ class LoginFormPanel < Netzke::Basepack::FormPanel
           'person[username]': values.username,
           'person[password]': values.password
         },
-          method: 'POST',
+        method: 'POST',
         success: function(form, action){
+          if (Ext.isIE){
+            Ext.Msg.alert('Предупреждение', 'Программа определила что Вы используете браузер IE' +
+              Ext.ieVersion + "." +
+              'Для удобной работы рекомендуется использовать FireFox 9 или выше или Chrome 11 или выше.');
+          }
           location.href = '/';
         },
         failure: function(form, action){
-          switch(action.failureType){
-            case Ext.form.action.Action.CLIENT_INVALID:
-                Ext.Msg.alert('Failure', 'Form fields may not be submitted with invalid values');
-                break;
-            case Ext.form.action.Action.CONNECT_FAILURE:
-                Ext.Msg.alert('Failure', 'Неверное имя или пароль');
-                break;
-            case Ext.form.action.Action.SERVER_INVALID:
-               Ext.Msg.alert('Failure', action.result.msg);
+          console.debug(action.response);
+          var result = Ext.JSON.decode(action.response.responseText, true);
+          console.debug('failure action', result);
+          var msg = '';
+          switch(result.error){
+            case "invalid":
+              msg = 'Неверное имя или пароль';
+              break;
+            case "inactive":
+              msg = 'Учетная запись заблокирована.';
+              break;
+            default:
+              msg = 'Неизвестная ошибка, повторите попытку позднее.';
+              break;
           }
+          Ext.Msg.show({
+            title: 'Ошибка',
+            msg: msg,
+            buttons: Ext.Msg.OK,
+            icon: Ext.MessageBox.ERROR
+          });
         }
       });
     }

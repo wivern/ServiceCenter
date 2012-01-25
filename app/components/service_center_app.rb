@@ -234,7 +234,7 @@ class ServiceCenterApp < TabbedApp #Netzke::Basepack::AuthApp
         :leaf => true,
         :component => :order_form,
         :icon => uri_to_icon(:application_form_add)
-    } if @ability.can?(:create, Order)
+    } if @ability.can?(:deliver, :order_form)
     items << {
         :text => "Заказы",
         :leaf => true,

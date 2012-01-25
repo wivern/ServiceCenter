@@ -1,8 +1,11 @@
+#encoding: UTF-8
 class LoginForm < Netzke::Base
 
   js_base_class "Ext.window.Window"
 
   js_mixin
+
+  js_property :title, I18n.t('views.forms.login_form_panel.title')
 
   component :login_panel do
     {

@@ -47,14 +47,14 @@ class PersonsGrid < Netzke::Basepack::GridPanel
 
   def configuration
     @ability = Ability.new Netzke::Core.current_user
-    super.merge(
-      :model => "Person",
-      :title => Person.model_name.human({:count => 5}),
-      :prohibit_create => @ability.cannot?(:create, Person),
-      :prohibit_update => @ability.cannot?(:update, Person),
-      :prohibit_delete => @ability.cannot?(:delete, Person),
-      :enable_edit_in_form => @ability.can?(:create, Person),
-      :columns => [
+    super.tap do |c|
+      c[:model] = "Person"
+      c[:title] = Person.model_name.human({:count => 5})
+      c[:prohibit_create] = @ability.cannot?(:create, Person)
+      c[:prohibit_update] = @ability.cannot?(:update, Person)
+      c[:prohibit_delete] = @ability.cannot?(:delete, Person)
+      c[:enable_edit_in_form] = @ability.can?(:create, Person)
+      c[:columns] = [
           {:name => :name},
           {:name => :username},
           {:name => :email},
@@ -62,8 +62,8 @@ class PersonsGrid < Netzke::Basepack::GridPanel
           {:name => :position__name},
           {:name => :person_status__name},
           {:name => :last_sign_in_at, :read_only => true}
-      ],
-      :add_form_config => {
+      ]
+      c[:add_form_config] = {
           :class_name => "Netzke::Basepack::FormPanel",
           :items => [
               :name, :username, :email,
@@ -72,7 +72,7 @@ class PersonsGrid < Netzke::Basepack::GridPanel
               :organization__name, :position__name
           ]
       }
-    )
+    end
   end
 
   js_mixin :persons_grid

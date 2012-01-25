@@ -14,6 +14,14 @@ class Person < ActiveRecord::Base
 
   delegate :roles, :to => :position
 
+  def active_for_authentication?
+    super && !fired?
+  end
+
+  def fired?
+    person_status && person_status.prevent_sign_in
+  end
+
   def display_name
     name_parts = name.split
     if name_parts.size < 3

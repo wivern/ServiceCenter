@@ -106,6 +106,9 @@ ru:
         password: Пароль
         password_confirmation: Подтверждение пароля
         person_status__name: Статус
+      person_status:
+        name: Наименование
+        prevent_sign_in: Запретить вход
       position:
         name: Наименование
         roles_names: Роли
@@ -207,6 +210,7 @@ ru:
         product_passport: "Паспорт изделия"
         order_details: "Атрибуты заказа"
       login_form_panel:
+        title: Аутентификация
         actions:
           login:
             text: "Войти"
