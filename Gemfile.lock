@@ -214,6 +214,8 @@ GEM
     rubyzip (0.9.4)
     russian (0.6.0)
       i18n (>= 0.5.0)
+    seed-fu (2.0.1)
+      activerecord (~> 3.0.0)
     selenium-webdriver (2.13.0)
       childprocess (>= 0.2.1)
       ffi (~> 1.0.9)
@@ -260,5 +262,6 @@ DEPENDENCIES
   rails-i18n
   rspec-rails (~> 2.6)
   russian (~> 0.6.0)
+  seed-fu (~> 2.0.0)
   selenium-webdriver
   thin

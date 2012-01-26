@@ -8,10 +8,6 @@ dictionaries:
     text: activerecord.models.complect
     leaf: true
     component: complect_component
-  dealer:
-    text: activerecord.models.dealer
-    leaf: true
-    component: dealer_component
   defect:
     text: activerecord.models.defect
     leaf: true
@@ -20,46 +16,62 @@ dictionaries:
     text: activerecord.models.external_state
     leaf: true
     component: external_state_component
-  goal:
-    text: activerecord.models.goal
-    leaf: true
-    component: goal_component
-  ground:
-    text: activerecord.models.ground
-    leaf: true
-    component: ground_component
   internal_state:
     text: activerecord.models.internal_state
     leaf: true
     component: internal_state_component
-  spare_part:
-    text: activerecord.models.spare_part
-    leaf: true
-    component: part_component
-  purchase_place:
-    text: activerecord.models.purchase_place
-    leaf: true
-    component: purchase_place_component
   reason:
     text: activerecord.models.reason
     leaf: true
     component: reason_component
-  result:
-    text: activerecord.models.result
-    leaf: true
-    component: result_component
   repair_type:
     text: activerecord.models.repair_type
     leaf: true
     component: repair_type_component
-  customer:
-    text: activerecord.models.customer
-    leaf: true
-    component: customer_component
-  activity:
-    text: activerecord.models.activity
-    leaf: true
-    component: activity_component
+  purchase:
+    text: views.navigation.purchase
+    expanded: true
+    children:
+      customer:
+        text: activerecord.models.customer
+        leaf: true
+        component: customer_component
+      purchase_place:
+        text: activerecord.models.purchase_place
+        leaf: true
+        component: purchase_place_component
+      dealer:
+        text: activerecord.models.dealer
+        leaf: true
+        component: dealer_component
+  diagnostic:
+    text: views.navigation.diagnostic
+    expanded: true
+    children:
+      result:
+        text: activerecord.models.result
+        leaf: true
+        component: result_component
+      goal:
+        text: activerecord.models.goal
+        leaf: true
+        component: goal_component
+      ground:
+        text: activerecord.models.ground
+        leaf: true
+        component: ground_component
+  maintenance:
+    text: views.navigation.maintenance
+    expanded: true
+    children:
+      activity:
+        text: activerecord.models.activity
+        leaf: true
+        component: activity_component
+      spare_part:
+        text: activerecord.models.spare_part
+        leaf: true
+        component: part_component
   products:
     text: views.navigation.products
     expanded: true

@@ -9,12 +9,6 @@ class Ability
       can :deliver, [:order_form, :orders, :report_component]
       cannot :destroy, Order
     end
-    if user.has_role_administrator?
-      can :manage, [Person, Organization, Position, Currency, Report, PersonStatus]
-      can :deliver, [:person_component, :organization_component, :position_component, :currency_component,
-        :report_component, :person_status_component]
-      can :reset_password, Person
-    end
     if user.has_role_engineer?
       can :read, [SparePart, Activity]
       can :manage, Order
@@ -33,6 +27,12 @@ class Ability
       can :manage, :all
       cannot :manage, [Person, Report]
       can :read, [Person, Report]
+    end
+    if user.has_role_administrator?
+      can :manage, [Person, Organization, Position, Currency, Report, PersonStatus]
+      can :deliver, [:person_component, :organization_component, :position_component, :currency_component,
+        :report_component, :person_status_component]
+      can :reset_password, Person
     end
   end
 end

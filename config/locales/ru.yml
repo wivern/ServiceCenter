@@ -221,7 +221,10 @@ ru:
       title: Заказ
     navigation:
       title: Навигатор
+      diagnostic: Диагностика
+      maintenance: Ремонт
       products: Изделия
+      purchase: Покупка
       settings: Настройки
     dictionary_window:
       title: "Выбор элемента"

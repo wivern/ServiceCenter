@@ -153,7 +153,9 @@ class ServiceCenterApp < TabbedApp #Netzke::Basepack::AuthApp
       if (v['leaf'])
         cmp = components[v['component']]
         logger.debug "Checking #{cmp.inspect}"
-        @ability.can? :read, cmp[:model].constantize if cmp && cmp.has_key?(:model)
+        r = @ability.can?(:read, cmp[:model].constantize) if cmp && cmp.has_key?(:model)
+        logger.debug r ? "accepted" : "rejected"
+        r
       else
         true
       end

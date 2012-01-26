@@ -18,4 +18,8 @@ class Position < ActiveRecord::Base
     self.roles.select{|e| e}.
         map{|r| available_roles[r.to_sym][:name] if r}.sort_by{|e| e}.join(', ')
   end
+
+  def roles
+    read_attribute(:roles).map(&:to_s)
+  end
 end

@@ -19,7 +19,7 @@
            var disabled = selected.length === 0;
            if (!disabled && selected[0].isNew) disabled = true;
            this.actions.open.setDisabled(disabled);
-           this.actions.print.setDisabled(disabled);
+//           this.actions.print.setDisabled(disabled);
         }, this);
     },
     openOrderDetails: function(orderId){
