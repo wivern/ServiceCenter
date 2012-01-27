@@ -109,11 +109,11 @@ class OrdersGrid < Netzke::Basepack::GridPanel
       if new_order.save
         {:set_result => 'ok', :netzke_feedback => @flash, :open_order_details => new_order.id}
       else
-        {:netzke_feedback => new_order.errors}
+        {:netzke_feedback => new_order.errors}.to_nifty_json
       end
     else
       flash :error => I18n.t('access_denied')
-      {:netzke_feedback => @flash}
+      {:netzke_feedback => @flash}.to_nifty_json
     end
   end
 
