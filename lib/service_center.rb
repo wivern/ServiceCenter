@@ -1,1 +1,1 @@
-require 'service_center/reportable'
+require "service_center/reportable"

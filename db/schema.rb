@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120125081733) do
+ActiveRecord::Schema.define(:version => 20120127082858) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -184,7 +184,10 @@ ActiveRecord::Schema.define(:version => 20120125081733) do
     t.text     "actual_defect"
     t.integer  "engineer_id"
     t.integer  "organization_id"
+    t.integer  "created_from_id"
   end
+
+  add_index "orders", ["created_from_id"], :name => "index_orders_on_created_from_id"
 
   create_table "organizations", :force => true do |t|
     t.string   "name"

@@ -246,3 +246,8 @@ ru:
     actions:
       reset_password: Сменить пароль
       logout: Выход
+  orders_grid:
+    actions:
+      create_from: Создать из
+      create_from_tooltip: Создать новый заказ из выбранного
+  access_denied: "Доступ запрещен"

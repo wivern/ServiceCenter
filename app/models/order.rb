@@ -21,6 +21,9 @@ class Order < ActiveRecord::Base
   has_many :order_spare_parts
   has_many :spare_parts, :through => :order_spare_parts
 
+  belongs_to :created_from, :class_name => "Order"
+  has_many :inherited, :class_name => "Order", :foreign_key => :created_from_id
+
   before_create :update_number_and_ticket
   before_create :update_organization
 
@@ -31,6 +34,10 @@ class Order < ActiveRecord::Base
 
   scope :by_organization, lambda{
     where("organization_id = ?", Netzke::Core.current_user.organization)
+  }
+
+  scope :inherited, lambda{|order|
+    where("created_from_id = ?", order.id)
   }
 
   cattr_accessor :discount_types

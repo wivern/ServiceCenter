@@ -1,4 +1,5 @@
 #encoding: UTF-8
+
 class OrdersGrid < Netzke::Basepack::GridPanel
 
   include ServiceCenter::Reportable
@@ -35,8 +36,10 @@ class OrdersGrid < Netzke::Basepack::GridPanel
   end
 
   def default_bbar
-    bbar = [ :search.action, "-", :open.action,
-      {:text => 'Печать', :icon => '/images/icons/printer.png', :name => 'print', :menu => []}]
+    bbar = []
+    bbar << { :text => 'Создать из', :name => 'createFrom', :icon => :link_add.icon, :menu => create_from_menu, :disabled => true} << "-" if @ability.can? :create, Order
+    bbar << :search.action << "-" << :open.action
+    bbar << {:text => 'Печать', :icon => :printer.icon, :name => 'print', :menu => [], :disabled => true}
     bbar << "-" <<  :edit.action << :apply.action if @ability.can?(:update, Order)
     bbar
   end
@@ -95,5 +98,30 @@ class OrdersGrid < Netzke::Basepack::GridPanel
       printForm.dom.submit();
     }
   JS
+
+  endpoint :create_from do |params|
+    if @ability.can? :create, Order
+      order = Order.find(params[:order_id])
+      repair_type = RepairType.find(params[:repair_type_id])
+      new_order = order.clone
+      new_order.repair_type = repair_type
+      new_order.created_from = order
+      if new_order.save
+        {:set_result => 'ok', :netzke_feedback => @flash, :open_order_details => new_order.id}
+      else
+        {:netzke_feedback => new_order.errors}
+      end
+    else
+      flash :error => I18n.t('access_denied')
+      {:netzke_feedback => @flash}
+    end
+  end
+
+  private
+  def create_from_menu
+    RepairType.all.map{|t|
+      {:text => t.name, :repair_type => t.id}
+    }
+  end
 
 end
