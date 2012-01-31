@@ -20,6 +20,10 @@ class Position < ActiveRecord::Base
   end
 
   def roles
-    read_attribute(:roles).map(&:to_s)
+    if read_attribute(:roles)
+      read_attribute(:roles).map(&:to_s)
+    else
+      []
+    end
   end
 end

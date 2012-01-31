@@ -54,7 +54,7 @@ namespace :deploy do
     task :symlinks do
       run "#{try_sudo} cd #{current_path}/public; ln -s #{shared_path}/system/assets assets"
       run "#{try_sudo} cd #{current_path}/public; rm -f images/icons; ln -s #{shared_path}/system/icons images/icons"
-      run "#{try_sudo} cd #{current_path}/public; rm -f extjs; ln -s #{shared_path}/system/javascripts/ext-4.0.7-gpl extjs"
+      run "#{try_sudo} cd #{current_path}/public; rm -f extjs; ln -s #{shared_path}/system/javascripts/ext-4.0.2a extjs"
     end
   end
 end
