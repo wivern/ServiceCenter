@@ -31,6 +31,17 @@ class Person < ActiveRecord::Base
     end
   end
 
+  def name_with_initials
+    name_parts = name.split
+    if name_parts.size >= 3
+      "#{name_parts[0]} #{name_parts[1][0]}. #{name_parts[2][0]}."
+    elsif name_parts.size > 1
+      "#{name_parts[0]} #{name_parts[1][0]}."
+    else
+      name
+    end
+  end
+
   def method_missing(method_name, *args)
     if match = matches_dynamic_role_check?(method_name)
       tokenize_roles(match.captures.first).each{|role|

@@ -103,17 +103,20 @@ class OrdersGrid < Netzke::Basepack::GridPanel
     if @ability.can? :create, Order
       order = Order.find(params[:order_id])
       repair_type = RepairType.find(params[:repair_type_id])
-      new_order = order.clone
+      new_order = order.clone :include => [:complects, :external_states, :defects, :grounds, :internal_states]
+      #new_order.complect_ids = order.complect_ids
       new_order.repair_type = repair_type
       new_order.created_from = order
+      logger.debug "Cloned order #{new_order.inspect}"
       if new_order.save
-        {:set_result => 'ok', :netzke_feedback => @flash, :open_order_details => new_order.id}
+        return {:set_result => 'ok', :netzke_feedback => @flash, :open_order => [new_order.id, new_order.number]}
       else
-        {:netzke_feedback => new_order.errors}.to_nifty_json
+        logger.error "Order clone errors, #{new_order.errors.inspect}"
+        {:netzke_feedback => new_order.errors}
       end
     else
       flash :error => I18n.t('access_denied')
-      {:netzke_feedback => @flash}.to_nifty_json
+      {:netzke_feedback => @flash}
     end
   end
 

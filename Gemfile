@@ -23,6 +23,7 @@ gem 'odf-report'
 
 gem 'russian', '~> 0.6.0'
 gem 'seed-fu', '~> 2.0.0'
+gem 'deep_cloneable', '~> 1.2.4'
 # Use unicorn as the web server
 # gem 'unicorn'
 

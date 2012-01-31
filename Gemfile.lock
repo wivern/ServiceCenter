@@ -75,6 +75,7 @@ GEM
       nokogiri (>= 1.5.0)
     daemons (1.1.4)
     database_cleaner (0.7.0)
+    deep_cloneable (1.2.4)
     devise (1.4.9)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.0.3)
@@ -248,6 +249,7 @@ DEPENDENCIES
   capybara
   cucumber-rails
   database_cleaner
+  deep_cloneable (~> 1.2.4)
   devise
   devise_active_directory_authenticatable
   factory_girl_rails

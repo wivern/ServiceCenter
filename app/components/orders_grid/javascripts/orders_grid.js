@@ -78,23 +78,34 @@
             });
         }
     },
+    openOrder: function(orderId, number){
+      this.getView().openOrder(orderId, number);
+    },
     onOpen: function(){
        if (this.getView().getSelectionModel().getSelection().length > 0){
            this.getView().openOrderDetails(this.getView().getSelectionModel().getSelection()[0]);
        }
     },
     viewConfig:{
-        openOrderDetails: function(record){
-            var app = Ext.ComponentQuery.query('viewport')[0],
-                orderId = record.get('id'),
-                number = record.get('number');
-            app.selectOrder({order_id: orderId});
+        openOrder: function(orderId, number){
+            console.debug('orderId is', typeof(orderId));
+            if (typeof(orderId) === 'object'){
+                number = orderId[1];
+                orderId = orderId[0];
+            }
+          var app = Ext.ComponentQuery.query('viewport')[0];
+//            app.selectOrder({order_id: orderId});
             app.addTab('OrderDetailsPanel',{
                 config:{
                     record_id: orderId,
                     title: 'Заказ № ' + number
                 }
             });
+        },
+        openOrderDetails: function(record){
+            var orderId = record.get('id'),
+                number = record.get('number');
+            this.openOrder(orderId, number);
 //            app.appLoadComponent('order_details');
         }
     }
