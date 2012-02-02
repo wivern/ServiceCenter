@@ -96,6 +96,11 @@ ru:
         currency__name: Валюта
       organization:
         name: Наименование
+        city: Город
+        address: Адрес
+        working_time: Часы работы
+        phone: Телефон
+        responsible__name: Ответственный
       person:
         name: Имя
         username: Уч.запись

@@ -124,7 +124,7 @@ class AddOrderForm < Netzke::Basepack::FormPanel
                                    {:field_label => Order.human_attribute_name("applied_at"), :name => :applied_at,
                                       :format => "d.m.y", :xtype => :datefield, :value => Date.today}, #TODO get date format from locale
                                    {:field_label => Order.human_attribute_name("plan_deliver_at"), :name => :plan_deliver_at,
-                                      :xtype => :datefield, :format => "d.m.y"}, #TODO: add default delivery period
+                                      :xtype => :datefield, :format => "d.m.y", :value => Date.today + 2.weeks}, #TODO: add default delivery period
                                    {:field_label => Order.human_attribute_name("complect"), :name => :complects__name,
                                       :xtype => :netzkeboxselect, :editable => false, :hide_trigger => true, :height => 110},
                                    {:field_label => Order.human_attribute_name("external_state"), :name => :external_states__name,

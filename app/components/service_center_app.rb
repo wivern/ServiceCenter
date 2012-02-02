@@ -131,7 +131,7 @@ class ServiceCenterApp < TabbedApp #Netzke::Basepack::AuthApp
     components[:reset_password_form][:items].first.merge!(:record_id => params[:record_id].to_i) if params[:name] == 'reset_password_form'
     component_name = params[:name].underscore.to_sym
     logger.debug "Checking access to #{component_name}"
-    if @ability.can?(:deliver, component_name)
+    if not (component_name.to_s =~ /^tab*$/) or @ability.can?(:deliver, component_name)
       super
     else
       {:component_delivery_failed => {:component_name => component_name, :msg => "Access denied to component '#{component_name}'"}}
