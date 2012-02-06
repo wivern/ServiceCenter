@@ -11,7 +11,8 @@ class Position < ActiveRecord::Base
       :engineer => {:name => I18n.t('roles.engineer')},
       :administrator => {:name => I18n.t('roles.administrator')},
       :manager => {:name => I18n.t('roles.manager')},
-      :director => {:name => I18n.t('roles.director')}
+      :director => {:name => I18n.t('roles.director')},
+      :analyst => {:name => I18n.t('roles.analyst')}
   }
 
   def roles_names

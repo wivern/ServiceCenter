@@ -14,6 +14,8 @@ class Person < ActiveRecord::Base
 
   delegate :roles, :to => :position
 
+  scope :active, joins("LEFT OUTER JOIN person_statuses ON person_statuses.id = people.person_status_id") & PersonStatus.not_fired
+
   def active_for_authentication?
     super && !fired?
   end

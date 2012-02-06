@@ -13,13 +13,18 @@
        });
     },
     select_by_token: function(token){
+        console.debug("select by token", token);
       if (token) {
         var node = this.navigation.getStore().getRootNode().findChildBy(function(n){
           return n.raw.component == token;
         }, this, true);
 
-        if (node) this.navigation.getView().select(node);
-      }
+        if (node)
+            this.navigation.getView().select(node);
+        else
+          this.navigation.getView().getSelectionModel().deselectAll();
+      } else
+          this.navigation.getView().getSelectionModel().deselectAll();
     },
 
     processHistory: function(token){

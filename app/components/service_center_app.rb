@@ -109,6 +109,10 @@ class ServiceCenterApp < TabbedApp #Netzke::Basepack::AuthApp
             :class_name => "OrderDetailsPanel",
             :title => "Карточка заказа"
 
+  component :analytics,
+            :class_name => "AnalyticsPane",
+            :title => "Аналитика"
+
   action :about, :icon => :information
 
   def menu
@@ -143,16 +147,20 @@ class ServiceCenterApp < TabbedApp #Netzke::Basepack::AuthApp
     d['components'].each { |name, options|
       options[:columns] = options[:columns].map { |k, v| v ? v : k } if options.has_key? :columns
       options[:title] = options[:model].constantize.model_name.human unless options.has_key? :title
+      logger.debug "Registering component #{name}"
       self.class.component name, options
     }
-    proceed_children(d['dictionaries'], d['components'])
+    components = d['components'].symbolize_keys
+    proceed_children(d['dictionaries'], components)
   end
 
   def proceed_children(items, components = {})
+    logger.debug "Components #{components.inspect}"
+
     items.select{|k, v|
       if (v['leaf'])
-        cmp = components[v['component']]
-        logger.debug "Checking #{cmp.inspect}"
+        cmp = components[v['component'].to_sym]
+        logger.debug "Checking #{cmp.inspect} for #{v}"
         r = @ability.can?(:read, cmp[:model].constantize) if cmp && cmp.has_key?(:model)
         logger.debug r ? "accepted" : "rejected"
         r
@@ -243,10 +251,16 @@ class ServiceCenterApp < TabbedApp #Netzke::Basepack::AuthApp
         :component => :orders
     } if @ability.can?(:read, Order)
     items << {
+        :text => "Аналитика",
+        :leaf => true,
+        :component => :analytics
+    }
+    dict_items = dictionaries
+    items << {
             :text => "Справочники",
             :expanded => true,
-            :children => dictionaries
-    }
+            :children => dict_items
+    } unless dict_items.empty?
     items
   end
 

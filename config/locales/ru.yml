@@ -244,6 +244,7 @@ ru:
     administrator: "Администратор"
     director: "Директор"
     manager: "Менеджер"
+    analyst: "Аналитик"
   tabbed_app:
     actions:
       reset_password: Сменить пароль
@@ -251,6 +252,8 @@ ru:
     actions:
       reset_password: Сменить пароль
       logout: Выход
+  analyser_form:
+    title: Параметры анализа
   orders_grid:
     actions:
       create_from: Создать из

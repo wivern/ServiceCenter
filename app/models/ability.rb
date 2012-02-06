@@ -29,6 +29,7 @@ class Ability
       can :manage, :all
       cannot :manage, [Person, Report]
       can :read, [Person, Report]
+      can :deliver, :all
     end
     if user.has_role_administrator?
       can :manage, [Person, Organization, Position, Currency, Report, PersonStatus]
