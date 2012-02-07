@@ -43,7 +43,17 @@ class AnalyserForm < Netzke::Base
     {:data => [[-1, 'Все']].concat(relation.map{|f| [f.id, f.name]})}
   end
 
+  endpoint :netzke_submit, :pre => true do |params|
+    netzke_submit params
+  end
+
   protected
+
+  def netzke_submit(params)
+    data = ActiveSupport::JSON.decode(params[:data])
+    session[:analisys_data] = data
+    {:set_result => true}
+  end
 
   def normalize_fields(fields = [])
     fields.each{|f|

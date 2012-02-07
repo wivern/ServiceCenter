@@ -11,5 +11,17 @@
     bodyStyle     : 'padding: 5px 5px 0',
     autoScroll    : true,
     fieldDefaults : { labelWidth : 120 },
-    applyMask     : { msg: "Applying..." },
+    applyMask     : { msg: "Применяется..." },
+
+    initComponent: function(){
+        this.callParent(arguments);
+//        this.addEvents('applysuccess');
+    },
+    onApply: function(){
+        var values = this.getForm().getValues();
+        this.netzkeSubmit(Ext.apply((this.baseParams || {}), {data:Ext.encode(values)}), function(success){
+            if (this.applyMaskCmp) this.applyMaskCmp.hide();
+            this.fireEvent('submitsuccess');
+        }, this);
+    }
 }

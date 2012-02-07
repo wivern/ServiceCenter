@@ -51,6 +51,10 @@ class Order < ActiveRecord::Base
     activities.inject(0){|sum, a| sum + a.price}
   end
 
+  def activities_count
+    activities.size
+  end
+
   def discount_amount
     case discount_type
       when :amount
@@ -68,6 +72,10 @@ class Order < ActiveRecord::Base
 
   def spare_parts_amount
     order_spare_parts.inject(0){|sum, sp| sum + sp.amount}
+  end
+
+  def spare_parts_count
+    order_spare_parts.size
   end
 
   def total_amount
@@ -92,6 +100,14 @@ class Order < ActiveRecord::Base
 
   def internal_state
     collection_printable(:internal_states)
+  end
+
+  def activities_printable
+    collection_printable(:activities)
+  end
+
+  def spare_parts_printable
+    collection_printable :spare_parts, :part_number
   end
 
   private
