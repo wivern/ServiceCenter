@@ -51,7 +51,7 @@ class AnalyserForm < Netzke::Base
 
   def netzke_submit(params)
     data = ActiveSupport::JSON.decode(params[:data])
-    session[:analisys_data] = data
+    session[:analysis_data] = data
     {:set_result => true}
   end
 

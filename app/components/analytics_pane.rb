@@ -1,7 +1,7 @@
 #encoding: UTF-8
 class AnalyticsPane < Netzke::Basepack::BorderLayoutPanel
 
-  component :analisys_form do
+  component :analysis_form do
     {
         :class_name => 'AnalyserForm',
         :region => :east,
@@ -11,7 +11,7 @@ class AnalyticsPane < Netzke::Basepack::BorderLayoutPanel
     }
   end
 
-  component :analisys_grid do
+  component :analysis_grid do
     {
         :class_name => 'AnalyserGrid',
         :model => 'Order',
@@ -30,10 +30,10 @@ class AnalyticsPane < Netzke::Basepack::BorderLayoutPanel
         :prohibit_delete => true,
         :load_inline_data => false,
         :scope => lambda{|rel|
-          data = session[:analisys_data]
+          data = session[:analysis_data]
           data = data.symbolize_keys
           data.reject!{|k,v| v == -1}
-          logger.debug("Analisys: #{data.inspect}")
+          logger.debug("Analysis: #{data.inspect}")
           rel = rel.where("organization_id = ?",data[:organization]) if data[:organization] && data[:organization] != -1
           rel = rel.where("applied_at >= ?", data[:starting_date]) if data[:starting_date]
           rel = rel.where("applied_at <= ?", data[:finish_date]) if data[:finish_date]
@@ -50,18 +50,20 @@ class AnalyticsPane < Netzke::Basepack::BorderLayoutPanel
   def configuration
     super.tap do |sup|
       sup[:items] = [
-          :analisys_grid.component(:region => :center, :prevent_header => false),
-          :analisys_form.component
+          :analysis_grid.component(:region => :center, :prevent_header => false),
+          :analysis_form.component
       ]
     end
   end
 
+  js_include :export
+
   js_method :init_component, <<-JS
     function(){
       this.callParent(arguments);
-      var form = this.getChildNetzkeComponent('analisys_form');
+      var form = this.getChildNetzkeComponent('analysis_form');
       if (form) form.on('submitsuccess', function(){
-        this.getChildNetzkeComponent('analisys_grid').store.load();
+        this.getChildNetzkeComponent('analysis_grid').store.load();
       }, this);
     }
   JS

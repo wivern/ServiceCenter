@@ -25,6 +25,10 @@ class Ability
         :report_component, :person_status_component]
       can :merge, :all
     end
+    if user.has_role_analyst?
+      can :read, Order
+      can :deliver, :analytics
+    end
     if user.has_role_director?
       can :manage, :all
       cannot :manage, [Person, Report]

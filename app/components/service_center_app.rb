@@ -254,7 +254,7 @@ class ServiceCenterApp < TabbedApp #Netzke::Basepack::AuthApp
         :text => "Аналитика",
         :leaf => true,
         :component => :analytics
-    }
+    } if Netzke::Core.current_user.has_role_analyst?
     dict_items = dictionaries
     items << {
             :text => "Справочники",

@@ -35,6 +35,13 @@ ru:
       order:
         number: "№ заказа"
         ticket: "№ талона"
+        activities_amount: "Стоимость работ"
+        activities_count: "Выполнено работ"
+        spare_parts_amount: "Стоимость з/ч"
+        spare_parts_printable: Запчасти
+        activities_printable: Работы
+        total_amount: Итого
+        total_amount_with_discount: Итого со скидкой
         applied_at: "Дата обращения"
         plan_deliver_at: "Дата выдачи (план)"
         actual_deliver_at: "Дата выдачи (факт)"
