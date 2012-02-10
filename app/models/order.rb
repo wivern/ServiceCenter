@@ -10,6 +10,8 @@ class Order < ActiveRecord::Base
   belongs_to :deliver_manager, :class_name => "Person"
   belongs_to :product_passport, :autosave => true
   belongs_to :organization
+  belongs_to :diagnostic_activity, :class_name => "Activity",
+      :conditions => "diagnostic = true"
   has_and_belongs_to_many :complects
   has_and_belongs_to_many :external_states
   has_and_belongs_to_many :defects

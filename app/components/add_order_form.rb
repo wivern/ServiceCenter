@@ -13,6 +13,16 @@ class AddOrderForm < Netzke::Basepack::FormPanel
     { :set_result => {:producer => params[:producer]}}
   end
 
+
+  component :select_diagnostic_activity do
+    {
+        :class_name => "DictionaryWindow",
+        :model => "Activity",
+        :scope => "diagnostic = true",
+        :initial_sort => ['name', 'ASC']
+    }
+  end
+
   component :select_producer do
     {
         :class_name => "DictionaryWindow",
@@ -136,9 +146,9 @@ class AddOrderForm < Netzke::Basepack::FormPanel
                                :items => [
                                    {:field_label => Order.human_attribute_name("defect"), :name => :defects__name, :xtype => :netzkepopupselect,
                                     :width => 320, :height => 140, :selection_component => :select_defect},
-                                   {:field_label => Order.human_attribute_name("diag_price"), :name => :diag_price,
-                                      :xtype => :numericfield, :currency_symbol => 'руб.', :currency_at_end => true,
-                                      :allow_negative => false, :step => 10},
+                                   {:field_label => Order.human_attribute_name("diag_price"), :name => :diagnostic_activity__price,
+                                    :xtype => :selecttriggerfield, :selection_component => :select_diagnostic_activity,
+                                    :display_field => :price},
                                    {:field_label => Order.human_attribute_name("prior_cost"), :name => :prior_cost,
                                       :xtype => :numericfield, :currency_at_end => true, :currency_symbol => 'руб.', :step => 10},
                                    {:field_label => Order.human_attribute_name('maximum_cost'), :name => :maximum_cost,

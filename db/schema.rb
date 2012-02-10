@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120131124533) do
+ActiveRecord::Schema.define(:version => 20120209141717) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(:version => 20120131124533) do
     t.integer  "currency_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "diagnostic",                                :default => false
   end
 
   create_table "complects", :force => true do |t|
@@ -123,6 +124,9 @@ ActiveRecord::Schema.define(:version => 20120131124533) do
 
   add_index "internal_states_orders", ["internal_state_id", "order_id"], :name => "index_internal_states_orders_on_internal_state_id_and_order_id", :unique => true
 
+  create_table "netzke_temp_table", :force => true do |t|
+  end
+
   create_table "numerators", :force => true do |t|
     t.string  "name",                          :null => false
     t.integer "repair_type_id"
@@ -185,9 +189,11 @@ ActiveRecord::Schema.define(:version => 20120131124533) do
     t.integer  "engineer_id"
     t.integer  "organization_id"
     t.integer  "created_from_id"
+    t.integer  "diagnostic_activity_id"
   end
 
   add_index "orders", ["created_from_id"], :name => "index_orders_on_created_from_id"
+  add_index "orders", ["diagnostic_activity_id"], :name => "index_orders_on_diagnostic_activity_id"
 
   create_table "organizations", :force => true do |t|
     t.string   "name"

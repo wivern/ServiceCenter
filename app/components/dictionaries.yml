@@ -234,6 +234,7 @@ components:
       :name:
       :price:
       :currency__name:
+      :diagnostic:
   currency_component:
     :class_name: Netzke::Basepack::GridPanel
     :model: Currency

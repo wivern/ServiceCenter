@@ -164,7 +164,7 @@ GEM
       oa-oauth (= 0.3.2)
       oa-openid (= 0.3.2)
     orm_adapter (0.0.5)
-    pg (0.11.0)
+    pg (0.13.0)
     polyglot (0.3.2)
     pyu-ruby-sasl (0.0.3.3)
     rack (1.2.4)

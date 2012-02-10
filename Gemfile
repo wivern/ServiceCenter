@@ -51,6 +51,10 @@ gem 'deep_cloneable', '~> 1.2.4'
 #   gem 'webrat'
  end
 
+#group :staging do
+#  gem 'seedsv'
+#end
+
 group :test do
   gem 'capybara'
   gem 'launchy'
