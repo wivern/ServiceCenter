@@ -21,7 +21,7 @@ class Ability
       cannot :destroy, [Order]
       cannot :manage, [Person, Organization, Position, Currency, Report, PersonStatus]
       can :deliver, :all
-      cannot :deliver, [:order_form, :person_component, :organization_component, :position_component, :currency_component,
+      cannot :deliver, [:person_component, :organization_component, :position_component, :currency_component,
         :report_component, :person_status_component]
       can :merge, :all
     end
