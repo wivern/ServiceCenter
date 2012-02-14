@@ -4,6 +4,7 @@ ru:
     attributes:
       name: Наименование
       activity:
+        code: Код
         name: Наименование
         price: Стоимость
         currency__name: Валюта
@@ -92,6 +93,7 @@ ru:
         service_phone_agreement: Согласование по телефону
         work_performed_at: Работа произведена
       order_activity:
+        activity__code: Код
         activity__name: Наименование
         activity__price: Стоимость
         performed_at: Дата выполнения

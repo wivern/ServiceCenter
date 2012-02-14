@@ -14,7 +14,7 @@ class Docs::PrintsController < ApplicationController
       r.add_field(:total_amount, @order.total_amount)
       r.add_field(:discount_amount, @order.discount_amount)
       r.add_field(:total_amount_with_discount, @order.total_amount_with_discount)
-      r.add_field(:responsible_name, current_person.organization.responsible.name_with_initials)
+      r.add_field(:responsible_name, current_person.organization.responsible.name_with_initials) if current_person.organization.responsible
       add_attributes(r, @order, '')
       add_attributes(r, current_person.organization, 'organization_')
       #@order.attributes.each { |attr, value|

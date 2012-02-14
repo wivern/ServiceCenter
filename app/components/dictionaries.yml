@@ -231,6 +231,7 @@ components:
     :persistance: true
     :force_fit: true
     :columns:
+      :code:
       :name:
       :price:
       :currency__name:

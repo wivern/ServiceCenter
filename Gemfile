@@ -20,6 +20,8 @@ gem 'cancan'
 #gem 'devise_active_directory_authenticatable'
 # docs reporting
 gem 'odf-report'
+# import dbf
+gem 'dbf'
 
 gem 'russian', '~> 0.6.0'
 gem 'seed-fu', '~> 2.0.0'

@@ -67,6 +67,7 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
         :class_name => "ActivitiesGrid",
         :strong_default_attrs => {:order_id => config[:record_id]},
         :scope => ["order_id = ?", config[:record_id]],
+        :order_id => config[:record_id],
         :prevent_header => true,
         :min_height => 300
     }
