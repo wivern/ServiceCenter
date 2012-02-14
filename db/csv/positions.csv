@@ -1,0 +1,5 @@
+id,name,created_at,updated_at,roles
+1,Приемщик,2012-01-26 10:35:20 UTC,2012-01-26 10:35:20 UTC,[:inspector]
+2,Сервис-инженер,2012-01-26 10:35:20 UTC,2012-01-26 10:35:20 UTC,[:engineer]
+3,Администратор,2012-01-26 10:35:20 UTC,2012-01-26 10:35:20 UTC,[:administrator]
+4,Директор,2012-01-26 10:35:20 UTC,2012-02-14 12:40:52 UTC,"[false, ""analyst"", ""director"", ""manager"", false, false]"

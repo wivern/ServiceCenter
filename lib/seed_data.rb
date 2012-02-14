@@ -17,5 +17,17 @@ module Seed
         puts "#{model_class.name} is not empty"
       end
     end
+
+    def write_data(model_class, file_name)
+      puts "Exporting #{model_class.name}"
+      data = model_class.all
+      CSV.open(file_name, 'wb') do |csv|
+        csv << model_class.column_names
+        data.each{|item|
+          csv << model_class.column_names.map{|attr| item[attr]}
+        }
+      end unless data.empty?
+      puts "Export finished, #{data.size} #{model_class.table_name} exported."
+    end
   end
 end
