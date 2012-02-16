@@ -1,12 +1,16 @@
 set :application, "service_center"
 
+set :stages, %w(staging production)
+set :default_stage, "production"
+
+require 'capistrano/ext/multistage'
+
 $LOAD_PATH.unshift File.expand_path('./lib', ENV['rvm_path'])
 require 'rvm/capistrano'
 require 'bundler/capistrano'
-load File.join(File.dirname(__FILE__), "deploy/targets.rb")
+#load File.join(File.dirname(__FILE__), "deploy/targets.rb")
 
 set :rvm_ruby_string, '1.9.2'
-set :rvm_type, :user
 
 default_run_options[:pty] = true # Must be set for the password prompt from git to work
 set :repository, "git@github.com:wivern/ServiceCenter.git" # Your clone URL
