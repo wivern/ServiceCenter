@@ -255,6 +255,22 @@ class ServiceCenterApp < TabbedApp #Netzke::Basepack::AuthApp
         :leaf => true,
         :component => :analytics
     } if Netzke::Core.current_user.has_role_analyst?
+    items << {
+        :text => "Обмен данными",
+        :expanded => true,
+        :children => [
+            {
+                :text => "Задания",
+                :leaf => true,
+                :icon => uri_to_icon(:database_gear)
+            },
+            {
+                :text => "Монитор",
+                :leaf => true,
+                :icon => uri_to_icon(:monitor_lightning)
+            }
+        ]
+    } if Netzke::Core.current_user.has_role_administrator?
     dict_items = dictionaries
     items << {
             :text => "Справочники",

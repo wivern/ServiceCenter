@@ -8,10 +8,22 @@ module ServiceCenter
         Rails.logger
       end
 
+      def self.import_from_directory(dir, options = {:mask => '*.dbf'})
+        if File.exists?(dir) and File.directory?(dir)
+          mask = options[:mask] || '*'
+          Dir.glob(File.join(dir, mask)).each{ |f|
+              File.delete(f) if self.do_import(f)
+          }
+        else
+          logger.error "Check that #{dir} not exists or not a directory"
+        end
+      end
+
       def self.do_import(file)
         logger.info "Starting import from #{file}"
         begin
           spare_parts = DBF::Table.new(file)
+          logger.info "Version: #{spare_parts.version}, encoding: #{spare_parts.encoding}"
           spare_parts.each { |rec|
             import_record rec
           }
@@ -19,9 +31,11 @@ module ServiceCenter
           logger.error e.message
           logger.error e.backtrace
           logger.error "Import for #{file} has failed, data was not fully imported."
-          raise e
+          false
+          #raise e
         end
         logger.info "Import of #{file} has finished"
+        true
       end
 
       private
