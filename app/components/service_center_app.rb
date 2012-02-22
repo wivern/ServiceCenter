@@ -113,6 +113,19 @@ class ServiceCenterApp < TabbedApp #Netzke::Basepack::AuthApp
             :class_name => "AnalyticsPane",
             :title => "Аналитика"
 
+  component :jobs,
+        :class_name => "JobsGrid",
+        :model => "ExchangeJob",
+        :title => "Задания",
+        :force_fit => true,
+        :columns => [
+            {:name => :type, :renderer => :render_type_icon},
+            :name, :target_path, :value, :run_at, :running?,
+            {:name => :latest_run, :read_only => true},
+            {:name => :success, :read_only => true},
+            {:name => :message, :read_only => true},
+        ]
+
   action :about, :icon => :information
 
   def menu
@@ -162,6 +175,7 @@ class ServiceCenterApp < TabbedApp #Netzke::Basepack::AuthApp
         cmp = components[v['component'].to_sym]
         logger.debug "Checking #{cmp.inspect} for #{v}"
         r = @ability.can?(:read, cmp[:model].constantize) if cmp && cmp.has_key?(:model)
+        r ||= false
         logger.debug r ? "accepted" : "rejected"
         r
       else
@@ -262,7 +276,8 @@ class ServiceCenterApp < TabbedApp #Netzke::Basepack::AuthApp
             {
                 :text => "Задания",
                 :leaf => true,
-                :icon => uri_to_icon(:database_gear)
+                :icon => uri_to_icon(:database_gear),
+                :component => :jobs
             },
             {
                 :text => "Монитор",

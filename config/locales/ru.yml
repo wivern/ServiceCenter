@@ -268,4 +268,12 @@ ru:
     actions:
       create_from: Создать из
       create_from_tooltip: Создать новый заказ из выбранного
+  jobs_grid:
+    actions:
+      create: Создать
+      create_tooltip: Создать новое задание
+      add_import: Задание импорта
+      add_export: Задание экспорта
+      run: Выполнить
+      run_tooltip: Выполнить задание
   access_denied: "Доступ запрещен"
