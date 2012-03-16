@@ -99,6 +99,10 @@ class ServiceCenterApp < TabbedApp #Netzke::Basepack::AuthApp
                 {:name => :manager__display_name, :read_only => true},
                 :actual_deliver_at, :status__name, :service_note]
 
+  component :maintenance,
+        :class_name => "EngineerWorkAreaPanel",
+        :title => "Ремонт и диагностика"
+
   component :order_form,
             :class_name => "AddOrderForm",
             :model => "Order",
@@ -121,7 +125,7 @@ class ServiceCenterApp < TabbedApp #Netzke::Basepack::AuthApp
         :columns => [
             {:name => :type, :renderer => :render_type_icon},
             :name, :target_path, :value, :run_at, :running?,
-            {:name => :latest_run, :read_only => true},
+            {:name => :latest_run, :read_only => true, :renderer => :render_date_time},
             {:name => :success, :read_only => true},
             {:name => :message, :read_only => true},
         ]
@@ -264,6 +268,12 @@ class ServiceCenterApp < TabbedApp #Netzke::Basepack::AuthApp
         :leaf => true,
         :component => :orders
     } if @ability.can?(:read, Order)
+    items << {
+        :text => "Ремонт и диагностика",
+        :leaf => true,
+        :icon => uri_to_icon(:wrench),
+        :component => :maintenance
+    } # if Netzke::Core.current_user.has_role_engineer?
     items << {
         :text => "Аналитика",
         :leaf => true,

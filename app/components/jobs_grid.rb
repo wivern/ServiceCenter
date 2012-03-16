@@ -88,6 +88,12 @@ class JobsGrid < DictionaryGridPanel
     }
   JS
 
+  js_method :render_date_time, <<-JS
+    function(value){
+      return Ext.util.Format.date(value, 'j.m.y G:i:s TP');
+    }
+  JS
+
   js_method :render_type_icon, <<-JS
     function(value){
       var icon = '';

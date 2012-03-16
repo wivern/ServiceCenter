@@ -84,7 +84,7 @@ class AddOrderForm < Netzke::Basepack::FormPanel
             :selection_component => :select_producer},
           {:name => :product_passport__product__name, :xtype => :selecttriggerfield,
             :selection_component => :select_product},
-          {:name => :product_passport__guarantee_stub_number, :xtype => :textfield},
+          {:name => :product_passport__guarantee_stub_number, :xtype => :textfield, :submit_value => true},
           {:name => :product_passport__purchase_place__name, :xtype => :selecttriggerfield,
              :selection_component => :select_purchase_place, :allowNew => true},
           {:name => :product_passport__purchased_at, :xtype => :datefield},
@@ -148,11 +148,11 @@ class AddOrderForm < Netzke::Basepack::FormPanel
                                     :width => 320, :height => 140, :selection_component => :select_defect},
                                    {:field_label => Order.human_attribute_name("diag_price"), :name => :diagnostic_activity__price,
                                     :xtype => :selecttriggerfield, :selection_component => :select_diagnostic_activity,
-                                    :display_field => :price},
-                                   {:field_label => Order.human_attribute_name("prior_cost"), :name => :prior_cost,
-                                      :xtype => :numericfield, :currency_at_end => true, :currency_symbol => 'руб.', :step => 10},
-                                   {:field_label => Order.human_attribute_name('maximum_cost'), :name => :maximum_cost,
-                                      :xtype => :numericfield, :currency_at_end => true, :currency_symbol => 'руб.', :step => 10}
+                                    :display_field => :price}
+                                   #{:field_label => Order.human_attribute_name("prior_cost"), :name => :prior_cost,
+                                   #   :xtype => :numericfield, :currency_at_end => true, :currency_symbol => 'руб.', :step => 10},
+                                   #{:field_label => Order.human_attribute_name('maximum_cost'), :name => :maximum_cost,
+                                   #   :xtype => :numericfield, :currency_at_end => true, :currency_symbol => 'руб.', :step => 10}
                                ]
                               }
                           ]
@@ -268,6 +268,7 @@ class AddOrderForm < Netzke::Basepack::FormPanel
         key = "#{path[path.size - 2]}_id"
         data_class = Kernel.const_get(path[path.size - 2].camelize)
         record = find_dictionary_value(data_class, {:name => v})
+        logger.debug "Searching #{data_class.name} with #{v} #{record ? "found" : ""}"
         value = record.id if record # ensure that it`s integer
       end
       search_options.merge!({key.to_sym => value}) if key and value

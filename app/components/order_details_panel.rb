@@ -171,8 +171,8 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
                                         {:name => :diag_manager__name},
                                         {:name => :diag_price, :xtype => :numericfield, :currency_at_end => true,
                                           :currency_symbol => 'руб.', :step => 10}, #TODO get currency from current locale
-                                        {:name => :grounds__name, :xtype => :netzkepopupselect, :height => 140,
-                                          :selection_component => :select_ground, :auto_load_store => true},
+                                        #{:name => :grounds__name, :xtype => :netzkepopupselect, :height => 140,
+                                        #  :selection_component => :select_ground, :auto_load_store => true},
                                         {:name => :diagnosed_at},
                                         {:name => :actual_defect, :xtype => :textarea, :height => 140}
                                     ]
@@ -180,8 +180,8 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
                                 {
                                     :flex => 1, :border => false, :defaults => {:anchor => "100%"},
                                     :items => [
-                                        {:name => :goals__name, :xtype => :netzkepopupselect, :height => 140,
-                                          :selection_component => :select_goal, :auto_load_store => true},
+                                        #{:name => :goals__name, :xtype => :netzkepopupselect, :height => 140,
+                                        #  :selection_component => :select_goal, :auto_load_store => true},
                                         {:name => :result, :xtype => :textarea, :height => 160}
                                     ]
                                 }
