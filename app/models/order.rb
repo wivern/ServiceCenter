@@ -58,14 +58,18 @@ class Order < ActiveRecord::Base
   end
 
   def discount_amount
-    case discount_type
+    logger.debug "Discount\nType: #{discount_type}, value: #{discount}"
+    amount = case discount_type.to_sym
       when :amount
         discount
       when :percent
         total_amount * discount / 100
       else
         0
-    end
+    end if discount_type
+    amount ||= 0
+    logger.debug "Amount: #{amount}"
+    amount
   end
 
   def total_amount_with_discount

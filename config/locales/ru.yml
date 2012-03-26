@@ -66,6 +66,7 @@ ru:
         discount_ground: Основание
         engineer: Сервис-инженер, выполнивший работы
         external_state: "Внешнее состояние"
+        external_state_note: "Дополнительно"
         external_states__name: "Внешнее состояние"
         internal_state: "Внутреннее состояние"
         internal_states__name: "Внутреннее состояние"
@@ -78,7 +79,7 @@ ru:
         manager__display_name: Принят
         status__name: Статус
         service_note: Примечание
-        guarantee_case: Гарантия
+        guarantee_case: Гарантия (мес.)
         deliver_manager__name: Выдал
         product_passport__factory_number: "Заводской номер"
         product_passport__producer__name: "Производитель"
@@ -276,4 +277,8 @@ ru:
       add_export: Задание экспорта
       run: Выполнить
       run_tooltip: Выполнить задание
+  order_details_panel:
+    actions:
+      recalc: Пересчитать
+      recalc_tooltip: Пересчитать стоимость заказа
   access_denied: "Доступ запрещен"

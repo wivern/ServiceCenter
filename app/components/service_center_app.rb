@@ -8,17 +8,19 @@ class ServiceCenterApp < TabbedApp #Netzke::Basepack::AuthApp
     @ability = Ability.new Netzke::Core.current_user
     sup = super
     sup.merge(
-        :items => [{
-                       :region => :north,
-                       :border => false,
-                       :height => 35,
-                       :html => %Q{
-            <div style="margin:10px; color:#333; text-align:center; font-family: Helvetica; font-size: 150%;">
-              <a style="color:#B32D15; text-decoration: none" href="/">Сервис-центр</a>
-            </div>
-            },
-                       :bodyStyle => {:background => %Q(#FFF url("/images/header-deco.gif") top left repeat-x)},
-                   }, {
+        :items => [
+            #{
+            #           :region => :north,
+            #           :border => false,
+            #           :height => 35,
+            #           :html => %Q{
+            #<div style="margin:10px; color:#333; text-align:center; font-family: Helvetica; font-size: 150%;">
+            #  <a style="color:#B32D15; text-decoration: none" href="/">Сервис-центр</a>
+            #</div>
+            #},
+            #           :bodyStyle => {:background => %Q(#FFF url("/images/header-deco.gif") top left repeat-x)},
+            #       },
+        {
             :region => :center,
             :layout => :border,
             :border => false,

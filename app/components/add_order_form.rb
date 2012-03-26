@@ -138,7 +138,8 @@ class AddOrderForm < Netzke::Basepack::FormPanel
                                    {:field_label => Order.human_attribute_name("complect"), :name => :complects__name,
                                       :xtype => :netzkeboxselect, :editable => false, :hide_trigger => true, :height => 110},
                                    {:field_label => Order.human_attribute_name("external_state"), :name => :external_states__name,
-                                    :xtype => :netzkepopupselect, :selection_component => :select_external_state, :height => 140}
+                                    :xtype => :netzkepopupselect, :selection_component => :select_external_state, :height => 140},
+                                   {:name => :external_state_note, :xtype => :textarea, :heigh => 140}
                                ]
                               },
                               {# 2nd column

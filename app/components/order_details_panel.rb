@@ -128,9 +128,7 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
                                                   {:name => :defects__name, :xtype => :netzkeboxselect, :read_only => true,
                                                     :hide_trigger => true, :height => 140, :auto_load_store => true},
                                                   {:name => :internal_states__name, :xtype => :netzkepopupselect, :height => 140,
-                                                    :auto_load_store => true, :selection_component => :select_internal_state},
-                                                  {:name => :external_states__name, :xtype => :netzkepopupselect, :height => 140,
-                                                    :auto_load_store => true, :selection_component => :select_external_state}
+                                                    :auto_load_store => true, :selection_component => :select_internal_state}
                                               ]
                                           },
                                           {
@@ -140,7 +138,10 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
                                                   {:name => :plan_deliver_at},
                                                   {:name => :actual_deliver_at},
                                                   {:name => :deliver_manager__name},
-                                                  {:name => :guarantee_case}
+                                                  {:name => :guarantee_case, :xtype => :numericfield},
+                                                  {:name => :external_states__name, :xtype => :netzkepopupselect, :height => 140,
+                                                    :auto_load_store => true, :selection_component => :select_external_state},
+                                                  {:name => :external_state_note, :xtype => :textarea, :height => 140}
                                               ]
                                           }
                                       ]
@@ -198,23 +199,27 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
                             :items => [
                               {:name => :work_performed_at, :format => "d.m.y"},
                               {:name => :engineer, :xtype => :selecttriggerfield,
-                                :selection_component => :select_person, :auto_load_store => true},
-                              {:name => :prior_cost, :xtype => :numericfield, :currency_symbol => 'руб.', :currency_at_end => true,
-                                      :allow_negative => false, :step => 10},
-                              {:name => :maximum_cost, :xtype => :numericfield, :currency_symbol => 'руб.', :currency_at_end => true,
-                                      :allow_negative => false, :step => 10}
+                                :selection_component => :select_person, :auto_load_store => true}
+                              #{:name => :prior_cost, :xtype => :numericfield, :currency_symbol => 'руб.', :currency_at_end => true,
+                              #        :allow_negative => false, :step => 10},
+                              #{:name => :maximum_cost, :xtype => :numericfield, :currency_symbol => 'руб.', :currency_at_end => true,
+                              #        :allow_negative => false, :step => 10}
                             ]
                           }
                       ]
                   },
                   :parts.component(:title => I18n.t('activerecord.models.spare_part')),
                   {
-                      :title => "Скидка",
+                      :title => "Стоимость",
                       :items => [
+                        {:name => :total_amount, :xtype => :numericfield, :read_only => true,
+                          :currency_symbol => 'руб.', :currency_at_end => true},
                         {:name => :discount, :xtype => :numericfield},
                         {:name => :discount_type, :xtype => :combo,
                           :store => Order.discount_types.map{ |k,v| [k,v]}},
-                        {:name => :discount_ground, :xtype => :textarea}
+                        {:name => :discount_ground, :xtype => :textarea},
+                        {:name => :total_amount_with_discount, :xtype => :numericfield, :read_only => true,
+                                                  :currency_symbol => 'руб.', :currency_at_end => true}
                       ]
                   },
                   {
@@ -253,14 +258,27 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
 
   action :print, :icon => :printer
 
+  action :recalc, :icon => :calculator
+
   js_mixin :order_details_panel
 
   js_property :allow_multi, true
+
+  endpoint :recalc do |params|
+    orderId = params[:orderId]
+    order = Order.find(orderId) #what if not found?
+    {:set_form_values =>
+        { :total_amount => order.total_amount,
+            :total_amount_with_discount => order.total_amount_with_discount
+        }.literalize_keys, :set_result => true
+    }
+  end
 
   #js_include "#{File.dirname(__FILE__)}/javascripts/print.js"
 
   def configure_bbar(c)
     c[:bbar] = [:apply.action, {:text => 'Печать', :icon => '/images/icons/printer.png', :name => 'print', :menu => []}]
+    c[:bbar] << :recalc.action
   end
 
   def netzke_submit(params)

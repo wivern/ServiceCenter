@@ -15,11 +15,12 @@ class ActivitiesGrid < Netzke::Basepack::GridPanel
     super.merge(
         :class_name => "Netzke::Basepack::GridPanel",
         :model => "OrderActivity",
+        :features => [{:ftype => 'summary'}],
         :columns => [
-                      {:name => :activity__code},
-                      {:name => :activity__name},
+                      {:name => :activity__code, :summary_type => :count},
+                      {:name => :activity__name, :summary_type => :count},
                      {:name => :activity__price, :read_only => true, :type => :number,
-                      :align => 'right', :renderer => 'this.currencyRenderer'},
+                      :align => 'right', :renderer => 'this.currencyRenderer', :summary_type => :sum},
                      :performed_at],
         :force_fit => true,
         :prohibit_update => false,

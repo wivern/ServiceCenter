@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120217151050) do
+ActiveRecord::Schema.define(:version => 20120326111421) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -201,6 +201,7 @@ ActiveRecord::Schema.define(:version => 20120217151050) do
     t.integer  "organization_id"
     t.integer  "created_from_id"
     t.integer  "diagnostic_activity_id"
+    t.text     "external_state_note"
   end
 
   add_index "orders", ["created_from_id"], :name => "index_orders_on_created_from_id"

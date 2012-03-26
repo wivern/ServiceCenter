@@ -19,13 +19,15 @@ class PartsGrid  < Netzke::Basepack::GridPanel
     super.merge(
         :class_name => "Netzke::Basepack::GridPanel",
         :model => "OrderSparePart",
+        :features => [{:ftype => "summary"}],
         :columns => [
-            {:name => :spare_part__name, :read_only => true},
+            {:name => :spare_part__name, :read_only => true, :summary_type => "count", :data_index => "spare_part__name"},
             {:name => :spare_part__part_number, :read_only => true},
             {:name => :price, :read_only => true, :align => :right, :renderer => 'this.currencyRenderer'},
-            {:name => :quantity, :align => :right},
-            {:name => :amount, :read_only => true, :align => :right, :renderer => 'this.currencyRenderer'},
-            {:name => :currency__name, :read_only => true}
+            {:name => :quantity, :align => :right, :summary_type => "count"},
+            {:name => :amount, :read_only => true, :align => :right, :summary_type => "sum", :data_index => "amount",
+              :renderer => 'this.currencyRenderer'}
+            #{:name => :currency__name, :read_only => true}
         ],
         :force_fit => true,
         :prohibit_update => false,

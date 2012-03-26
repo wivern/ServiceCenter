@@ -26,5 +26,10 @@
         var tbar = this.child('toolbar');
         var pbutton = tbar.child('button[name=print]');
         this.loadPrintButtonOptions(pbutton, this.record.id);
+    },
+    onRecalc: function(){
+        console.debug('recalculate');
+        //this.recalc({orderId: this.recordId});
+        this.onApply();
     }
 }
