@@ -41,6 +41,10 @@ module ServiceCenter
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
 
+    if defined?(Rails) && (Rails.env == 'development')
+      Rails.logger = Logger.new(STDOUT)
+    end
+
     #Netzke::Core.ext_javascripts << "#{File.dirname(__FILE__)}/../app/components/javascripts/lookup_field.js"
   end
 end

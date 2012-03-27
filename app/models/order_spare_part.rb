@@ -2,7 +2,7 @@ class OrderSparePart < ActiveRecord::Base
   belongs_to :order
   belongs_to :spare_part
   belongs_to :currency
-  validates_presence_of :order, :spare_part
+  #validates_presence_of :spare_part
 
   before_create :checkout_price
 

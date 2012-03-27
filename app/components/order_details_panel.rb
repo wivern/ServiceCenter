@@ -8,7 +8,7 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
         :class_name => "DictionaryWindow",
         :model => "ExternalState",
         :prohibit_modify => true,
-        :initial_sort => ['name', 'ASC']
+        :initial_sort => %w('name' 'ASC')
     }
   end
 
@@ -18,7 +18,7 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
         :model => "Defect",
         :columns => [:name],
         :prohibit_modify => false,
-        :initial_sort => ['name', 'ASC']
+        :initial_sort => %w('name' 'ASC')
     }
   end
 
@@ -28,7 +28,7 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
         :model => "InternalState",
         :columns => [:name],
         :prohibit_modify => true,
-        :initial_sort => ['name', 'ASC']
+        :initial_sort => %w('name' 'ASC')
     }
   end
 
@@ -38,7 +38,7 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
         :model => "Ground",
         :columns => [:name],
         :prohibit_modify => false,
-        :initial_sort => ['name', 'ASC']
+        :initial_sort => %w('name' 'ASC')
     }
   end
 
@@ -48,7 +48,7 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
         :model => "Goal",
         :columns => [:name],
         :prohibit_modify => false,
-        :initial_sort => ['name', 'ASC']
+        :initial_sort => %w('name' 'ASC')
     }
   end
 
@@ -58,7 +58,16 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
         :model => "Person",
         :columns => [:name, :login],
         :prohibit_modify => false,
-        :initial_sort => ['name', 'ASC']
+        :initial_sort => %w('name' 'ASC')
+    }
+  end
+
+  component :select_diagnostic_activity do
+    {
+        :class_name => "DictionaryWindow",
+        :model => "Activity",
+        :scope => "diagnostic = true",
+        :initial_sort => %w('name' 'ASC')
     }
   end
 
@@ -170,8 +179,9 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
                                     :flex => 1, :border => false, :defaults => {:anchor => "-8"},
                                     :items => [
                                         {:name => :diag_manager__name},
-                                        {:name => :diag_price, :xtype => :numericfield, :currency_at_end => true,
-                                          :currency_symbol => 'руб.', :step => 10}, #TODO get currency from current locale
+                                        {:field_label => Order.human_attribute_name("diag_price"), :name => :diagnostic_activity__price,
+                                         :xtype => :selecttriggerfield, :selection_component => :select_diagnostic_activity,
+                                         :display_field => :name},
                                         #{:name => :grounds__name, :xtype => :netzkepopupselect, :height => 140,
                                         #  :selection_component => :select_ground, :auto_load_store => true},
                                         {:name => :diagnosed_at},
@@ -236,12 +246,8 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
                               {
                                   :flex => 1, :border => false, :defaults => {:anchor => "-8"}, :items => [
                                     {:name => :service_state},
-                                    {:name => :service_note}
-                                ]
-                              },
-                              {
-                                  :flex => 1, :border => false, :defaults => {:anchor => "100%"}, :items => [
-                                    {:name => :service_phone_agreement}
+                                    {:name => :service_note},
+                                    :service_phone_agreement
                                 ]
                               }
                             ]

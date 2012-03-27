@@ -105,6 +105,12 @@ class OrdersGrid < Netzke::Basepack::GridPanel
       repair_type = RepairType.find(params[:repair_type_id])
       new_order = order.clone :include => [:complects, :external_states, :defects, :grounds, :internal_states]
       #new_order.complect_ids = order.complect_ids
+      order.order_activities.each{|oa|
+        new_order.order_activities << oa.clone
+      }
+      order.order_spare_parts.each{|os|
+        new_order.order_spare_parts << os.clone
+      }
       new_order.repair_type = repair_type
       new_order.created_from = order
       logger.debug "Cloned order #{new_order.inspect}"
