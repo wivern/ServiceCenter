@@ -91,6 +91,7 @@ class AddOrderForm < Netzke::Basepack::FormPanel
           {:name => :product_passport__dealer__name, :xtype => :autosuggest, :allowNew => true}]
       customer_fields = [
           {:name => :customer__name, :xtype => :autosuggest, :populate_related_fields => true, :allow_blank => false, :allow_new => true},
+          {:name => :customer__address, :xtype => :textarea},
           {:name => :customer__phone, :xtype => :textfield },
           {:name => :customer__email, :xtype => :textfield },
           {:name => :customer__passport, :xtype => :textfield }

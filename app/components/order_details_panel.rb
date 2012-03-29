@@ -281,6 +281,10 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
   end
 
   #js_include "#{File.dirname(__FILE__)}/javascripts/print.js"
+  def configure
+    super
+    @ability = Ability.new Netzke::Core.current_user
+  end
 
   def configure_bbar(c)
     c[:bbar] = [:apply.action, {:text => 'Печать', :icon => '/images/icons/printer.png', :name => 'print', :menu => []}]

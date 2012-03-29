@@ -41,6 +41,7 @@ class OrdersGrid < Netzke::Basepack::GridPanel
     bbar << :search.action << "-" << :open.action
     bbar << {:text => 'Печать', :icon => :printer.icon, :name => 'print', :menu => [], :disabled => true}
     bbar << "-" <<  :edit.action << :apply.action if @ability.can?(:update, Order)
+    bbar << :del.action if @ability.can?(:delete, Order)
     bbar
   end
 
