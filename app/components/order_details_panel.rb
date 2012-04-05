@@ -108,9 +108,9 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
                           :items => [
                               { :title => "Начальные сведения",  :flex => 1,
                                 :items => [
-                                  {:name => :repair_type__name, :xtype => :displayfield},
-                                  {:name => :number, :xtype => :displayfield},
-                                  {:name => :ticket, :xtype => :displayfield},
+                                  {:name => :repair_type__name, :read_only => true},
+                                  {:name => :number, :read_only => true},
+                                  {:name => :ticket, :read_only => true},
                                   {:name => :manager__display_name, :xtype => :textfield, :read_only => true, :width => 300}
                               ]},
                               { :title => "Паспорт изделия", :defaults => {:read_only => true, :xtype => :textfield},
@@ -208,7 +208,7 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
                             :bodyPadding => "10 0 0 0",
                             :items => [
                               {:name => :work_performed_at, :format => "d.m.y"},
-                              {:name => :engineer, :xtype => :selecttriggerfield,
+                              {:name => :engineer__name, :xtype => :selecttriggerfield,
                                 :selection_component => :select_person, :auto_load_store => true}
                               #{:name => :prior_cost, :xtype => :numericfield, :currency_symbol => 'руб.', :currency_at_end => true,
                               #        :allow_negative => false, :step => 10},
@@ -301,7 +301,17 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
       end
     end
 
-    success = create_or_update_record(data)
+    #data.symbolize_keys!
+    #Engineer
+    data[:engineer.to_s] = Person.find(data[:engineer.to_s]) if data[:engineer.to_s]
+
+    begin
+      success = create_or_update_record(data)
+    rescue Exception => e
+      logger.error e.message
+      success = false
+      flash :error => "Ошибка сохранения данных"
+    end
 
     if success
       flash :notice => I18n.t("form_saved")
