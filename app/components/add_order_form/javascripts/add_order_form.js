@@ -35,6 +35,55 @@
             }, this);
         else
             console.debug('field not found');
+    },
+    onApply: function(){
+        if (this.fireEvent('apply', this)) {
+            var values = this.getForm().getValues();
+            //filter readonly fields
+            for(var fieldName in values){
+                var field = this.getForm().findField(fieldName);
+                if (!field || field.disabled)
+                    delete values[fieldName];
+                else if (field && field.name.indexOf("__") !== -1 && field.readOnly && !field.nestedAttribute)
+                    delete values[fieldName];
+                else if (field && field.isXType("displayfield"))
+                    delete values[fieldName];
+                else if (field && field.displayOnly)
+                    delete values[fieldName];
+            }
+            if (this.fileUpload) {
+                    this.getForm().submit({ // normal submit
+                      url: this.endpointUrl("netzke_submit"),
+                      params: {
+                        data: Ext.encode(values) // here are the correct values that may be different from display values
+                      },
+                      failure: function(form, action){
+                        if (this.applyMaskCmp) this.applyMaskCmp.hide();
+                      },
+                      success: function(form, action) {
+                        try {
+                          var respObj = Ext.decode(action.response.responseText);
+                          delete respObj.success;
+                          this.bulkExecute(respObj);
+                          this.fireEvent('submitsuccess');
+                        }
+                        catch(e) {
+                          Ext.Msg.alert('File upload error', action.response.responseText);
+                        }
+                        if (this.applyMaskCmp) this.applyMaskCmp.hide();
+                      },
+                      scope: this
+                    });
+                  } else {
+                    this.netzkeSubmit(Ext.apply((this.baseParams || {}), {data:Ext.encode(values)}), function(success){
+                      if (success) {
+                        this.fireEvent("submitsuccess");
+                        if (this.mode == "lockable") this.setReadonlyMode(true);
+                      };
+                      if (this.applyMaskCmp) this.applyMaskCmp.hide();
+                    }, this);
+                  }
+        }
     }
 
 }

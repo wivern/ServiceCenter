@@ -51,6 +51,12 @@ class Person < ActiveRecord::Base
           return true if roles.include?(role.downcase.to_s)
       }
       return false
+    elsif match = matches_dynamic_not_role_check?(method_name)
+        no_role = true
+        tokenize_roles(match.captures.first).each{|role|
+          no_role = no_role or not roles.include?(role.downcase.to_s)
+        }
+      return no_role
     else
       super
     end
@@ -59,6 +65,10 @@ class Person < ActiveRecord::Base
   #private
   def matches_dynamic_role_check?(method_name)
     /^has_role_([a-zA-Z]\w*)\?$/.match(method_name.to_s)
+  end
+
+  def matches_dynamic_not_role_check?(method_name)
+    /^has_no_role_([a-zA-Z]\w*)\?$/.match method_name.to_s
   end
 
   def tokenize_roles(roles_candidates)

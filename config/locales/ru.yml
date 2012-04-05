@@ -64,7 +64,7 @@ ru:
         discount: Скидка
         discount_type: Тип скидки
         discount_ground: Основание
-        engineer: Сервис-инженер, выполнивший работы
+        engineer__name: Сервис-инженер, выполнивший работы
         external_state: "Внешнее состояние"
         external_state_note: "Дополнительно"
         external_states__name: "Внешнее состояние"

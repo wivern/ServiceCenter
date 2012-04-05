@@ -283,12 +283,14 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
   #js_include "#{File.dirname(__FILE__)}/javascripts/print.js"
   def configure
     super
-    @ability = Ability.new Netzke::Core.current_user
+    @user = Netzke::Core.current_user
+    @ability = Ability.new @user
   end
 
   def configure_bbar(c)
+    user = Netzke::Core.current_user
     c[:bbar] = [:apply.action, {:text => 'Печать', :icon => '/images/icons/printer.png', :name => 'print', :menu => []}]
-    c[:bbar] << :recalc.action
+    c[:bbar] << :recalc.action if user.has_no_role_engineer?
   end
 
   def netzke_submit(params)

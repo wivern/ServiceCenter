@@ -16,19 +16,18 @@ class PartsGrid  < Netzke::Basepack::GridPanel
   end
 
   def configuration
+    @user = Netzke::Core.current_user
+    columns = [{:name => :spare_part__name, :read_only => true, :summary_type => "count", :data_index => "spare_part__name"},
+                {:name => :spare_part__part_number, :read_only => true}]
+    columns << {:name => :price, :read_only => true, :align => :right, :renderer => 'this.currencyRenderer'} if @user.has_no_role_engineer?
+    columns << {:name => :quantity, :align => :right, :summary_type => "count"}
+    columns << {:name => :amount, :read_only => true, :align => :right, :summary_type => "sum", :data_index => "amount",
+                  :renderer => 'this.currencyRenderer'} if @user.has_no_role_engineer?
     super.merge(
         :class_name => "Netzke::Basepack::GridPanel",
         :model => "OrderSparePart",
         :features => [{:ftype => "summary"}],
-        :columns => [
-            {:name => :spare_part__name, :read_only => true, :summary_type => "count", :data_index => "spare_part__name"},
-            {:name => :spare_part__part_number, :read_only => true},
-            {:name => :price, :read_only => true, :align => :right, :renderer => 'this.currencyRenderer'},
-            {:name => :quantity, :align => :right, :summary_type => "count"},
-            {:name => :amount, :read_only => true, :align => :right, :summary_type => "sum", :data_index => "amount",
-              :renderer => 'this.currencyRenderer'}
-            #{:name => :currency__name, :read_only => true}
-        ],
+        :columns => columns,
         :force_fit => true,
         :prohibit_update => false,
         :enable_edit_in_form => false

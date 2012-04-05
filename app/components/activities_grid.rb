@@ -12,16 +12,17 @@ class ActivitiesGrid < Netzke::Basepack::GridPanel
   end
 
   def configuration
+    @user = Netzke::Core.current_user
+    columns = [ {:name => :activity__code, :summary_type => :count},
+                {:name => :activity__name, :summary_type => :count} ]
+    columns << {:name => :activity__price, :read_only => true, :type => :number,
+                          :align => 'right', :renderer => 'this.currencyRenderer', :summary_type => :sum} if not @user.has_role_engineer?
+    columns << :performed_at
     super.merge(
         :class_name => "Netzke::Basepack::GridPanel",
         :model => "OrderActivity",
         :features => [{:ftype => 'summary'}],
-        :columns => [
-                      {:name => :activity__code, :summary_type => :count},
-                      {:name => :activity__name, :summary_type => :count},
-                     {:name => :activity__price, :read_only => true, :type => :number,
-                      :align => 'right', :renderer => 'this.currencyRenderer', :summary_type => :sum},
-                     :performed_at],
+        :columns => columns,
         :force_fit => true,
         :prohibit_update => false,
         :enable_edit_in_form => false
