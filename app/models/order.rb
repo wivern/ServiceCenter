@@ -35,7 +35,7 @@ class Order < ActiveRecord::Base
   validates_presence_of :repair_type, :customer, :product_passport, :complects, :external_states, :defects, :on => :create
 
   scope :by_organization, lambda{
-    where("organization_id = ?", Netzke::Core.current_user.organization)
+    where("Orders.organization_id = ?", Netzke::Core.current_user.organization)
   }
 
   scope :inherited, lambda{|order|
