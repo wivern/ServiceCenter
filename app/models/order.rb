@@ -23,6 +23,8 @@ class Order < ActiveRecord::Base
   has_many :order_spare_parts
   has_many :spare_parts, :through => :order_spare_parts
 
+  has_one :product, :through => :product_passport
+
   belongs_to :created_from, :class_name => "Order"
   has_many :inherited, :class_name => "Order", :foreign_key => :created_from_id
 
@@ -40,6 +42,10 @@ class Order < ActiveRecord::Base
 
   scope :inherited, lambda{|order|
     where("created_from_id = ?", order.id)
+  }
+
+  scope :order_by_product, lambda{|dir|
+     includes(:product).order("products.name #{dir.to_s}")
   }
 
   cattr_accessor :discount_types

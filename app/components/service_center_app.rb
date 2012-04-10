@@ -93,7 +93,8 @@ class ServiceCenterApp < TabbedApp #Netzke::Basepack::AuthApp
             :columns => [
                 {:name => :repair_type__name, :read_only => true},
                 {:name => :number, :read_only => true},
-                {:name => :product_passport__product__name, :read_only => true},
+                {:name => :product_passport__product__name, :read_only => true,
+                  :sorting_scope => :order_by_product},
                 {:name => :ticket, :read_only => true},
                 {:name => :applied_at, :read_only => true},
                 {:name => :product_passport__factory_number, :read_only => true},
