@@ -73,7 +73,7 @@ class ServiceCenterApp < TabbedApp #Netzke::Basepack::AuthApp
     }
 
     {
-      :lazy_loading => true,
+      :lazy_loading => false,
       :class_name => "Netzke::Basepack::GridPanel::RecordFormWindow",
       :title => I18n.t('views.actions.reset_password.text'),
       :button_align => "right",
