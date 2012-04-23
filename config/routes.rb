@@ -4,7 +4,7 @@ ServiceCenter::Application.routes.draw do
   devise_for :people do
     get "/login" => "devise/sessions#new"
     post "/login" => "devise/sessions#create"
-    get "/logout" => "devise/sessions#destroy"
+    get "/logout" => "sessions#destroy"
   end
 
   match '/people' => "welcome#index"

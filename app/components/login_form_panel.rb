@@ -50,6 +50,12 @@ class LoginFormPanel < Netzke::Basepack::FormPanel
               Ext.ieVersion + "." +
               'Для удобной работы рекомендуется использовать FireFox 9 или выше или Chrome 11 или выше.');
           }
+          Ext.Msg.show({
+            title: 'Аутентификация',
+            modal: false,
+            msg: "Пароль принят, пожалуйста, подождите...",
+            icon: Ext.Msg.INFO
+          });
           location.href = '/';
         },
         failure: function(form, action){
