@@ -120,7 +120,8 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
                                     {:name => :product_passport__factory_number, :read_only => true},
                                     {:name => :product_passport__guarantee_stub_number, :read_only => true},
                                     {:name => :product_passport__purchase_place__name, :read_only => true},
-                                    {:name => :product_passport__purchased_at, :xtype => :datefield, :read_only => true},
+                                    {:name => :product_passport__purchased_at_str, :read_only => true,
+                                      :format => 'd.m.Y', :submit_format => 'Y-m-d'}, #:xtype => :datefield, :format => 'd.m.y'
                                     {:name => :product_passport__dealer__name, :read_only => true}
                                 ]
                               },
@@ -143,10 +144,10 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
                                           {
                                               :flex => 1, :border => false, :defaults => {:anchor => "100%"},
                                               :items => [
-                                                  {:name => :applied_at},
-                                                  {:name => :plan_deliver_at},
-                                                  {:name => :actual_deliver_at},
-                                                  {:name => :deliver_manager__name},
+                                                  {:name => :applied_at, :format => 'd.m.Y', :read_only => true},
+                                                  {:name => :plan_deliver_at, :format => 'd.m.Y', :read_only => true},
+                                                  {:name => :actual_deliver_at, :format => 'd.m.Y'},
+                                                  {:name => :deliver_manager__name, :scope => :active_and_in_current_organization},
                                                   {:name => :guarantee_case, :xtype => :numericfield},
                                                   {:name => :external_states__name, :xtype => :netzkepopupselect, :height => 140,
                                                     :auto_load_store => true, :selection_component => :select_external_state},

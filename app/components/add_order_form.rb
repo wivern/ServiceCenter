@@ -87,7 +87,7 @@ class AddOrderForm < Netzke::Basepack::FormPanel
           {:name => :product_passport__guarantee_stub_number, :xtype => :textfield, :submit_value => true},
           {:name => :product_passport__purchase_place__name, :xtype => :selecttriggerfield,
              :selection_component => :select_purchase_place, :allowNew => true},
-          {:name => :product_passport__purchased_at, :xtype => :datefield},
+          {:name => :product_passport__purchased_at, :xtype => :datefield, :format => "d.m.y"},
           {:name => :product_passport__dealer__name, :xtype => :autosuggest, :allowNew => true}]
       customer_fields = [
           {:name => :customer__name, :xtype => :autosuggest, :populate_related_fields => true, :allow_blank => false, :allow_new => true},
@@ -190,6 +190,7 @@ class AddOrderForm < Netzke::Basepack::FormPanel
 
   def netzke_submit(params)
     data = ActiveSupport::JSON.decode(params[:data])
+    data["product_passport__purchased_at"] = Date.strptime(data["product_passport__purchased_at"], '%d.%m.%y').to_time_in_current_zone if data["product_passport__purchased_at"]
     passport = find_or_create(ProductPassport, get_search_options(data, "product_passport"),
                               :factory_number)
     customer = find_or_create(Customer, get_search_options(data, "customer"), :name)

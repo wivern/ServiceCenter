@@ -87,6 +87,7 @@ ru:
         product_passport__guarantee_stub_number: "Номер гарантийного талона"
         product_passport__purchase_place__name: "Место покупки"
         product_passport__purchased_at: "Дата покупки"
+        product_passport__purchased_at_str: "Дата покупки"
         product_passport__dealer__name: "Поступило от дилера"
         service_state: Состояние
         service_info: Информация
