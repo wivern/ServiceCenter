@@ -48,7 +48,7 @@ GEM
       activemodel (= 3.0.9)
       activesupport (= 3.0.9)
     activesupport (3.0.9)
-    acts_as_list (0.1.6)
+    acts_as_list (0.1.4)
     addressable (2.2.7)
     arel (2.0.10)
     bcrypt-ruby (3.0.1)
@@ -251,6 +251,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  acts_as_list (= 0.1.4)
   cancan
   capybara
   cucumber-rails

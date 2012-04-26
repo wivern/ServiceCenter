@@ -11,6 +11,7 @@ gem 'netzke-core', :git => "git://github.com/skozlov/netzke-core.git"
 #gem 'netzke-basepack', :path => "/home/vitaly/RubymineProjects/netzke-basepack", :group => [:development, :test]
 gem 'netzke-basepack', :git => "git@github.com:wivern/netzke-basepack.git"
 gem 'netzke-communitypack'
+gem 'acts_as_list', '0.1.4'
 
 # authentication
 gem 'devise'
