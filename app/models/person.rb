@@ -15,7 +15,7 @@ class Person < ActiveRecord::Base
   delegate :roles, :to => :position
 
   scope :active, joins("LEFT OUTER JOIN person_statuses ON person_statuses.id = people.person_status_id").merge(PersonStatus.not_fired)
-  scope :in_current_organization, lambda{ where(:organization_id => Netzke::Core.current_user.organization.id) }
+  scope :in_current_organization, lambda{ where(:organization_id => Netzke::Core.current_user.organization.id) if Netzke::Core.current_user }
   scope :active_and_in_current_organization, active.in_current_organization.order(:name)
 
   def active_for_authentication?
