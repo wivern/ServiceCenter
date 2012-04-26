@@ -1,2 +1,7 @@
 <%= netzke :login_form %>
 <%= javascript_include_tag 'login_in' if Rails.env.staging? %>
+<script>
+  Ext.onReady(function(){
+     new Image('images/loader.gif');
+  });
+</script>
