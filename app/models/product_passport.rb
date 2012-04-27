@@ -11,6 +11,8 @@ class ProductPassport < ActiveRecord::Base
   validates_presence_of :factory_number, :product, :producer
 
   def purchased_at_str
-    purchased_at.to_datetime.strftime('%d.%m.%Y')
+    s = purchased_at.to_datetime.strftime('%d.%m.%Y') if purchased_at
+    s ||= ""
+    s
   end
 end
