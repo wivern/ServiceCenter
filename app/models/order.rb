@@ -48,6 +48,13 @@ class Order < ActiveRecord::Base
      includes(:product).order("products.name #{dir.to_s}")
   }
 
+  scope :completed, where(:status_id => 15) #TODO change to workflow state completed
+  scope :ready, where(:status_id => 14)
+  scope :by_work_performed_date, lambda{ |start, till|
+    where("work_performed_at between ? and ?", start, till) }
+  scope :by_deliver_date, lambda{|start, till|
+    where("actual_deliver_at between ? and ?", start, till)}
+
   cattr_accessor :discount_types
   @@discount_types = {
       :disabled => "Нет скидки",

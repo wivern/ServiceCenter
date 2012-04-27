@@ -1,4 +1,6 @@
 ServiceCenter::Application.routes.draw do
+  get "export.:format" => "export#index", :constraints => lambda {|req| !req.params[:from].blank?}
+
   get "prints/print"
 
   devise_for :people do

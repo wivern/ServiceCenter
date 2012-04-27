@@ -49,3 +49,15 @@ module ServiceCenter
     #Netzke::Core.ext_javascripts << "#{File.dirname(__FILE__)}/../app/components/javascripts/lookup_field.js"
   end
 end
+
+module Rake
+  class Task
+    alias_method :origin_invoke, :invoke if method_defined?(:invoke)
+    def invoke(*args)
+      logger = Logger.new("#{Rails.root}/log/rake_tasks_log.log")
+      logger.info "#{Time.now} -- #{name} -- #{args.inspect}"
+      Rails.logger = logger
+      origin_invoke(args)
+    end
+  end
+end
