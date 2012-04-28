@@ -144,8 +144,8 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
                                           {
                                               :flex => 1, :border => false, :defaults => {:anchor => "100%"},
                                               :items => [
-                                                  {:name => :applied_at, :format => 'd.m.Y', :read_only => true},
-                                                  {:name => :plan_deliver_at, :format => 'd.m.Y', :read_only => true},
+                                                  {:name => :applied_at, :format => 'd.m.Y'},
+                                                  {:name => :plan_deliver_at, :format => 'd.m.Y'},
                                                   {:name => :actual_deliver_at, :format => 'd.m.Y'},
                                                   {:name => :deliver_manager__name, :scope => :active_and_in_current_organization},
                                                   {:name => :guarantee_case, :xtype => :numericfield},
