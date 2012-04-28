@@ -36,7 +36,7 @@ ru:
         name: Наименование
       order:
         number: "№ заказа"
-        ticket: "№ талона"
+        ticket: "№ квитанции"
         activities_amount: "Стоимость работ"
         activities_count: "Выполнено работ"
         spare_parts_amount: "Стоимость з/ч"
