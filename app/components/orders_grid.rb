@@ -30,9 +30,27 @@ class OrdersGrid < Netzke::Basepack::GridPanel
     }
   end
 
+  action :filter_by_serial_num do
+    {
+        :icon => :camera
+    }
+  end
+
   def configuration
     @ability = Ability.new Netzke::Core.current_user
     super
+  end
+
+  def js_config
+    res = super
+    res.merge({
+        :tbar => config.has_key?(:tbar) ? config[:tbar] : default_tbar
+    })
+  end
+
+  def default_tbar
+    tbar = []
+    tbar << :filter_by_serial_num.action
   end
 
   def default_bbar

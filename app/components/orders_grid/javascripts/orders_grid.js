@@ -78,6 +78,38 @@
             });
         }
     },
+    onFilterBySerialNum: function(item, e){
+        console.debug('filter by s/n');
+        var me = this;
+        var selection = this.getView().getSelectionModel().getSelection();
+        item.toggle();
+        if (item.pressed){
+            if (selection.length > 0){
+                console.debug('apply filter');
+                var order = selection[0];
+                var snumber =  order.data._meta.associationValues.product_passport__factory_number; //order.get('product_passport__factory_number');
+                console.debug('snumber', snumber, order);
+                this.filters.createFilters();
+                var snFilter = this.filters.getFilter('product_passport__factory_number');
+                if (!snFilter){
+                    snFilter = this.filters.addFilter({
+                       type: 'string',
+                       dataIndex: 'product_passport__factory_number'
+                    });
+                }
+                snFilter.setActive(true);
+                Ext.Function.defer(function(){
+                   snFilter = this.filters.getFilter('product_passport__factory_number');
+                   snFilter.setValue(snumber);
+                }, 10, this);
+            }
+        } else {
+           console.debug("clear filter");
+            var snFilter = this.filters.getFilter('product_passport__factory_number');
+            snFilter.setActive(false);
+        }
+
+    },
     openOrder: function(orderId, number){
       this.getView().openOrder(orderId, number);
     },
