@@ -69,6 +69,15 @@ class AddOrderForm < Netzke::Basepack::FormPanel
     }
   end
 
+  component :select_dealer do
+    {
+        :class_name => "DictionaryWindow",
+        :model => "Dealer",
+        :prohibit_modify => false,
+        :initial_sort => ['name', 'ASC']
+    }
+  end
+
   def default_config
     super.merge(:model => "Order")
   end
@@ -88,7 +97,8 @@ class AddOrderForm < Netzke::Basepack::FormPanel
           {:name => :product_passport__purchase_place__name, :xtype => :selecttriggerfield,
              :selection_component => :select_purchase_place, :allowNew => true},
           {:name => :product_passport__purchased_at, :xtype => :datefield, :format => "d.m.y"},
-          {:name => :product_passport__dealer__name, :xtype => :autosuggest, :allowNew => true}]
+          {:name => :product_passport__dealer__name, :xtype => :selecttriggerfield,
+            :selection_component => :select_dealer, :allowNew => true}]
       customer_fields = [
           {:name => :customer__name, :xtype => :autosuggest, :populate_related_fields => true, :allow_blank => false, :allow_new => true},
           {:name => :customer__address, :xtype => :textarea},
@@ -292,7 +302,7 @@ class AddOrderForm < Netzke::Basepack::FormPanel
     logger.debug "Find or create #{klass.name} with #{params.inspect}"
     dict = nil
     dict = klass.find(params[:name]) if is_digit?(params[:name]) and klass.exists?(params[:name])
-    dict = klass.where(:name => params[:name]) unless dict
+    dict = klass.where(:name => params[:name]).first() unless dict
     #dict = klass.create(params) unless dict and not @@prevent_creation_classes.include? klass
     dict
   end
