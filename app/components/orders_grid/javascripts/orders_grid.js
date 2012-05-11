@@ -33,7 +33,9 @@
            this.actions.open.setDisabled(disabled);
            var bbar = this.getDockedItems('pagingtoolbar')[0];
            bbar.child('button[name=createFrom]').setDisabled(disabled);
-           bbar.child('button[name=print]').setDisabled(disabled);
+           var print = bbar.child('button[name=print]');
+           if (print && typeof(print) !== 'undefined')
+            print.setDisabled(disabled);
         }, this);
         //create_from menu
     },
@@ -49,7 +51,7 @@
           console.debug(bbar);
           if (bbar){
             var pbutton = bbar.child('button[name=print]');
-            if (selections[0]){
+            if (selections[0] && pbutton && typeof(pbutton) !== 'undefined'){
                 this.loadPrintButtonOptions(pbutton, selections[0].get('id'));
             }
           }

@@ -93,6 +93,168 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
   end
 
   def configuration
+    @user = Netzke::Core.current_user
+    general_tabs = [
+                                      { :title => "Начальные сведения",  :flex => 1,
+                                        :items => [
+                                          {:name => :repair_type__name, :read_only => true},
+                                          {:name => :number, :read_only => true},
+                                          {:name => :ticket, :read_only => true},
+                                          {:name => :status__name},
+                                          {:name => :manager__display_name, :xtype => :textfield, :read_only => true, :width => 300}
+                                      ]},
+                                      { :title => "Паспорт изделия", :defaults => {:read_only => true, :xtype => :textfield},
+                                        :items => [
+                                            {:name => :product_passport__producer__name, :read_only => true},
+                                            {:name => :product_passport__product__name, :read_only => true},
+                                            {:name => :product_passport__factory_number, :read_only => true},
+                                            {:name => :product_passport__guarantee_stub_number, :read_only => true},
+                                            {:name => :product_passport__purchase_place__name, :read_only => true},
+                                            {:name => :product_passport__purchased_at_str, :read_only => true,
+                                              :format => 'd.m.Y', :submit_format => 'Y-m-d'}, #:xtype => :datefield, :format => 'd.m.y'
+                                            {:name => :product_passport__dealer__name, :read_only => true}
+                                        ]
+                                      },
+                                      {
+                                          :title => "Атрибуты заказа",
+                                          :items => [{
+                                              :layout => :hbox, :border => false, :defaults => {:border => false},
+                                              :items => [
+                                                  {
+                                                      :flex => 1, :defaults => {:anchor => "-8"},
+                                                      :items => [
+                                                          {:name => :complects__name, :xtype => :netzkeboxselect, :read_only => true,
+                                                            :hide_trigger => true, :height => 110, :auto_load_store => true},
+                                                          {:name => :defects__name, :xtype => :netzkeboxselect, :read_only => true,
+                                                            :hide_trigger => true, :height => 140, :auto_load_store => true},
+                                                          {:name => :internal_states__name, :xtype => :netzkepopupselect, :height => 140,
+                                                            :auto_load_store => true, :selection_component => :select_internal_state}
+                                                      ]
+                                                  },
+                                                  {
+                                                      :flex => 1, :border => false, :defaults => {:anchor => "100%"},
+                                                      :items => [
+                                                          {:name => :applied_at, :format => 'd.m.Y'},
+                                                          {:name => :plan_deliver_at, :format => 'd.m.Y'},
+                                                          {:name => :actual_deliver_at, :format => 'd.m.Y'},
+                                                          {:name => :deliver_manager__name, :scope => :active_and_in_current_organization},
+                                                          {:name => :guarantee_case, :xtype => :numericfield},
+                                                          {:name => :external_states__name, :xtype => :netzkepopupselect, :height => 140,
+                                                            :auto_load_store => true, :selection_component => :select_external_state},
+                                                          {:name => :external_state_note, :xtype => :textarea, :height => 140}
+                                                      ]
+                                                  }
+                                              ]
+                                          }]
+                                      }
+                                  ]
+    general_tabs << {
+                                              :flex => 1,
+                                              :title => "Заказчик",
+                                              :items => [
+                                                  { :name => :customer__name, :read_only => true },
+                                                  { :name => :customer__address, :read_only => true },
+                                                  { :name => :customer__phone, :read_only => true },
+                                                  { :name => :customer__email, :read_only => true },
+                                                  { :name => :customer__passport, :read_only => true }
+                                              ]
+                                          } if @user.has_no_role_engineer?
+    general_items = [
+                              {:xtype => :tabpanel, :align => "stretch", :body_padding => 5, :plain => true, :active_tab => 0,
+                              :items => general_tabs}
+                          ]
+    cost_tab = {
+                          :title => "Стоимость",
+                          :items => [
+                            {:name => :total_amount, :xtype => :numericfield, :read_only => true,
+                              :currency_symbol => 'руб.', :currency_at_end => true},
+                            {:name => :discount, :xtype => :numericfield},
+                            {:name => :discount_type, :xtype => :combo,
+                              :store => Order.discount_types.map{ |k,v| [k,v]}},
+                            {:name => :discount_ground, :xtype => :textarea},
+                            {:name => :total_amount_with_discount, :xtype => :numericfield, :read_only => true,
+                                                      :currency_symbol => 'руб.', :currency_at_end => true}
+                          ]
+                      }
+    service_tab = {
+                          :title => "Сервис",
+                          :items => [
+                              {
+                                  :layout => :hbox, :align => "stretch", :pack => 'start', :border => false, :items => [
+                                  {
+                                      :flex => 1, :border => false, :defaults => {:anchor => "-8"},
+                                      :items => [
+                                          {:name => :service_info }
+                                      ]
+                                  },
+                                  {
+                                      :flex => 1, :border => false, :defaults => {:anchor => "-8"}, :items => [
+                                        {:name => :service_state},
+                                        {:name => :service_note},
+                                        :service_phone_agreement
+                                    ]
+                                  }
+                                ]
+                              }
+                          ]
+                      }
+    order_tabs = [
+                      {
+                          :title => "Сведения",
+                          :items => general_items
+                      },
+                      {
+                          :title => "Диагностика",
+                          :items => [
+                              {
+                                  :layout => :hbox, :align => "stretch", :border => false, :flex => 1, :items => [
+                                    {
+                                        :flex => 1, :border => false, :defaults => {:anchor => "-8"},
+                                        :items => [
+                                            {:name => :diag_manager__name},
+                                            {:field_label => Order.human_attribute_name("diag_price"), :name => :diagnostic_activity__price,
+                                             :xtype => :selecttriggerfield, :selection_component => :select_diagnostic_activity,
+                                             :display_field => :name},
+                                            #{:name => :grounds__name, :xtype => :netzkepopupselect, :height => 140,
+                                            #  :selection_component => :select_ground, :auto_load_store => true},
+                                            {:name => :diagnosed_at},
+                                            {:name => :actual_defect, :xtype => :textarea, :height => 140}
+                                        ]
+                                    },
+                                    {
+                                        :flex => 1, :border => false, :defaults => {:anchor => "100%"},
+                                        :items => [
+                                            #{:name => :goals__name, :xtype => :netzkepopupselect, :height => 140,
+                                            #  :selection_component => :select_goal, :auto_load_store => true},
+                                            {:name => :result, :xtype => :textarea, :height => 160}
+                                        ]
+                                    }
+                                ]
+                              }
+                          ]
+                      },
+                      {
+                          :title => I18n.t('activerecord.models.activity'),
+                          :items => [
+                              :activities.component(:title => "Работы"),
+                              { :layout => :fit, :border => false,
+                                :bodyPadding => "10 0 0 0",
+                                :items => [
+                                  {:name => :work_performed_at, :format => "d.m.y"},
+                                  {:name => :engineer__name, :xtype => :selecttriggerfield,
+                                    :selection_component => :select_person, :auto_load_store => true}
+                                  #{:name => :prior_cost, :xtype => :numericfield, :currency_symbol => 'руб.', :currency_at_end => true,
+                                  #        :allow_negative => false, :step => 10},
+                                  #{:name => :maximum_cost, :xtype => :numericfield, :currency_symbol => 'руб.', :currency_at_end => true,
+                                  #        :allow_negative => false, :step => 10}
+                                ]
+                              }
+                          ]
+                      },
+                      :parts.component(:title => I18n.t('activerecord.models.spare_part'))
+                  ]
+    order_tabs << cost_tab if @user.has_no_role_engineer?
+    order_tabs << service_tab
     super.merge(
       :model => "Order",
       #:record_id => session[:selected_order_id],
@@ -100,162 +262,7 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
           {
               :xtype => :tabpanel, :flex => 1, :align => "stretch", :body_padding => 5, :plain => true, :active_tab => 0,
               :layout => :fit,
-              :items => [
-                  {
-                      :title => "Сведения",
-                      :items => [
-                          {:xtype => :tabpanel, :align => "stretch", :body_padding => 5, :plain => true, :active_tab => 0,
-                          :items => [
-                              { :title => "Начальные сведения",  :flex => 1,
-                                :items => [
-                                  {:name => :repair_type__name, :read_only => true},
-                                  {:name => :number, :read_only => true},
-                                  {:name => :ticket, :read_only => true},
-                                  {:name => :manager__display_name, :xtype => :textfield, :read_only => true, :width => 300}
-                              ]},
-                              { :title => "Паспорт изделия", :defaults => {:read_only => true, :xtype => :textfield},
-                                :items => [
-                                    {:name => :product_passport__producer__name, :read_only => true},
-                                    {:name => :product_passport__product__name, :read_only => true},
-                                    {:name => :product_passport__factory_number, :read_only => true},
-                                    {:name => :product_passport__guarantee_stub_number, :read_only => true},
-                                    {:name => :product_passport__purchase_place__name, :read_only => true},
-                                    {:name => :product_passport__purchased_at_str, :read_only => true,
-                                      :format => 'd.m.Y', :submit_format => 'Y-m-d'}, #:xtype => :datefield, :format => 'd.m.y'
-                                    {:name => :product_passport__dealer__name, :read_only => true}
-                                ]
-                              },
-                              {
-                                  :title => "Атрибуты заказа",
-                                  :items => [{
-                                      :layout => :hbox, :border => false, :defaults => {:border => false},
-                                      :items => [
-                                          {
-                                              :flex => 1, :defaults => {:anchor => "-8"},
-                                              :items => [
-                                                  {:name => :complects__name, :xtype => :netzkeboxselect, :read_only => true,
-                                                    :hide_trigger => true, :height => 110, :auto_load_store => true},
-                                                  {:name => :defects__name, :xtype => :netzkeboxselect, :read_only => true,
-                                                    :hide_trigger => true, :height => 140, :auto_load_store => true},
-                                                  {:name => :internal_states__name, :xtype => :netzkepopupselect, :height => 140,
-                                                    :auto_load_store => true, :selection_component => :select_internal_state}
-                                              ]
-                                          },
-                                          {
-                                              :flex => 1, :border => false, :defaults => {:anchor => "100%"},
-                                              :items => [
-                                                  {:name => :applied_at, :format => 'd.m.Y'},
-                                                  {:name => :plan_deliver_at, :format => 'd.m.Y'},
-                                                  {:name => :actual_deliver_at, :format => 'd.m.Y'},
-                                                  {:name => :deliver_manager__name, :scope => :active_and_in_current_organization},
-                                                  {:name => :guarantee_case, :xtype => :numericfield},
-                                                  {:name => :external_states__name, :xtype => :netzkepopupselect, :height => 140,
-                                                    :auto_load_store => true, :selection_component => :select_external_state},
-                                                  {:name => :external_state_note, :xtype => :textarea, :height => 140}
-                                              ]
-                                          }
-                                      ]
-                                  }]
-                              },
-                              {
-                                  :flex => 1,
-                                  :title => "Заказчик",
-                                  :items => [
-                                      { :name => :customer__name, :read_only => true },
-                                      { :name => :customer__address, :read_only => true },
-                                      { :name => :customer__phone, :read_only => true },
-                                      { :name => :customer__email, :read_only => true },
-                                      { :name => :customer__passport, :read_only => true }
-                                  ]
-                              }
-                          ]}
-                      ]
-                  },
-                  {
-                      :title => "Диагностика",
-                      :items => [
-                          {
-                              :layout => :hbox, :align => "stretch", :border => false, :flex => 1, :items => [
-                                {
-                                    :flex => 1, :border => false, :defaults => {:anchor => "-8"},
-                                    :items => [
-                                        {:name => :diag_manager__name},
-                                        {:field_label => Order.human_attribute_name("diag_price"), :name => :diagnostic_activity__price,
-                                         :xtype => :selecttriggerfield, :selection_component => :select_diagnostic_activity,
-                                         :display_field => :name},
-                                        #{:name => :grounds__name, :xtype => :netzkepopupselect, :height => 140,
-                                        #  :selection_component => :select_ground, :auto_load_store => true},
-                                        {:name => :diagnosed_at},
-                                        {:name => :actual_defect, :xtype => :textarea, :height => 140}
-                                    ]
-                                },
-                                {
-                                    :flex => 1, :border => false, :defaults => {:anchor => "100%"},
-                                    :items => [
-                                        #{:name => :goals__name, :xtype => :netzkepopupselect, :height => 140,
-                                        #  :selection_component => :select_goal, :auto_load_store => true},
-                                        {:name => :result, :xtype => :textarea, :height => 160}
-                                    ]
-                                }
-                            ]
-                          }
-                      ]
-                  },
-                  {
-                      :title => I18n.t('activerecord.models.activity'),
-                      :items => [
-                          :activities.component(:title => "Работы"),
-                          { :layout => :fit, :border => false,
-                            :bodyPadding => "10 0 0 0",
-                            :items => [
-                              {:name => :work_performed_at, :format => "d.m.y"},
-                              {:name => :engineer__name, :xtype => :selecttriggerfield,
-                                :selection_component => :select_person, :auto_load_store => true}
-                              #{:name => :prior_cost, :xtype => :numericfield, :currency_symbol => 'руб.', :currency_at_end => true,
-                              #        :allow_negative => false, :step => 10},
-                              #{:name => :maximum_cost, :xtype => :numericfield, :currency_symbol => 'руб.', :currency_at_end => true,
-                              #        :allow_negative => false, :step => 10}
-                            ]
-                          }
-                      ]
-                  },
-                  :parts.component(:title => I18n.t('activerecord.models.spare_part')),
-                  {
-                      :title => "Стоимость",
-                      :items => [
-                        {:name => :total_amount, :xtype => :numericfield, :read_only => true,
-                          :currency_symbol => 'руб.', :currency_at_end => true},
-                        {:name => :discount, :xtype => :numericfield},
-                        {:name => :discount_type, :xtype => :combo,
-                          :store => Order.discount_types.map{ |k,v| [k,v]}},
-                        {:name => :discount_ground, :xtype => :textarea},
-                        {:name => :total_amount_with_discount, :xtype => :numericfield, :read_only => true,
-                                                  :currency_symbol => 'руб.', :currency_at_end => true}
-                      ]
-                  },
-                  {
-                      :title => "Сервис",
-                      :items => [
-                          {
-                              :layout => :hbox, :align => "stretch", :pack => 'start', :border => false, :items => [
-                              {
-                                  :flex => 1, :border => false, :defaults => {:anchor => "-8"},
-                                  :items => [
-                                      {:name => :service_info }
-                                  ]
-                              },
-                              {
-                                  :flex => 1, :border => false, :defaults => {:anchor => "-8"}, :items => [
-                                    {:name => :service_state},
-                                    {:name => :service_note},
-                                    :service_phone_agreement
-                                ]
-                              }
-                            ]
-                          }
-                      ]
-                  }
-              ]
+              :items => order_tabs
           }
       ]
     )
@@ -290,8 +297,11 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
 
   def configure_bbar(c)
     user = Netzke::Core.current_user
-    c[:bbar] = [:apply.action, {:text => 'Печать', :icon => '/images/icons/printer.png', :name => 'print', :menu => []}]
-    c[:bbar] << :recalc.action if user.has_no_role_engineer?
+    c[:bbar] = [:apply.action]
+    if user.has_no_role_engineer?
+      c[:bbar] << {:text => 'Печать', :icon => '/images/icons/printer.png', :name => 'print', :menu => []}
+      c[:bbar] << :recalc.action
+    end
   end
 
   def netzke_submit(params)

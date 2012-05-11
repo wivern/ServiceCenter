@@ -54,11 +54,11 @@ class Person < ActiveRecord::Base
       }
       return false
     elsif match = matches_dynamic_not_role_check?(method_name)
-        no_role = true
         tokenize_roles(match.captures.first).each{|role|
-          no_role = no_role or not roles.include?(role.downcase.to_s)
+          logger.debug "checking #{role} in #{roles.inspect}"
+          return false if roles.include?(role.downcase.to_s)
         }
-      return no_role
+      return true
     else
       super
     end

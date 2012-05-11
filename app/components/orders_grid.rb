@@ -37,7 +37,9 @@ class OrdersGrid < Netzke::Basepack::GridPanel
   end
 
   def configuration
-    @ability = Ability.new Netzke::Core.current_user
+
+    @user = Netzke::Core.current_user
+    @ability = Ability.new @user
     super
   end
 
@@ -57,14 +59,16 @@ class OrdersGrid < Netzke::Basepack::GridPanel
     bbar = []
     bbar << { :text => 'Создать из', :name => 'createFrom', :icon => :link_add.icon, :menu => create_from_menu, :disabled => true} << "-" if @ability.can? :create, Order
     bbar << :search.action << "-" << :open.action
-    bbar << {:text => 'Печать', :icon => :printer.icon, :name => 'print', :menu => [], :disabled => true}
+    bbar << {:text => 'Печать', :icon => :printer.icon, :name => 'print', :menu => [], :disabled => true} if @user.has_no_role_engineer?
     bbar << "-" <<  :edit.action << :apply.action if @ability.can?(:update, Order)
     bbar << :del.action if @ability.can?(:delete, Order)
     bbar
   end
 
   def default_context_menu
-    [:open.action, {:text => 'Печать', :icon => '/images/icons/printer.png', :name => 'print', :menu => []}] # *super
+    menu = [:open.action]
+    menu << {:text => 'Печать', :icon => '/images/icons/printer.png', :name => 'print', :menu => []} if @user.has_no_role_engineer?
+    menu
   end
 
   component :add_order_form do
