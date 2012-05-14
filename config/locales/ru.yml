@@ -58,6 +58,7 @@ ru:
         customer__passport: Паспорт
         defect: "Заявленная неисправность"
         defects__name: Заявленная неисправность
+        defect_note: "Заявленная неисправность (примечание)"
         diag_manager__name: Диагностику провел
         diag_price: Стоимость диагностики
         diagnosed_at: Дата проведения диагностики
@@ -66,7 +67,7 @@ ru:
         discount_ground: Основание
         engineer__name: Сервис-инженер, выполнивший работы
         external_state: "Внешнее состояние"
-        external_state_note: "Дополнительно"
+        external_state_note: "Внешнее состояние (примечание)"
         external_states__name: "Внешнее состояние"
         internal_state: "Внутреннее состояние"
         internal_states__name: "Внутреннее состояние"

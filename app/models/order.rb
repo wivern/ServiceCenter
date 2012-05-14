@@ -40,7 +40,7 @@ class Order < ActiveRecord::Base
     where("Orders.organization_id = ?", Netzke::Core.current_user.organization)
   }
 
-  scope :inherited, lambda{|order|
+  scope :inherited_from, lambda{|order|
     where("created_from_id = ?", order.id)
   }
 
