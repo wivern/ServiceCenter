@@ -7,7 +7,7 @@ gem 'rails-i18n'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'pg'
-gem 'netzke-core', :git => "git://github.com/skozlov/netzke-core.git"
+gem 'netzke-core', '0.7.4', :git => "git://github.com/skozlov/netzke-core.git", :tag => 'v0.7.4'
 #gem 'netzke-basepack', :path => "/home/vitaly/RubymineProjects/netzke-basepack", :group => [:development, :test]
 gem 'netzke-basepack', :git => "git@github.com:wivern/netzke-basepack.git"
 gem 'netzke-communitypack'

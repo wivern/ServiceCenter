@@ -91,7 +91,7 @@ class ServiceCenterApp < TabbedApp #Netzke::Basepack::AuthApp
             :scope => :by_organization,
             #:bbar => [:add_order.action, '-', :search.action],
             :columns => [
-                {:name => :repair_type__name, :read_only => true},
+                {:name => :repair_type__name, :read_only => true, :filter => {:type => :list}},
                 {:name => :number, :read_only => true, :hidden => true},
                 {:name => :product_passport__product__name, :read_only => true,
                   :sorting_scope => :order_by_product},
@@ -100,8 +100,12 @@ class ServiceCenterApp < TabbedApp #Netzke::Basepack::AuthApp
                 {:name => :product_passport__factory_number, :read_only => true},
                 {:name => :plan_deliver_at},
                 {:name => :customer__name, :read_only => true},
-                {:name => :manager__display_name, :read_only => true},
-                :actual_deliver_at, :status__name, :service_note]
+                {:name => :manager__display_name, :read_only => true, :filterable => true,
+                  :filter => {:type => :list, :value_model => 'Person', :data_index => 'manager__display_name',
+                              :scope => :active_and_in_current_organization}},
+                :actual_deliver_at,
+                {:name => :status__name, :filter => {:type => :list}},
+                :service_note]
 
   component :maintenance,
         :class_name => "EngineerWorkAreaPanel",
