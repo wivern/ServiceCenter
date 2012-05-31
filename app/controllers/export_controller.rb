@@ -8,7 +8,7 @@ class ExportController < ApplicationController
   def index
     @from = Date.parse params[:from]
     @till = params[:till] || Date.today
-    @orders = Order.completed.by_deliver_date(@from, @till) + Order.ready.by_work_performed_date(@from, @till)
+    @orders = Order.performed.completed.by_deliver_date(@from, @till) + Order.ready.by_work_performed_date(@from, @till)
     render :xml => { :params => {
         :from => @from,
         :till => @till },
