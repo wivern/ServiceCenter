@@ -50,6 +50,7 @@ class Order < ActiveRecord::Base
 
   scope :completed, where(:status_id => 15) #TODO change to workflow state completed
   scope :ready, where(:status_id => 14)
+  scope :performed, where(:repair_type_id => [1,3]) #TODO change to repair type property
   scope :by_work_performed_date, lambda{ |start, till|
     where("work_performed_at between ? and ?", start, till) }
   scope :by_deliver_date, lambda{|start, till|

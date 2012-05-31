@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120327121008) do
+ActiveRecord::Schema.define(:version => 20120514132503) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(:version => 20120327121008) do
     t.integer "complect_id"
   end
 
-  add_index "complects_orders", %w("complect_id" "order_id"), :name => "index_complects_orders_on_complect_id_and_order_id", :unique => true
+  add_index "complects_orders", ["complect_id", "order_id"], :name => "index_complects_orders_on_complect_id_and_order_id", :unique => true
 
   create_table "currencies", :force => true do |t|
     t.string   "name"
@@ -202,6 +202,7 @@ ActiveRecord::Schema.define(:version => 20120327121008) do
     t.integer  "diagnostic_activity_id"
     t.text     "external_state_note"
     t.boolean  "service_phone_agreement",                               :default => false
+    t.text     "defect_note"
   end
 
   add_index "orders", ["created_from_id"], :name => "index_orders_on_created_from_id"
