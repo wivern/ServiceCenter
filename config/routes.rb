@@ -11,6 +11,7 @@ ServiceCenter::Application.routes.draw do
 
   match '/people' => "welcome#index"
   match '/print/:report/:id' => "docs/prints#print"
+  match '/status/:ticket' => "status#index", :as => :status
   get '/analytics.:format' => "analysis#index", :as => :analysis
 
   get "welcome/index"
