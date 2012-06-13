@@ -121,7 +121,8 @@ components:
     :persistance: true
     :force_fit: true
     :columns:
-      :name: !!null 
+      :name: !!null
+      :customer_info:
   complect_component:
     :class_name: DictionaryGridPanel
     :enable_edit_in_form: false

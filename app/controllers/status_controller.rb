@@ -5,7 +5,7 @@ class StatusController < ApplicationController
     begin
       order = Order.find_by_ticket(params[:ticket])
       if order
-        render :text => order.status ? order.status.name : "Заказ принят"
+        render :text => order.status ? order.status.status_name : "Заказ принят"
       else
         render :text => "Заказ не найден"
       end

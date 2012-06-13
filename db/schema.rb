@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120514132503) do
+ActiveRecord::Schema.define(:version => 20120613102954) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -345,6 +345,7 @@ ActiveRecord::Schema.define(:version => 20120514132503) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "customer_info"
   end
 
 end

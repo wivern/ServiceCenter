@@ -156,6 +156,7 @@ ru:
         currency__name: Валюта
       status:
         name: Наименование
+        customer_info: Для клиента
     errors:
       attributes:
         name:
