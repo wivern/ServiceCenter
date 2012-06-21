@@ -29,7 +29,7 @@ module ServiceCenter
         if File.exists?(dir) and File.directory?(dir)
           mask = options[:mask] || '*'
           Dir.glob(File.join(dir, mask)).each { |f|
-            File.delete(f) if self.do_import(f, :format => File.extname(f)[1..-1].to_sym, :encoding => "Cp1251")
+            File.delete(f) if self.do_import(f, :format => File.extname(f)[1..-1].downcase.to_sym, :encoding => "Cp1251")
           }
         else
           logger.error "Check that #{dir} not exists or not a directory"
