@@ -40,11 +40,24 @@ class ServiceCenterApp < TabbedApp #Netzke::Basepack::AuthApp
                         :text => 'Navigation',
                         :expanded => true,
                         :children => root_items
-                    }
+                    },
                 }]
             }]
         }]
     )
+  end
+
+  def main_panel_config(overrides = {})
+    {
+            :item_id => 'main_panel',
+            :xtype => 'tabpanel',
+            :region => 'center',
+            :deferredRender => false,
+            :autoScroll => true,
+            :margins => '0 4 4 0',
+            :activeTab => 0,
+            :items => [ :dashboard.component(:title => "Панель управления")]
+        }.merge(overrides)
   end
 
   Dir.glob(File.join(File.dirname(__FILE__), "javascripts", "*.js")).sort.each { |f|
@@ -55,6 +68,12 @@ class ServiceCenterApp < TabbedApp #Netzke::Basepack::AuthApp
   js_include "#{File.dirname(__FILE__)}/dialog_trigger_field/javascripts/dialog_trigger_field.js"
 
   #Components
+  component :dashboard do
+    {
+        :class_name => "DashboardPane"
+    }
+  end
+
   component :reset_password_form do
     form_config = {
         :class_name => "Netzke::Basepack::FormPanel",
@@ -139,6 +158,14 @@ class ServiceCenterApp < TabbedApp #Netzke::Basepack::AuthApp
         ]
 
   action :about, :icon => :information
+  action :home, :icon => :house
+
+  js_method :on_home, <<-JS
+    function (){
+      //document.location = '/';
+      this.addTab('DashboardPane', {});
+    }
+  JS
 
   def menu
     super.tap do |menu|

@@ -11,6 +11,8 @@
        this.mainPanel.on("added", function(cmp, container, pos, eopts){
           console.debug("added " + Ext.getClassName(cmp));
        });
+       console.debug('adding dashboard');
+       //this.addTab('dashboard');
     },
     select_by_token: function(token){
         console.debug("select by token", token);

@@ -68,7 +68,7 @@
                 }});
             }
         } else {
-            this.mainPanel.removeAll();
+//            this.mainPanel.removeAll();
         }
     }
 }
