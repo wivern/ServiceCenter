@@ -8,6 +8,7 @@ class ServiceCenterApp < TabbedApp #Netzke::Basepack::AuthApp
     @ability = Ability.new Netzke::Core.current_user
     sup = super
     sup.merge(
+        :current_user => Netzke::Core.current_user.id,
         :items => [
             #{
             #           :region => :north,
@@ -266,7 +267,7 @@ class ServiceCenterApp < TabbedApp #Netzke::Basepack::AuthApp
 
   js_method :on_reset_password, <<-JS
     function(){
-        var recordId = #{Netzke::Core.current_user.id};
+        var recordId = this.currentUser;
         this.loadNetzkeComponent({
            name: 'reset_password_form',
            params: {record_id: recordId},
