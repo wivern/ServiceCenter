@@ -28,6 +28,10 @@ dictionaries:
     text: activerecord.models.repair_type
     leaf: true
     component: repair_type_component
+  location:
+    text: activerecord.models.location
+    leaf: true
+    component: location_component
   purchase:
     text: views.navigation.purchase
     expanded: true
@@ -121,8 +125,8 @@ components:
     :persistance: true
     :force_fit: true
     :columns:
-      :name: !!null
-      :customer_info:
+      :name: !!null 
+      :customer_info: !!null 
   complect_component:
     :class_name: DictionaryGridPanel
     :enable_edit_in_form: false
@@ -232,11 +236,11 @@ components:
     :persistance: true
     :force_fit: true
     :columns:
-      :code:
-      :name:
-      :price:
-      :currency__name:
-      :diagnostic:
+      :code: !!null 
+      :name: !!null 
+      :price: !!null 
+      :currency__name: !!null 
+      :diagnostic: !!null 
   currency_component:
     :class_name: Netzke::Basepack::GridPanel
     :model: Currency
@@ -274,11 +278,17 @@ components:
     :persistance: true
     :force_fit: true
     :columns:
-      :name: !!null
-      :roles_names:
+      :name: !!null 
+      :roles_names: !!null 
   person_status_component:
     :class_name: Netzke::Basepack::GridPanel
     :model: PersonStatus
+    :lazy_loading: true
+    :persistance: true
+    :force_fit: true
+  location_component:
+    :class_name: DictionaryGridPanel
+    :model: OrderLocation
     :lazy_loading: true
     :persistance: true
     :force_fit: true

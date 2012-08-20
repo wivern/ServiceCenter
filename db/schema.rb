@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120613102954) do
+ActiveRecord::Schema.define(:version => 20120820095435) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -138,6 +138,12 @@ ActiveRecord::Schema.define(:version => 20120613102954) do
 
   add_index "internal_states_orders", ["internal_state_id", "order_id"], :name => "index_internal_states_orders_on_internal_state_id_and_order_id", :unique => true
 
+  create_table "locations", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "numerators", :force => true do |t|
     t.string  "name",                          :null => false
     t.integer "repair_type_id"
@@ -203,6 +209,7 @@ ActiveRecord::Schema.define(:version => 20120613102954) do
     t.text     "external_state_note"
     t.boolean  "service_phone_agreement",                               :default => false
     t.text     "defect_note"
+    t.integer  "location_id"
   end
 
   add_index "orders", ["created_from_id"], :name => "index_orders_on_created_from_id"

@@ -142,7 +142,8 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
                                                           {:name => :guarantee_case, :xtype => :numericfield},
                                                           {:name => :external_states__name, :xtype => :netzkepopupselect, :height => 140,
                                                             :auto_load_store => true, :selection_component => :select_external_state},
-                                                          {:name => :external_state_note, :xtype => :textarea, :height => 140}
+                                                          {:name => :external_state_note, :xtype => :textarea, :height => 140},
+                                                          {:name => :order_location__name}
                                                       ]
                                                   }
                                               ]

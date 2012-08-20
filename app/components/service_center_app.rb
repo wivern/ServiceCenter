@@ -123,6 +123,7 @@ class ServiceCenterApp < TabbedApp #Netzke::Basepack::AuthApp
                 {:name => :manager__display_name, :read_only => true, :filterable => true,
                   :filter => {:type => :list, :value_model => 'Person', :data_index => 'manager__display_name',
                               :scope => :active_and_in_current_organization}},
+                {:name => :order_location__name, :filter => {:type => :list}},
                 :actual_deliver_at,
                 {:name => :status__name, :filter => {:type => :list}},
                 :service_note]

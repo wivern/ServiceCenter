@@ -18,10 +18,13 @@ class AnalyticsPane < Netzke::Basepack::BorderLayoutPanel
         :columns => [
             :ticket, :applied_at, :product_passport__product__name,
             :product_passport__factory_number, :product_passport__producer__name,
-            :repair_type__name, :status__name, :manager__name,
+            :repair_type__name, :status__name,
+            :manager__name,
             :engineer__name, :activities_amount, :activities_count, :spare_parts_amount,
             :total_amount, :total_amount_with_discount, :diag_price, :work_performed_at,
-            :actual_deliver_at, :customer__name, :spare_parts_printable,
+            :actual_deliver_at, :customer__name,
+            :order_location__name,
+            :spare_parts_printable,
             :reason, :activities_printable
         ],
         :title => "Заказы",
@@ -42,6 +45,7 @@ class AnalyticsPane < Netzke::Basepack::BorderLayoutPanel
           rel = rel.where("producer_id = ?", data[:producer]) if data[:producer]
           rel = rel.where("manager_id = ?", data[:manager]) if data[:manager]
           rel = rel.where("engineer_id = ?", data[:engineer]) if data[:engineer]
+          rel = rel.where("location_id = ?", data[:order_location]) if data[:order_location]
           rel.order(:ticket)
         }
     }

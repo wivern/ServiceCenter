@@ -24,6 +24,7 @@ class Order < ActiveRecord::Base
   has_many :spare_parts, :through => :order_spare_parts
 
   has_one :product, :through => :product_passport
+  belongs_to :order_location, :foreign_key => "location_id"
 
   belongs_to :created_from, :class_name => "Order"
   has_many :inherited, :class_name => "Order", :foreign_key => :created_from_id

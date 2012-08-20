@@ -26,7 +26,8 @@ class AnalyserForm < Netzke::Base
           {:field_label => Status.human_name, :name => :status, :model => :status, :xtype => :scremotecombo},
           {:field_label => Producer.human_name, :name => :producer, :model => :producer, :xtype => :scremotecombo},
           {:field_label => "Менеджер", :name => :manager, :model => :person, :xtype => :scremotecombo},
-          {:field_label => "Сервис-инженер", :name => :engineer, :scope => :active, :model => :person, :xtype => :scremotecombo}
+          {:field_label => "Сервис-инженер", :name => :engineer, :scope => :active, :model => :person, :xtype => :scremotecombo},
+          {:field_label => OrderLocation.human_name, :name => :order_location, :model => :order_location, :xtype => :scremotecombo}
       ]
     end
   end

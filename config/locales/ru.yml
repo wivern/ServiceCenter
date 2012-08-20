@@ -34,6 +34,8 @@ ru:
         name: Наименование
       ground:
         name: Наименование
+      location:
+        name: Наименование
       order:
         number: "№ заказа"
         ticket: "№ квитанции"
@@ -82,6 +84,7 @@ ru:
         service_note: Примечание
         guarantee_case: Гарантия (мес.)
         deliver_manager__name: Выдал
+        order_location__name: Местоположение
         product_passport__factory_number: "Заводской номер"
         product_passport__producer__name: "Производитель"
         product_passport__product__name: "Название устройства"
@@ -90,6 +93,7 @@ ru:
         product_passport__purchased_at: "Дата покупки"
         product_passport__purchased_at_str: "Дата покупки"
         product_passport__dealer__name: "Поступило от дилера"
+        reason: "Причина обращения"
         service_state: Состояние
         service_info: Информация
         service_note: Примечание
@@ -179,6 +183,7 @@ ru:
       internal_state: Внутреннее состояние
       goal: Цель диагностики
       ground: Основание диагностики
+      order_location: Местоположение
       order: Заказ
       order_spare_part: Деталь
       organization: Организация
