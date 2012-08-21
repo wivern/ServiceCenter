@@ -34,7 +34,7 @@ ru:
         name: Наименование
       ground:
         name: Наименование
-      location:
+      order_location:
         name: Наименование
       order:
         number: "№ заказа"

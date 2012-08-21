@@ -29,7 +29,7 @@ dictionaries:
     leaf: true
     component: repair_type_component
   location:
-    text: activerecord.models.location
+    text: activerecord.models.order_location
     leaf: true
     component: location_component
   purchase:
