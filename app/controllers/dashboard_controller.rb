@@ -22,6 +22,14 @@ class DashboardController < ApplicationController
     respond_with collect_products #<< {:name => 'others', :order_count => others}
   end
 
+  def quarterly_scores
+    person = Netzke::Core.current_user
+    today = Date.today
+    scores = [today - 2.months, today - 1.month, today].map{|date| { :month => I18n.t("date.abbr_month_names")[date.month],
+                                                            :score => person.scored_at(date) } }
+    respond_with scores
+  end
+
   private
   def collect_orders_with_types
     @orders.collect{|o| { :repair_type => RepairType.find(o.repair_type_id).name, :order_count => o.order_count.to_i } }

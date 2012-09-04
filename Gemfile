@@ -51,9 +51,6 @@ gem 'rufus-scheduler'
 # and rake tasks are available in development mode:
  group :development, :test do
    gem 'thin'
-   gem "rspec-rails", "~> 2.6"
-   gem 'factory_girl_rails'
-   gem 'cucumber-rails'
 #   gem 'webrat'
  end
 
@@ -62,8 +59,12 @@ gem 'rufus-scheduler'
 #end
 
 group :test do
+  gem "rspec-rails", "~> 2.6"
+  gem 'factory_girl_rails', "~> 4.0"
   gem 'capybara'
   gem 'launchy'
   gem 'database_cleaner'
   gem 'selenium-webdriver'
+  gem 'cucumber-rails'
+  gem 'faker'
 end

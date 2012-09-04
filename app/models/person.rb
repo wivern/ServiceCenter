@@ -12,6 +12,13 @@ class Person < ActiveRecord::Base
   belongs_to :organization
   belongs_to :person_status
 
+  has_many :performed_orders, :class_name => "Order", :foreign_key => "engineer_id", :include => :status,
+      :conditions => "statuses.performed = TRUE" do
+    def filter(date)
+      where("work_performed_at between ? and ?", date.beginning_of_month, date.end_of_month)
+    end
+  end
+
   delegate :roles, :to => :position
 
   scope :active, joins("LEFT OUTER JOIN person_statuses ON person_statuses.id = people.person_status_id").merge(PersonStatus.not_fired)
@@ -24,6 +31,11 @@ class Person < ActiveRecord::Base
 
   def fired?
     person_status && person_status.prevent_sign_in
+  end
+
+  def scored_at(date = nil)
+    date ||= Date.today
+    performed_orders.filter(date).inject(0){|total, o| total + o.activities_score }
   end
 
   def display_name

@@ -88,11 +88,13 @@ GEM
     erubis (2.6.6)
       abstract (>= 1.0.0)
     eventmachine (0.12.10)
-    factory_girl (3.2.0)
+    factory_girl (4.0.0)
       activesupport (>= 3.0.0)
-    factory_girl_rails (3.2.0)
-      factory_girl (~> 3.2.0)
+    factory_girl_rails (4.0.0)
+      factory_girl (~> 4.0.0)
       railties (>= 3.0.0)
+    faker (1.0.1)
+      i18n (~> 0.4)
     faraday (0.7.6)
       addressable (~> 2.2)
       multipart-post (~> 1.1)
@@ -259,7 +261,8 @@ DEPENDENCIES
   deep_cloneable (~> 1.2.4)
   devise
   devise_active_directory_authenticatable
-  factory_girl_rails
+  factory_girl_rails (~> 4.0)
+  faker
   launchy
   netzke-basepack!
   netzke-communitypack

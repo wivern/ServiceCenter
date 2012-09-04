@@ -126,7 +126,10 @@ components:
     :force_fit: true
     :columns:
       :name: !!null 
-      :customer_info: !!null 
+      :customer_info: !!null
+      :complete:
+      :ready:
+      :performed:
   complect_component:
     :class_name: DictionaryGridPanel
     :enable_edit_in_form: false
@@ -230,7 +233,7 @@ components:
       :phone: !!null 
       :passport: !!null 
   activity_component:
-    :class_name: DictionaryGridPanel
+    :class_name: ActivitiesGridPanel
     :model: Activity
     :lazy_loading: true
     :persistance: true
@@ -240,7 +243,8 @@ components:
       :name: !!null 
       :price: !!null 
       :currency__name: !!null 
-      :diagnostic: !!null 
+      :diagnostic: !!null
+      :score:
   currency_component:
     :class_name: Netzke::Basepack::GridPanel
     :model: Currency

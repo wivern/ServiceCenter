@@ -157,27 +157,86 @@ class DashboardPane < Netzke::Basepack::Panel
     }
   end
 
+  component :quarterly_scores do
+    {
+        :class_name => "Charts::Chart",
+        :chart_data_url => "/dashboard/quarterly_scores",
+        :theme => "Yellow",
+        :fields => [
+            {:name => 'month', :type => 'string'},
+            {:name => 'score', :type => 'int'}
+        ],
+        :axes => [
+            {
+                :type => 'Numeric',
+                :position => 'left',
+                :fields => ['score'],
+                :title => 'Баллы',
+                :minimum => 0,
+                :decimal => 0
+            },
+            {
+                :type => 'Category',
+                :position => 'bottom',
+                :fields => ['month'],
+                :title => 'Месяц'
+            }
+        ],
+        :series => [
+            {
+                :type => 'column',
+                :stacked => true,
+                :axis => 'left',
+                :yField => 'score',
+                :xField => 'month',
+                :highlight => true,
+                :label => {
+                    :display => 'insideEnd',
+                    :field => 'score',
+                    #:orientation => 'vertical',
+                    :color => '#fff',
+                    :contrast => true,
+                    'text-anchor' => 'middle'
+                },
+                :tips => {
+                    :track_mouse => true,
+                    :width => 125,
+                    :height => 50,
+                    :renderer => <<-JS.l
+                      function(store, item){
+                        this.setTitle(store.data.month + ' : ' + store.data.score)
+                      }
+                    JS
+                }
+            }
+        ]
+    }
+  end
+
   def configuration
     super.tap do |s|
+      chart_items = [
+                        :orders_by_repair_type_chart.component(:width => 450, :height => 300),
+                        :orders_by_status_chart.component(:width => 450, :height => 300),
+                        {
+                            :border => false, :header => false, :layout => {:type => 'vbox', :align => :stretch},
+                            :width => 450, :height => 350,
+                          :items => [
+                            :top_repaired_products.component(:width => 450, :height => 300),
+                            {:xtype => 'label', :text => 'Наиболее ремонтируемые', :style => {
+                                :font => 'bold 16px Arial',
+                                :textAlign => 'center'}
+                            }
+                          ]
+                        }
+
+                    ]
+      chart_items << :quarterly_scores.component(:width => 450, :height => 300) if Netzke::Core.current_user.has_role_engineer?
       s[:items] = [
           {
               :layout => {:type => 'table', :columns => 2},
               :border => false, :plain => true, :width => '100%',
-              :items => [
-                  :orders_by_repair_type_chart.component(:width => 450, :height => 300),
-                  :orders_by_status_chart.component(:width => 450, :height => 300),
-                  {
-                      :border => false, :header => false, :layout => {:type => 'vbox', :align => :stretch},
-                      :width => 450, :height => 350,
-                    :items => [
-                      :top_repaired_products.component(:width => 450, :height => 300),
-                      {:xtype => 'label', :text => 'Наиболее ремонтируемые', :style => {
-                          :font => 'bold 16px Arial',
-                          :textAlign => 'center'}
-                      }
-                    ]
-                  }
-              ]
+              :items => chart_items
           }
       ]
     end

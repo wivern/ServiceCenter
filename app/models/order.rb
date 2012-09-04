@@ -49,8 +49,9 @@ class Order < ActiveRecord::Base
      includes(:product).order("products.name #{dir.to_s}")
   }
 
-  scope :completed, where(:status_id => 15) #TODO change to workflow state completed
-  scope :ready, where(:status_id => 14)
+  scope :completed, includes(:status).where("statuses.complete = true")
+  scope :ready, includes(:status).where("statuses.ready = true")
+  scope :maintenance_finished, includes(:status).where("statuses.performed = true")
   scope :performed, where(:repair_type_id => [1,3]) #TODO change to repair type property
   scope :by_work_performed_date, lambda{ |start, till|
     where("work_performed_at between ? and ?", start, till) }
@@ -66,6 +67,10 @@ class Order < ActiveRecord::Base
 
   def activities_amount
     activities.inject(0){|sum, a| sum + a.price}
+  end
+
+  def activities_score
+    activities.inject(0){|sum, a| sum + a.score}
   end
 
   def activities_count

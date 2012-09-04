@@ -10,6 +10,7 @@ ServiceCenter::Application.routes.draw do
   end
 
   match '/people' => "welcome#index"
+  match '/print/payments.:format/:date' => "docs/payments_report#print"
   match '/print/:report/:id' => "docs/prints#print"
   match '/status/:ticket' => "status#index", :as => :status
   match '/dashboard/:action', :controller => 'dashboard', :defaults => {:format => :json}

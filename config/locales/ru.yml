@@ -9,6 +9,7 @@ ru:
         price: Стоимость
         currency__name: Валюта
         diagnostic: Диагностика
+        score: Балл
       complect:
         name: Наименование
       customer:
@@ -161,6 +162,9 @@ ru:
       status:
         name: Наименование
         customer_info: Для клиента
+        complete: Выдан
+        ready: Готов
+        performed: Произведен
     errors:
       attributes:
         name:

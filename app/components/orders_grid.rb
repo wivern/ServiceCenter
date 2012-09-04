@@ -113,7 +113,7 @@ class OrdersGrid < Netzke::Basepack::GridPanel
 
   js_mixin :orders_grid
 
-  js_include "#{File.dirname(__FILE__)}/javascripts/print.js"
+  #js_include "#{File.dirname(__FILE__)}/javascripts/print.js"
 
   js_method :on_print, <<-JS
     function (){

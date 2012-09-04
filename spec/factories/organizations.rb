@@ -2,6 +2,9 @@
 
 FactoryGirl.define do
   factory :organization do
-    name "Org1"
+    name Faker::Company.name
+    city Faker::Address.city
+    address Faker::Address.street_address
+    phone Faker::PhoneNumber.phone_number
   end
 end

@@ -1,7 +1,11 @@
 FactoryGirl.define do
+
   factory :person do
-    name 'admin'
-    email 'admin@pentar.ru'
+    name Faker::Name.name
+    email Faker::Internet.email
     password 'Admin123'
+    password_confirmation 'Admin123'
+    organization
+    position
   end
 end

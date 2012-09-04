@@ -24,6 +24,7 @@ class Ability
       cannot :deliver, [:person_component, :organization_component, :position_component, :currency_component,
         :report_component, :person_status_component]
       can :merge, :all
+      can :print, :payments
     end
     if user.has_role_analyst?
       can :read, Order
@@ -34,6 +35,7 @@ class Ability
       cannot :manage, [Person, Report]
       can :read, [Person, Report]
       can :deliver, :all
+      can :print, :payments
     end
     if user.has_role_administrator?
       can :manage, [Person, Organization, Position, Currency, Report, PersonStatus]

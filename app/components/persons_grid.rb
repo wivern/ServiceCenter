@@ -1,4 +1,7 @@
+#encoding: UTF-8
 class PersonsGrid < Netzke::Basepack::GridPanel
+
+  include ServiceCenter::Reportable
 
   action :reset_password do
     {
@@ -72,7 +75,20 @@ class PersonsGrid < Netzke::Basepack::GridPanel
               :organization__name, :position__name
           ]
       }
+      if @ability.can? :print, :payments
+        c[:tbar] = [
+            {:text => 'Печать', :icon => :printer.icon, :name => :print, :menu => [:print_payments.action]},
+            {:text => 'Месяц', :icon => :calendar.icon, :name => :month, :menu => [{:xtype => :datepicker, :name => :date}]}
+          ]
+      end
     end
+  end
+
+  action :print_payments do
+    {
+      :text => "Платежная ведомость",
+      :icon => :coins
+    }
   end
 
   js_mixin :persons_grid
