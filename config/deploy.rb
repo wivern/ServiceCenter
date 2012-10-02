@@ -36,7 +36,7 @@ set :deploy_via, :remote_cache
 namespace :deploy do
 
   after "deploy:setup", "deploy:resources:setup"
-  after "deploy:symlink", "deploy:resources:symlinks"
+  after "deploy:create_symlink", "deploy:resources:symlinks"
 
   task :start do
     ;
