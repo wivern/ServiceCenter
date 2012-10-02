@@ -200,41 +200,39 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
                               }
                           ]
                       }
+    diagnostic_1_items = [ {:name => :diag_manager__name} ]
+    diagnostic_1_items << {:field_label => Order.human_attribute_name("diag_price"), :name => :diagnostic_activity__price,
+        :xtype => :selecttriggerfield, :selection_component => :select_diagnostic_activity,
+        :display_field => :name} unless @user.has_role_engineer?
+    diagnostic_1_items << {:name => :diagnosed_at} << {:name => :actual_defect, :xtype => :textarea, :height => 140}
+
+    order_diagnostic_tab = {
+                              :title => "Диагностика",
+                              :items => [
+                                  {
+                                      :layout => :hbox, :align => "stretch", :border => false, :flex => 1, :items => [
+                                        {
+                                            :flex => 1, :border => false, :defaults => {:anchor => "-8"},
+                                            :items => diagnostic_1_items
+                                        },
+                                        {
+                                            :flex => 1, :border => false, :defaults => {:anchor => "100%"},
+                                            :items => [
+                                                #{:name => :goals__name, :xtype => :netzkepopupselect, :height => 140,
+                                                #  :selection_component => :select_goal, :auto_load_store => true},
+                                                {:name => :result, :xtype => :textarea, :height => 160}
+                                            ]
+                                        }
+                                    ]
+                                  }
+                              ]
+                          }
     order_tabs = [
                       {
                           :title => "Сведения",
                           :items => general_items
                       },
-                      {
-                          :title => "Диагностика",
-                          :items => [
-                              {
-                                  :layout => :hbox, :align => "stretch", :border => false, :flex => 1, :items => [
-                                    {
-                                        :flex => 1, :border => false, :defaults => {:anchor => "-8"},
-                                        :items => [
-                                            {:name => :diag_manager__name},
-                                            {:field_label => Order.human_attribute_name("diag_price"), :name => :diagnostic_activity__price,
-                                             :xtype => :selecttriggerfield, :selection_component => :select_diagnostic_activity,
-                                             :display_field => :name},
-                                            #{:name => :grounds__name, :xtype => :netzkepopupselect, :height => 140,
-                                            #  :selection_component => :select_ground, :auto_load_store => true},
-                                            {:name => :diagnosed_at},
-                                            {:name => :actual_defect, :xtype => :textarea, :height => 140}
-                                        ]
-                                    },
-                                    {
-                                        :flex => 1, :border => false, :defaults => {:anchor => "100%"},
-                                        :items => [
-                                            #{:name => :goals__name, :xtype => :netzkepopupselect, :height => 140,
-                                            #  :selection_component => :select_goal, :auto_load_store => true},
-                                            {:name => :result, :xtype => :textarea, :height => 160}
-                                        ]
-                                    }
-                                ]
-                              }
-                          ]
-                      },
+                      order_diagnostic_tab,
                       {
                           :title => I18n.t('activerecord.models.activity'),
                           :items => [

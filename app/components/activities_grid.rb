@@ -5,7 +5,7 @@ class ActivitiesGrid < Netzke::Basepack::GridPanel
     {
         :class_name => "AddActivityWindow",
         :model => "Activity",
-        :columns => [:code, :name, :price, :currency__name],
+        :columns => activities_columns,
         :initial_sort => ['code', 'ASC'],
         :order_id => config[:order_id]
     }
@@ -41,6 +41,13 @@ class ActivitiesGrid < Netzke::Basepack::GridPanel
   def process_data(data, operation)
     data.map{ |r| r.delete('activity__price') }
     super(data, operation)
+  end
+
+  protected
+  def activities_columns
+    columns = [:code, :name]
+    columns << :price << :currency_name unless @user.has_role_engineer?
+    columns << :score
   end
 
 end
