@@ -16,6 +16,8 @@ class AddActivityWindow < DictionaryWindow
     function(){
       this.callParent();
       this.addEvents('activityadded');
+      console.debug('order', this.orderId);
+      console.debug('activitywindow', this);
     }
   JS
 
@@ -24,7 +26,6 @@ class AddActivityWindow < DictionaryWindow
       var selectionModel = this.items.first().getSelectionModel();
       if (selectionModel.hasSelection())
         this.selection = selectionModel.getSelection()[0];
-      console.debug('selection', this.selection);
       this.closeResult = 'select';
       this.hide();
       this.addActivity({order_id: this.orderId, activity_id: this.selection.data.id },
@@ -34,5 +35,11 @@ class AddActivityWindow < DictionaryWindow
       );
     }
   JS
+
+  def js_config
+    super.tap do |res|
+      res[:item_id] = "#{name}_#{config[:order_id]}"
+    end
+  end
 
 end

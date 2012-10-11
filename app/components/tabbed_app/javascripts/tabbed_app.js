@@ -7,8 +7,8 @@
 
 {
     addTab: function(cmp, options){
-        var tabCount = this.mainPanel.items.getCount(), cmpName, params, tab;
-        cmpName = "tab" + (tabCount + 1);
+        var cmpName, params, tab;
+        cmpName = "tab" + this.newTabId();
         params = {component: cmp};
         params.config = options.config;
         this.loadNetzkeComponent({name: cmpName, params: params, callback: function(comp){
@@ -26,13 +26,22 @@
             this.mainPanel.setActiveTab(tab);
         }});
     },
+    newTabId: function(){
+      this.tabCount += 1;
+      return this.tabCount;
+    },
     initComponent: function(){
         this.callParent();
+        this.tabCount = 0;
         this.mainPanel.on('remove',function(me, tab){
             if (typeof(tab.netzkeComponentId) !== 'undefined' &&
                 tab.netzkeComponentId.match(/^tab\d+$/)){
                 console.debug("Removing", tab);
                 this.serverRemoveTab({name: tab.netzkeComponentId});
+                Ext.each(Ext.query('*[class *=' + tab.id + ']'), function(el){
+                    console.debug('removing', el);
+                    Ext.remove(el);
+                });
             }
         }, this);
         this.mainPanel.on('tabchange',function(panel, tab){

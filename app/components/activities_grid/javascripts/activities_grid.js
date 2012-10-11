@@ -27,7 +27,6 @@
         }
     },
     sumAmount: function(values){
-      console.debug('sum', values);
       var amount = 0;
       for(i in values) amount += parseFloat(values[i].data._meta.associationValues.activity__price);
       return amount;
@@ -52,6 +51,9 @@
               }
           );
 
-       } else this.selectActivityWindow.show();
+       } else {
+           this.selectActivityWindow.orderId = this.orderId;
+           this.selectActivityWindow.show();
+       }
     }
 }
