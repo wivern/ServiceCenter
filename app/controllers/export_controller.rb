@@ -20,4 +20,9 @@ class ExportController < ApplicationController
         :except => [:created_at, :updated_at])
   end
 
+  def organizations
+    @organizations = Organization.order(:name)
+    render(:xml => @organizations).to_xml(:root => :organizations)
+  end
+
 end

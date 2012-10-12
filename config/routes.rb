@@ -17,6 +17,7 @@ ServiceCenter::Application.routes.draw do
   get '/analytics.:format' => "analysis#index", :as => :analysis
 
   get "welcome/index"
+  get '/organizations.:format' => "export#organizations"
 
   netzke
   root :to => "welcome#index"
