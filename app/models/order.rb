@@ -65,6 +65,17 @@ class Order < ActiveRecord::Base
       :amount   => "Сумма"
   }
 
+  def self.completed_by_date_and_organization(from, till, organization = nil)
+    if organization.present?
+      logger.debug "Filter by organization"
+      orders = (Order.performed.completed.by_deliver_date(from, till) + Order.ready.by_work_performed_date(from, till)).where(:organization => organization) if organization.present?
+    else
+      logger.debug "Export orders from #{from} till #{till}"
+      orders = Order.performed.completed.by_deliver_date(from, till) + Order.ready.by_work_performed_date(from, till)
+    end if
+    orders
+  end
+
   def activities_amount
     activities.inject(0){|sum, a| sum + a.price}
   end

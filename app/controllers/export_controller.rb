@@ -8,7 +8,15 @@ class ExportController < ApplicationController
   def index
     @from = Date.parse params[:from]
     @till = params[:till] || Date.today
-    @orders = Order.performed.completed.by_deliver_date(@from, @till) + Order.ready.by_work_performed_date(@from, @till)
+    @organization = Organization.find(params[:organization]) if params[:organization]
+#    @orders = Order.completed_by_date_and_organization(@from, @till, @organization)
+    if params[:organization]
+      @organization = Organization.find(params[:organization])
+      @orders = Order.performed.completed.by_deliver_date(@from, @till).where(:organization_id => @organization) +
+          Order.ready.by_work_performed_date(@from, @till).where(:organization_id => @organization)
+    else
+      @orders = Order.performed.completed.by_deliver_date(@from, @till) + Order.ready.by_work_performed_date(@from, @till)
+    end
     render :xml => { :params => {
         :from => @from,
         :till => @till },
