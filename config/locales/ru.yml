@@ -88,6 +88,7 @@ ru:
         guarantee_case: Гарантия (мес.)
         deliver_manager__name: Выдал
         order_location__name: Местоположение
+        producer__name: "Производитель"
         product_passport__factory_number: "Заводской номер"
         product_passport__producer__name: "Производитель"
         product_passport__product__name: "Название устройства"
