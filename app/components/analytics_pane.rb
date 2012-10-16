@@ -25,7 +25,7 @@ class AnalyticsPane < Netzke::Basepack::BorderLayoutPanel
             :actual_deliver_at, :customer__name,
             :order_location__name,
             :spare_parts_printable,
-            :reason, :activities_printable
+            :reason, :activities_score, :activities_printable
         ],
         :title => "Заказы",
         :prohibit_create => true,

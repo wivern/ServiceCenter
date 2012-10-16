@@ -42,6 +42,7 @@ ru:
         ticket: "№ квитанции"
         activities_amount: "Стоимость работ"
         activities_count: "Выполнено работ"
+        activities_score: "Балл"
         spare_parts_amount: "Стоимость з/ч"
         spare_parts_printable: Запчасти
         activities_printable: Работы
@@ -68,6 +69,7 @@ ru:
         discount: Скидка
         discount_type: Тип скидки
         discount_ground: Основание
+        engineer: Сервис-инженер
         engineer__name: Сервис-инженер, выполнивший работы
         external_state: "Внешнее состояние"
         external_state_note: "Внешнее состояние (примечание)"

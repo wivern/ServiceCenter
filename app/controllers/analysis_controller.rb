@@ -41,6 +41,7 @@ class AnalysisController < ApplicationController
           Order.human_attribute_name(:customer__name),
           Order.human_attribute_name(:spare_parts_printable),
           Order.human_attribute_name(:reason),
+          Order.human_attribute_name(:activities_score),
           Order.human_attribute_name(:activities_printable) ]
       rel.each {|r|
         logger.debug r.inspect
@@ -50,7 +51,7 @@ class AnalysisController < ApplicationController
             safe_str(r.engineer), r.activities_amount, r.activities_count, r.spare_parts_amount,
             r.total_amount, r.total_amount_with_discount, r.diag_price, r.work_performed_at,
             r.actual_deliver_at, safe_str(r.customer), r.spare_parts_printable,
-            r.reason, r.activities_printable]
+            r.reason, r.activities_score, r.activities_printable]
       }
     end
     send_data csv_data, :type => "text/plain"
