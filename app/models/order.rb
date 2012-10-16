@@ -24,6 +24,7 @@ class Order < ActiveRecord::Base
   has_many :spare_parts, :through => :order_spare_parts
 
   has_one :product, :through => :product_passport
+  has_one :producer, :through => :product_passport
   belongs_to :order_location, :foreign_key => "location_id"
 
   belongs_to :created_from, :class_name => "Order"
@@ -47,6 +48,10 @@ class Order < ActiveRecord::Base
 
   scope :order_by_product, lambda{|dir|
      includes(:product).order("products.name #{dir.to_s}")
+  }
+
+  scope :order_by_producer, lambda{|dir|
+      includes(:producer).order("producers.name #{dir.to_s}")
   }
 
   scope :completed, includes(:status).where("statuses.complete = true")
@@ -101,6 +106,14 @@ class Order < ActiveRecord::Base
     amount ||= 0
     logger.debug "Amount: #{amount}"
     amount
+  end
+
+  def producer_id
+    if producer
+      producer.id
+    else
+      0
+    end
   end
 
   def total_amount_with_discount
