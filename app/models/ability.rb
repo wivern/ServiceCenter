@@ -3,6 +3,7 @@ class Ability
 
   def initialize(user)
     user ||= Person.new #guest user
+    can :see, [:customer_in_order] #for everyone
     if user.has_role_inspector?
       #can :read, Report
       can :manage, Order

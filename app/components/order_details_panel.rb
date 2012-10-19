@@ -94,6 +94,7 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
 
   def configuration
     @user = Netzke::Core.current_user
+    @ability = Ability.new @user
     general_tabs = [
                                       { :title => "Начальные сведения",  :flex => 1,
                                         :items => [
@@ -160,7 +161,7 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
                                                   { :name => :customer__email, :read_only => true },
                                                   { :name => :customer__passport, :read_only => true }
                                               ]
-                                          } if @user.has_no_role_engineer?
+                                          } if @ability.can :see_customer_in_order
     general_items = [
                               {:xtype => :tabpanel, :align => "stretch", :body_padding => 5, :plain => true, :active_tab => 0,
                               :items => general_tabs}
