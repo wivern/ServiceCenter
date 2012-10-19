@@ -75,6 +75,7 @@ ru:
         external_state_note: "Внешнее состояние (примечание)"
         external_states__name: "Внешнее состояние"
         internal_state: "Внутреннее состояние"
+        internal_state_note: "Внутреннее состояние (примечание)"
         internal_states__name: "Внутреннее состояние"
         goals__name: Цель диагностики
         grounds__name: "Основание для проведения диагностики"

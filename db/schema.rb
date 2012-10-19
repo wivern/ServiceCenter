@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120830080017) do
+ActiveRecord::Schema.define(:version => 20121019125219) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -211,6 +211,7 @@ ActiveRecord::Schema.define(:version => 20120830080017) do
     t.boolean  "service_phone_agreement",                               :default => false
     t.text     "defect_note"
     t.integer  "location_id"
+    t.text     "internal_state_note"
   end
 
   add_index "orders", ["created_from_id"], :name => "index_orders_on_created_from_id"

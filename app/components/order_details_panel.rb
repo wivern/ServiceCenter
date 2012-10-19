@@ -225,7 +225,8 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
                                             :items => [
                                                 #{:name => :goals__name, :xtype => :netzkepopupselect, :height => 140,
                                                 #  :selection_component => :select_goal, :auto_load_store => true},
-                                                {:name => :result, :xtype => :textarea, :height => 160, :width => DIAG_FIELD_WIDTH}
+                                                {:name => :result, :xtype => :textarea, :height => 220, :width => DIAG_FIELD_WIDTH},
+                                                {:name => :internal_state_note, :xtype => :textarea, :height => 160, :width => DIAG_FIELD_WIDTH}
                                             ]
                                         }
                                     ]
