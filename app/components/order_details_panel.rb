@@ -64,9 +64,7 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
 
   component :select_diagnostic_activity do
     {
-        :class_name => "DictionaryWindow",
-        :model => "Activity",
-        :scope => "diagnostic = true",
+        :class_name => "SelectDiagnosticActivityWindow",
         :initial_sort => %w('name' 'ASC')
     }
   end
@@ -128,9 +126,7 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
                                                             :hide_trigger => true, :height => 110, :auto_load_store => true},
                                                           {:name => :defects__name, :xtype => :netzkeboxselect, :read_only => true,
                                                             :hide_trigger => true, :height => 140, :auto_load_store => true},
-                                                          {:name => :defect_note, :xtype => :textarea, :height => 140, :read_only => true},
-                                                          {:name => :internal_states__name, :xtype => :netzkepopupselect, :height => 140,
-                                                            :auto_load_store => true, :selection_component => :select_internal_state}
+                                                          {:name => :defect_note, :xtype => :textarea, :height => 140, :read_only => true}
                                                       ]
                                                   },
                                                   {
@@ -155,11 +151,14 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
                                               :flex => 1,
                                               :title => "Заказчик",
                                               :items => [
-                                                  { :name => :customer__name, :read_only => true },
-                                                  { :name => :customer__address, :read_only => true },
-                                                  { :name => :customer__phone, :read_only => true },
-                                                  { :name => :customer__email, :read_only => true },
-                                                  { :name => :customer__passport, :read_only => true }
+                                                  :layout => :anchor, :border => false, :defaults => {:anchor => '50%'},
+                                                  :items => [
+                                                    { :name => :customer__name, :anchor => "60%", :read_only => true },
+                                                    { :name => :customer__address, :anchor => "100%", :read_only => true },
+                                                    { :name => :customer__phone, :read_only => true },
+                                                    { :name => :customer__email, :read_only => true },
+                                                    { :name => :customer__passport, :read_only => true }
+                                                  ]
                                               ]
                                           } if @ability.can :see_customer_in_order
     general_items = [
@@ -204,8 +203,11 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
     diagnostic_1_items = [ {:name => :diag_manager__name} ]
     diagnostic_1_items << {:field_label => Order.human_attribute_name("diag_price"), :name => :diagnostic_activity__price,
         :xtype => :selecttriggerfield, :selection_component => :select_diagnostic_activity,
-        :display_field => :name} unless @user.has_role_engineer?
+        :display_field => :name} #unless @user.has_role_engineer?
     diagnostic_1_items << {:name => :diagnosed_at} << {:name => :actual_defect, :xtype => :textarea, :height => 140}
+    diagnostic_1_items << {:name => :internal_states__name, :xtype => :netzkepopupselect, :height => 140,
+      :auto_load_store => true, :selection_component => :select_internal_state}
+
 
     order_diagnostic_tab = {
                               :title => "Диагностика",

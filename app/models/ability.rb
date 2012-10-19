@@ -3,7 +3,7 @@ class Ability
 
   def initialize(user)
     user ||= Person.new #guest user
-    can :see, [:customer_in_order] #for everyone
+    can :see, [:customer_in_order, :prices] #for everyone
     if user.has_role_inspector?
       #can :read, Report
       can :manage, Order
@@ -15,6 +15,7 @@ class Ability
       can :manage, Order
       cannot :destroy, Order
       can :deliver, [:orders, :part_component, :activity_component]
+      cannot :see, [:prices]
     end
     if user.has_role_manager?
       can :read, [Order, Report]
