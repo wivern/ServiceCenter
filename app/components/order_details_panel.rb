@@ -90,6 +90,8 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
     }
   end
 
+  DIAG_FIELD_WIDTH = 450
+
   def configuration
     @user = Netzke::Core.current_user
     @ability = Ability.new @user
@@ -204,8 +206,8 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
     diagnostic_1_items << {:field_label => Order.human_attribute_name("diag_price"), :name => :diagnostic_activity__price,
         :xtype => :selecttriggerfield, :selection_component => :select_diagnostic_activity,
         :display_field => :name} #unless @user.has_role_engineer?
-    diagnostic_1_items << {:name => :diagnosed_at} << {:name => :actual_defect, :xtype => :textarea, :height => 140}
-    diagnostic_1_items << {:name => :internal_states__name, :xtype => :netzkepopupselect, :height => 140,
+    diagnostic_1_items << {:name => :diagnosed_at} << {:name => :actual_defect, :xtype => :textarea, :height => 140, :width => DIAG_FIELD_WIDTH}
+    diagnostic_1_items << {:name => :internal_states__name, :xtype => :netzkepopupselect, :height => 140, :width => DIAG_FIELD_WIDTH,
       :auto_load_store => true, :selection_component => :select_internal_state}
 
 
@@ -223,7 +225,7 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
                                             :items => [
                                                 #{:name => :goals__name, :xtype => :netzkepopupselect, :height => 140,
                                                 #  :selection_component => :select_goal, :auto_load_store => true},
-                                                {:name => :result, :xtype => :textarea, :height => 160}
+                                                {:name => :result, :xtype => :textarea, :height => 160, :width => DIAG_FIELD_WIDTH}
                                             ]
                                         }
                                     ]
