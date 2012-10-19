@@ -196,7 +196,7 @@
         },
         openOrderDetails: function(record){
             var orderId = record.get('id'),
-                number = record.get('number');
+                number = record.get('ticket');
             this.openOrder(orderId, number);
 //            app.appLoadComponent('order_details');
         }

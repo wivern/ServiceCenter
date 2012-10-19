@@ -137,20 +137,26 @@ class OrdersGrid < Netzke::Basepack::GridPanel
       order.order_spare_parts.each{|os|
         new_order.order_spare_parts << os.clone
       }
+      order.external_states.each{|es|
+        logger.debug "Cloning state #{es.inspect}"
+        new_order.external_states << es.clone
+      }
       new_order.repair_type = repair_type
       new_order.created_from = order
       logger.debug "Cloned order #{new_order.inspect}"
       if new_order.save
-        return {:set_result => 'ok', :netzke_feedback => @flash, :open_order => [new_order.id, new_order.number]}
+        notice = I18n.t('orders_grid.notice.order_created', :ticket => new_order.ticket)
+        return {:set_result => 'ok', :netzke_feedback => notice, :open_order => [new_order.id, new_order.ticket]}
       else
         logger.error "Order clone errors, #{new_order.errors.inspect}"
-        {:netzke_feedback => new_order.errors}
+        {:netzke_feedback => new_order.errors.to_s}
       end
     else
       flash :error => I18n.t('access_denied')
       {:netzke_feedback => @flash}
     end
   end
+
 
   endpoint :get_list_filter_data do |params|
     get_list_filter_data(params)

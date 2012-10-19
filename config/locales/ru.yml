@@ -287,6 +287,8 @@ ru:
       create_from_tooltip: Создать новый заказ из выбранного
       filter_by_serial_num: Фильтр с/н
       filter_by_serial_num_tooltip: Включить/выключить фильтр по текущему серийному номеру
+    notice:
+      order_created: "Заказ № %{ticket} создан успешно"
   jobs_grid:
     actions:
       create: Создать
