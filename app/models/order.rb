@@ -82,7 +82,13 @@ class Order < ActiveRecord::Base
   end
 
   def activities_amount
-    activities.inject(0){|sum, a| sum + a.price}
+    activities.inject(0){|sum, a|
+      if not a.diagnostic
+        sum + a.price
+      else
+        sum
+      end
+    }
   end
 
   def activities_score

@@ -28,7 +28,11 @@
     },
     sumAmount: function(values){
       var amount = 0;
-      for(i in values) amount += parseFloat(values[i].data._meta.associationValues.activity__price);
+      for(i in values){
+        console.debug('sumAmount', values[i].data._meta.associationValues);
+        if (!(values[i].data._meta.associationValues.activity__diagnostic))
+          amount += parseFloat(values[i].data._meta.associationValues.activity__price);
+      }
       return amount;
     },
     totalRenderer: function(value,data,dataIndex){

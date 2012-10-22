@@ -203,7 +203,7 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
                           ]
                       }
     diagnostic_1_items = [ {:name => :diag_manager__name} ]
-    diagnostic_1_items << {:field_label => Order.human_attribute_name("diag_price"), :name => :diagnostic_activity__price,
+    diagnostic_1_items << {:field_label => Order.human_attribute_name("diag_price"), :name => :diagnostic_activity__name,
         :xtype => :selecttriggerfield, :selection_component => :select_diagnostic_activity,
         :display_field => :name} #unless @user.has_role_engineer?
     diagnostic_1_items << {:name => :diagnosed_at} << {:name => :actual_defect, :xtype => :textarea, :height => 140, :width => DIAG_FIELD_WIDTH}
@@ -283,6 +283,50 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
   js_mixin :order_details_panel
 
   js_property :allow_multi, true
+
+  endpoint :add_activity do |params|
+    if @ability.can? :update, Order
+      order_id = params[:order_id]
+      activity_id = params[:activity_id]
+      if order_id and activity_id
+        if not OrderActivity.where(:order_id => order_id, :activity_id => activity_id).exists?
+          OrderActivity.create(:order_id => order_id, :activity_id => activity_id)
+        end
+        {:set_result => true}
+      else
+        {:set_result => false}
+      end
+    else
+      {:netzke_feedback => I18n.t('access_denied')}
+    end
+  end
+
+  endpoint :remove_activity do |params|
+    if @ability.can? :update, Order
+      order_id = params[:order_id]
+      activity_id = params[:activity_id]
+      if order_id and activity_id
+        activity = OrderActivity.find_by_order_id_and_activity_id(order_id, activity_id)
+        activity.destroy if activity
+        {:set_result => true}
+      end
+    else
+      {:netzke_feedback => I18n.t('access_denied')}
+    end
+  end
+
+  endpoint :remove_all_diag_activities do |params|
+    if @ability.can? :update, Order
+      order_id = params[:order_id]
+      if order_id
+        activities = OrderActivity.find_all_by_order_id(order_id)
+        activities.reject{|a| not a.activity.diagnostic}.each(&:destroy)
+      end
+      {:set_result => true}
+    else
+      {:netzke_feedback => I18n.t('access_denied')}
+    end
+  end
 
   endpoint :recalc do |params|
     orderId = params[:orderId]
