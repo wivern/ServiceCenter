@@ -19,7 +19,11 @@ class Order < ActiveRecord::Base
   has_and_belongs_to_many :grounds
   has_and_belongs_to_many :goals
   has_many :order_activities
+  has_many :working_order_activities, :include => :activity, :class_name => "OrderActivity",
+           :conditions => "activities.diagnostic = 'f'"
   has_many :activities, :through => :order_activities
+  has_many :working_activities, :source => :activity, :through => :order_activities,
+           :conditions => "activities.diagnostic = 'f'"
   has_many :order_spare_parts
   has_many :spare_parts, :through => :order_spare_parts
 
@@ -82,13 +86,7 @@ class Order < ActiveRecord::Base
   end
 
   def activities_amount
-    activities.inject(0){|sum, a|
-      if not a.diagnostic
-        sum + a.price
-      else
-        sum
-      end
-    }
+    working_activities.inject(0){|sum, a| sum + a.price}
   end
 
   def activities_score

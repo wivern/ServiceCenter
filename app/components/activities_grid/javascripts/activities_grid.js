@@ -17,6 +17,8 @@
             else if ("activity__price" === column.dataIndex){
                 column.summaryRenderer = this.summaryRenderer;
                 column.summaryType = this.sumAmount;
+            } else if ("activity__score" == column.dataIndex){
+                column.summaryType = this.sumScore;
             }
         }
         if (win){
@@ -34,6 +36,11 @@
           amount += parseFloat(values[i].data._meta.associationValues.activity__price);
       }
       return amount;
+    },
+    sumScore: function(values){
+        var score = 0;
+        for(i in values) score += parseFloat(values[i].data._meta.associationValues.activity__score);
+        return score;
     },
     totalRenderer: function(value,data,dataIndex){
         return "<b>Итого:</b>";

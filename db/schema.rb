@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121019125219) do
+ActiveRecord::Schema.define(:version => 20121022121812) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -157,6 +157,7 @@ ActiveRecord::Schema.define(:version => 20121019125219) do
     t.date     "performed_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "notes"
   end
 
   add_index "order_activities", ["order_id", "activity_id"], :name => "index_order_activities_on_order_id_and_activity_id", :unique => true

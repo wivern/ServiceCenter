@@ -108,7 +108,9 @@ ru:
         activity__code: Код
         activity__name: Наименование
         activity__price: Стоимость
+        activity__score: Балл
         performed_at: Дата выполнения
+        notes: Примечание
       order_spare_part:
         spare_part__name: Название
         spare_part__part_number: Код
