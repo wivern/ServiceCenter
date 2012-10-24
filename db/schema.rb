@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121022121812) do
+ActiveRecord::Schema.define(:version => 20121024112359) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -264,6 +264,16 @@ ActiveRecord::Schema.define(:version => 20121022121812) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "roles",      :default => "--- []\n"
+  end
+
+  create_table "prices", :force => true do |t|
+    t.float    "value"
+    t.integer  "priceable_id"
+    t.string   "priceable_type"
+    t.integer  "currency_id"
+    t.integer  "organization_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "producers", :force => true do |t|

@@ -7,9 +7,10 @@ ru:
         code: Код
         name: Наименование
         price: Стоимость
-        currency__name: Валюта
+        price__currency__name: Валюта
         diagnostic: Диагностика
         score: Балл
+        price__value: Стоимость
       complect:
         name: Наименование
       customer:
@@ -164,7 +165,8 @@ ru:
         part_number: Код изделия
         price: Цена
         currency: Валюта
-        currency__name: Валюта
+        price__currency__name: Валюта
+        price__value: Цена
       status:
         name: Наименование
         customer_info: Для клиента

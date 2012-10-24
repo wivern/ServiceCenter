@@ -6,7 +6,7 @@ class SelectDiagnosticActivityWindow < DictionaryWindow
     @ability = Ability.new @user
     super.tap do |t|
       cols = [:code, :name]
-      cols << :price if @ability.can :see, :prices
+      cols << :price__value if @ability.can :see, :prices
       cols << :score
       t[:columns] = cols
       t[:model] = 'Activity'

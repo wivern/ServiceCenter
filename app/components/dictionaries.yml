@@ -238,13 +238,6 @@ components:
     :lazy_loading: true
     :persistance: true
     :force_fit: true
-    :columns:
-      :code: !!null 
-      :name: !!null 
-      :price: !!null 
-      :currency__name: !!null 
-      :diagnostic: !!null
-      :score:
   currency_component:
     :class_name: Netzke::Basepack::GridPanel
     :model: Currency
@@ -264,11 +257,10 @@ components:
     :persistance: true
     :force_fit: true
   part_component:
-    :class_name: Netzke::Basepack::GridPanel
+    :class_name: SparePartsGridPanel
     :model: SparePart
     :lazy_loading: true
     :persistance: true
-    :force_fit: true
   person_component:
     :class_name: PersonsGrid
     :model: Person

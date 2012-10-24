@@ -9,7 +9,7 @@ class PartsGrid  < Netzke::Basepack::GridPanel
     {
         :class_name => "AddPartWindow",
         :model => "SparePart",
-        :columns => [:part_number, :name, :price, :currency__name],
+        :columns => [:part_number, :name, :price__value, :price__currency__name],
         :initial_sort => ['part_number', 'ASC'],
         :order_id => config[:order_id]
     }

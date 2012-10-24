@@ -14,7 +14,7 @@
             var column = this.columns[i];
             if ("activity__code" === column.dataIndex)
                 column.summaryRenderer = this.totalRenderer;
-            else if ("activity__price" === column.dataIndex){
+            else if ("activity__price__value" === column.dataIndex){
                 column.summaryRenderer = this.summaryRenderer;
                 column.summaryType = this.sumAmount;
             } else if ("activity__score" == column.dataIndex){
@@ -33,7 +33,7 @@
       for(i in values){
         console.debug('sumAmount', values[i].data._meta.associationValues);
         if (!(values[i].data._meta.associationValues.activity__diagnostic))
-          amount += parseFloat(values[i].data._meta.associationValues.activity__price);
+          amount += parseFloat(values[i].data._meta.associationValues.activity__price__value);
       }
       return amount;
     },

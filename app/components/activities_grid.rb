@@ -17,7 +17,7 @@ class ActivitiesGrid < Netzke::Basepack::GridPanel
                 {:name => :activity__name, :summary_type => :count, :read_only => true},
                 {:name => :activity__diagnostic, :hidden => true, :read_only => true}
               ]
-    columns << {:name => :activity__price, :read_only => true, :type => :number,
+    columns << {:name => :activity__price__value, :read_only => true, :type => :number,
                           :align => 'right', :renderer => 'this.currencyRenderer', :summary_type => :sum} if @user.has_no_role_engineer?
     columns << {:name => :activity__score, :read_only => true, :type => :number, :align => 'right', :summary_type => :sum} if @user.has_role_engineer?
 
@@ -43,14 +43,14 @@ class ActivitiesGrid < Netzke::Basepack::GridPanel
   JS
 
   def process_data(data, operation)
-    data.map{ |r| r.delete('activity__price') }
+    data.map{ |r| r.delete('activity__price__value') }
     super(data, operation)
   end
 
   protected
   def activities_columns
     columns = [:code, :name]
-    columns << :price << :currency_name unless @user.has_role_engineer?
+    columns << :price__value << :price__currency__name unless @user.has_role_engineer?
     columns << :score
   end
 
