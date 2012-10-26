@@ -85,10 +85,14 @@ module ServiceCenter
           logger.debug "Code: #{rec.code}"
           model = SparePart.find_or_initialize_by_part_number(@ic.iconv(rec.code))
         end
-        model.price = rec.price
-        model.currency = Currency.find_by_char_code(rec.currency)
+        organization = Organization.find(rec.organization)
+        price = model.price.for_organization(organization)
+        price = model.build_price(:organization => organization) if price.nil?
+        price.value = rec.price
+        price.currency = Currency.find_by_char_code(rec.currency)
         model.name = @ic.iconv(rec.name)
         model.save
+        price.save
       end
     end
   end

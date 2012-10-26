@@ -1,0 +1,1 @@
+require 'service_center/price/acts_as_priceable'
