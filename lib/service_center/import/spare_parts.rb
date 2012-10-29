@@ -86,12 +86,16 @@ module ServiceCenter
           model = SparePart.find_or_initialize_by_part_number(@ic.iconv(rec.code))
         end
         organization = Organization.find(rec.organization)
-        price = model.price.for_organization(organization)
-        price = model.build_price(:organization => organization) if price.nil?
-        price.value = rec.price
-        price.currency = Currency.find_by_char_code(rec.currency)
+        #logger.debug "Organization: #{organization.name}"
         model.name = @ic.iconv(rec.name)
         model.save
+        price = model.prices.for_organization(organization)
+        if price.nil?
+          price = Price.create(:organization => organization, :priceable => model)
+          model.prices << price
+        end
+        price.value = rec.price
+        price.currency = Currency.find_by_char_code(rec.currency)
         price.save
       end
     end
