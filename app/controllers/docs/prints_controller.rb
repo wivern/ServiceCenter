@@ -97,7 +97,7 @@ class Docs::PrintsController < ApplicationController
       reflection.klass.reflect_on_all_associations.each{ |ref|
         logger.debug "Adding association #{ref.name}"
         unless ref.name.to_s == 'organization'
-          add_reflection(report, ref, data.send(ref.name))  unless [:has_many, :has_and_belongs_to_many].include? ref.macro
+          add_reflection(report, ref, data.send(ref.name))  unless [:has_many, :has_and_belongs_to_many].include?(ref.macro) or ref.options.include?(:as)
         end
       }
     end
