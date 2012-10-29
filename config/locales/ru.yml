@@ -108,7 +108,7 @@ ru:
       order_activity:
         activity__code: Код
         activity__name: Наименование
-        activity__price: Стоимость
+        activity__price__value: Стоимость
         activity__score: Балл
         performed_at: Дата выполнения
         notes: Примечание
