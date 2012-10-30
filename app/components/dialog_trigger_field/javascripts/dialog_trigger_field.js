@@ -40,11 +40,21 @@ Ext.define('Ext.ux.SelectTriggerField',
                     return typeof(p.getForm) == 'function';
                 });
             console.debug('Parent',parent);
-            if (parent)
-                parent.loadNetzkeComponent({name: this.selectionComponent, callback: function(win){
+            if (parent){
+                var cmpName = parent.id + "__" + this.selectionComponent;
+                console.debug("Looking for", cmpName);
+                var cmp = Ext.getCmp(cmpName);
+                if (typeof(cmp) !== 'undefined'){
+                    console.debug('found', cmp);
+                    this.selectWindow = cmp;
+                    console.debug('showing window');
+                    this.selectWindow.show();
+                } else
+                   parent.loadNetzkeComponent({name: this.selectionComponent, callback: function(win){
+                    console.debug('component loaded', win);
+                    var cmp = Ext.getCmp(win.id);
                     self.selectWindow = win;
-                    self.selectWindow.show();
-                    win.on('hide', function(){
+                    self.selectWindow.on('hide', function(){
                         console.log('closing');
                         var selected = win.selection;
                         if (win.closeResult == 'select'){
@@ -56,7 +66,10 @@ Ext.define('Ext.ux.SelectTriggerField',
                             console.debug('self.store', self);
                         }
                     }, self);
+                    console.debug('showing window');
+                    self.selectWindow.show();
                 }});
+            }
         }
     }
 });

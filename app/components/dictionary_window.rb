@@ -63,6 +63,7 @@ class DictionaryWindow < Netzke::Basepack::Window
 
   js_method :on_select, <<-JS
     function(){
+      console.debug("window onSelect");
       var selectionModel = this.items.first().getSelectionModel();
       if (selectionModel.hasSelection())
         this.selection = selectionModel.getSelection()[0];
@@ -73,6 +74,7 @@ class DictionaryWindow < Netzke::Basepack::Window
 
   js_method :on_cancel, <<-JS
     function(){
+      console.debug("hiding window");
       this.hide();
     }
   JS

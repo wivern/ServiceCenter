@@ -159,10 +159,10 @@ class AddOrderForm < Netzke::Basepack::FormPanel
                                :items => [
                                    {:field_label => Order.human_attribute_name("defect"), :name => :defects__name, :xtype => :netzkepopupselect,
                                     :width => 320, :height => 140, :selection_component => :select_defect},
-                                   {:name => :defect_note, :xtype => :textarea, :width => 320, :height => 140}
-                                   #{:field_label => Order.human_attribute_name("diag_price"), :name => :diagnostic_activity__price__value,
-                                   # :xtype => :selecttriggerfield, :selection_component => :select_diagnostic_activity,
-                                   # :display_field => :price__value}
+                                   {:name => :defect_note, :xtype => :textarea, :width => 320, :height => 140},
+                                   {:field_label => Order.human_attribute_name("diag_price"), :name => :diagnostic_activity__price__value,
+                                   :xtype => :selecttriggerfield, :selection_component => :select_diagnostic_activity}
+                                   #:display_field => :price__value}
                                    #{:field_label => Order.human_attribute_name("prior_cost"), :name => :prior_cost,
                                    #   :xtype => :numericfield, :currency_at_end => true, :currency_symbol => 'руб.', :step => 10},
                                    #{:field_label => Order.human_attribute_name('maximum_cost'), :name => :maximum_cost,
