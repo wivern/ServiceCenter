@@ -86,7 +86,7 @@ class Order < ActiveRecord::Base
   end
 
   def activities_amount
-    working_activities.inject(0){|sum, a| sum + a.price.value}
+    working_activities.inject(0){|sum, a| sum + a.prices.for_organization(organization).value}
   end
 
   def activities_score
