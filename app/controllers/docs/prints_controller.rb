@@ -66,6 +66,10 @@ class Docs::PrintsController < ApplicationController
         logger.debug "adding virtual column amount"
         t.add_column(:amount, :amount)
       end
+      if ref.name.to_s == 'working_order_activities'
+        logger.debug "adding virtual column activity_price"
+        t.add_column(:activity_price_value, :price)
+      end
 
       ref.klass.reflect_on_all_associations(:belongs_to).each{ |assoc|
         assoc.klass.columns.each {|col|
