@@ -92,6 +92,9 @@ class Docs::PrintsController < ApplicationController
         else
           value = data.send("#{attr.name}") if data
         end
+        if reflection.klass == Activity and attr.name == 'price'
+          value = data.price.value if data
+        end
         value ||= ''
         logger.debug "Adding field #{field_name} with #{value}"
         report.add_field(field_name, value)
