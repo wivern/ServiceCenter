@@ -47,6 +47,8 @@ class AnalyticsPane < Netzke::Basepack::BorderLayoutPanel
           rel = rel.where("orders.applied_at <= ?", data[:finish_date]) if data[:finish_date]
           rel = rel.where("orders.actual_deliver_at >= ?", data[:deliver_starting_date]) if data[:deliver_starting_date]
           rel = rel.where("orders.actual_deliver_at <= ?", data[:deliver_finish_date]) if data[:deliver_finish_date]
+          rel = rel.where("orders.work_performed_at >= ?", data[:work_starting_date]) if data[:work_starting_date]
+          rel = rel.where("orders.work_performed_at <= ?", data[:work_finish_date]) if data[:work_finish_date]
           rel = rel.where("orders.repair_type_id = ?", data[:repair_type]) if data[:repair_type] && data[:repair_type] != -1
           rel = rel.where("orders.status_id = ?", data[:status]) if data[:status]
           rel = rel.joins(:product_passport).where("product_passports.producer_id = ?", data[:producer]) if data[:producer]

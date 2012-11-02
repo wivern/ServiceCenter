@@ -17,6 +17,8 @@ class AnalysisController < ApplicationController
     rel = rel.where("applied_at <= ?", data[:finish_date]) if data[:finish_date]
     rel = rel.where("actual_deliver_at >= ?", data[:deliver_starting_date]) if data[:deliver_starting_date]
     rel = rel.where("actual_deliver_at <= ?", data[:deliver_finish_date]) if data[:deliver_finish_date]
+    rel = rel.where("work_performed_at >= ?", data[:work_starting_date]) if data[:work_starting_date]
+    rel = rel.where("work_performed_at <= ?", data[:work_finish_date]) if data[:work_finish_date]
     rel = rel.where("repair_type_id = ?", data[:repair_type]) if data[:repair_type] && data[:repair_type] != -1
     rel = rel.where("status_id = ?", data[:status]) if data[:status]
     rel = rel.where("producer_id = ?", data[:producer]) if data[:producer]

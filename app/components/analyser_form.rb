@@ -20,18 +20,24 @@ class AnalyserForm < Netzke::Base
       sup[:title] = I18n.t('analyser_form.title')
       sup[:items] = normalize_fields [
           {:field_label => Organization.human_name, :name => :organization, :model => :organization, :xtype => :scremotecombo},
-          {:xtype => 'fieldset', :title => 'Дата поступления',
+          {:xtype => 'fieldset', :title => 'Дата поступления', :collapsible => true,
            :items => [
             {:field_label => "Начальная дата", :name => :starting_date, :xtype => :datefield },
             {:field_label => "Конечная дата", :name => :finish_date, :xtype => :datefield}
            ]
           },
           {
-              :xtype => 'fieldset', :title => 'Дата выдачи',
+              :xtype => 'fieldset', :title => 'Дата выдачи', :collapsible => true,
               :items => [
                   {:field_label => 'Начальная дата', :name => :deliver_starting_date, :xtype => :datefield},
                   {:field_label => 'Конечная дата', :name => :deliver_finish_date, :xtype => :datefield}
               ]
+          },
+          {:xtype => 'fieldset', :title => 'Дата выполнения работ', :collapsible => true,
+           :items => [
+               {:field_label => "Начальная дата", :name => :work_starting_date, :xtype => :datefield},
+               {:field_label => "Конечная дата", :name => :work_finish_date, :xtype => :datefield}
+           ]
           },
           {:field_label => RepairType.human_name, :name => :repair_type, :model => :repair_type, :xtype => :scremotecombo},
           {:field_label => Status.human_name, :name => :status, :model => :status, :xtype => :scremotecombo},
