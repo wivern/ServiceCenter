@@ -31,6 +31,7 @@ class ServiceCenterApp < TabbedApp #Netzke::Basepack::AuthApp
                 :items => [menu_bar_config, main_panel_config, {
                     #Navigation
                     :region => :west,
+                    :collapsible => true,
                     :width => 250,
                     :split => true,
                     :xtype => :treepanel,
