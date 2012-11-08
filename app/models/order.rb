@@ -61,7 +61,7 @@ class Order < ActiveRecord::Base
   scope :completed, includes(:status).where("statuses.complete = true")
   scope :ready, includes(:status).where("statuses.ready = true")
   scope :maintenance_finished, includes(:status).where("statuses.performed = true")
-  scope :performed, where(:repair_type_id => [1,3]) #TODO change to repair type property
+  scope :performed, lambda{ ready | completed } # where(:repair_type_id => [1,3]) #TODO change to repair type property
   scope :by_work_performed_date, lambda{ |start, till|
     where("work_performed_at between ? and ?", start, till) }
   scope :by_deliver_date, lambda{|start, till|
@@ -86,7 +86,7 @@ class Order < ActiveRecord::Base
   end
 
   def activities_amount
-    working_activities.inject(0){|sum, a| sum + a.prices.for_organization(organization).value}
+    working_order_activities.inject(0){|sum, a| sum + a.price}
   end
 
   def activities_score

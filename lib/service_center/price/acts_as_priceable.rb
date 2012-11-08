@@ -8,7 +8,7 @@ module ServiceCenter
     module ActsAsMethod
       def acts_as_priceable
         has_one :price, :as => :priceable,
-                   :conditions => proc{["prices.organization_id = ?", Netzke::Core.current_user.organization]}
+                   :conditions => proc{["prices.organization_id = ?", Netzke::Core.current_user.organization] if Netzke::Core.current_user}
         has_many :prices, :as => :priceable, :extend => ServiceCenter::ActsAsPriceable::AssociationMethods
         class_eval <<-END
           include ServiceCenter::ActsAsPriceable::InstanceMethods

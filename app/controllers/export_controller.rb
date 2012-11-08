@@ -8,7 +8,7 @@ class ExportController < ApplicationController
   def index
     @from = Date.parse params[:from]
     @till = params[:till] || Date.today
-    @organization = Organization.find(params[:organization]) if params[:organization]
+    #@organization = Organization.find(params[:organization]) if params[:organization]
 #    @orders = Order.completed_by_date_and_organization(@from, @till, @organization)
     if params[:organization]
       @organization = Organization.find(params[:organization])
