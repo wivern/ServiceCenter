@@ -233,11 +233,10 @@ components:
       :phone: !!null 
       :passport: !!null 
   activity_component:
-    :class_name: ActivitiesGridPanel
+    :class_name: ActivitiesPanel
     :model: Activity
     :lazy_loading: true
     :persistance: true
-    :force_fit: true
   currency_component:
     :class_name: Netzke::Basepack::GridPanel
     :model: Currency

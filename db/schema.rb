@@ -10,17 +10,28 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121108105848) do
+ActiveRecord::Schema.define(:version => 20121109145250) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
-    t.decimal  "price",       :precision => 8, :scale => 2
+    t.decimal  "price",                :precision => 8, :scale => 2
     t.integer  "currency_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "diagnostic",                                :default => false
+    t.boolean  "diagnostic",                                         :default => false
     t.string   "code"
-    t.integer  "score",                                     :default => 0
+    t.integer  "score",                                              :default => 0
+    t.integer  "activity_category_id"
+  end
+
+  create_table "activity_categories", :force => true do |t|
+    t.string   "name"
+    t.integer  "parent_id"
+    t.integer  "lft"
+    t.integer  "rgt"
+    t.integer  "depth"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "complects", :force => true do |t|

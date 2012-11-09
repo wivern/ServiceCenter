@@ -12,6 +12,7 @@ gem 'netzke-core', '0.7.4', :git => "git://github.com/skozlov/netzke-core.git", 
 gem 'netzke-basepack', :git => "git@github.com:wivern/netzke-basepack.git"
 gem 'netzke-communitypack'
 gem 'acts_as_list', '0.1.4'
+gem 'awesome_nested_set'
 
 # authentication
 gem 'devise'
