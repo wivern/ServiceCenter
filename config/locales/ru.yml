@@ -138,6 +138,7 @@ ru:
         password: Пароль
         password_confirmation: Подтверждение пароля
         person_status__name: Статус
+        scored_at: Балл
       person_status:
         name: Наименование
         prevent_sign_in: Запретить вход
@@ -308,3 +309,4 @@ ru:
       recalc: Пересчитать
       recalc_tooltip: Пересчитать стоимость заказа
   access_denied: "Доступ запрещен"
+  score: "Баллы"

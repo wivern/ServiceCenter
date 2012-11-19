@@ -100,6 +100,10 @@ dictionaries:
         text: activerecord.models.person
         leaf: true
         component: person_component
+      score:
+        text: score
+        leaf: true
+        component: score_component
       report:
         text: activerecord.models.report
         leaf: true
@@ -287,3 +291,10 @@ components:
     :lazy_loading: true
     :persistance: true
     :force_fit: true
+  score_component:
+    :class_name: ScoreGrid
+    :model: Person
+    :lazy_loading: true
+    :persistance: true
+    :force_fit: true
+    :title: Баллы

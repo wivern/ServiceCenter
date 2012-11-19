@@ -18,12 +18,12 @@ class Ability
       cannot :see, [:prices]
     end
     if user.has_role_manager?
-      can :read, [Order, Report]
+      can :read, [Order, Report, Person]
       can :manage, :all
       cannot :destroy, [Order]
-      cannot :manage, [Person, Organization, Position, Currency, Report, PersonStatus]
+      cannot :manage, [Organization, Position, Currency, Report, PersonStatus]
       can :deliver, :all
-      cannot :deliver, [:person_component, :organization_component, :position_component, :currency_component,
+      cannot :deliver, [:organization_component, :position_component, :currency_component,
         :report_component, :person_status_component]
       can :merge, :all
       can :print, :payments

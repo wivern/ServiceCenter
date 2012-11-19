@@ -25,8 +25,10 @@ class TabbedApp < Netzke::Basepack::AuthApp
   end
 
   def deliver_component_endpoint(params)
+    logger.debug "Deliver component #{params.inspect}"
     cmp_name = params[:name]
     if params[:component].present?
+      logger.debug "Component #{params[:component]}"
       cmp_class = constantize_class_name(params[:component])
       raise RuntimeError, "Could not find class #{params[:component]}" if cmp_class.nil?
       cmp_config = {:name => cmp_name, :class_name => cmp_class.name, :persistance => true}.merge(params[:config] || {}).symbolize_keys
