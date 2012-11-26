@@ -61,10 +61,15 @@
                 this.mainPanel.setActiveTab(tab);
             } else {
                 this.loadNetzkeComponent({name: token, callback: function(comp){
+                   var icon;
+                   if ((typeof comp.iconCls) !== 'undefined')
+                    icon = comp.iconCls;
+                   else
+                    icon = 'icon-tab';
                    var tab = this.mainPanel.add({
         //                title: token,
                         id: token_id,
-                        iconCls: 'icon-tab',
+                        iconCls: icon,
                         closable: true,
                         layout: 'fit'
                     });

@@ -1,0 +1,115 @@
+.icon-fld-tool{
+    background-image: url(/images/icons/folder_wrench.png);
+}
+
+.x-grid-tree-node-expanded .icon-fld-tool{
+    background-image: url(/images/icons/folder_wrench.png);
+}
+
+.icon-fld-all{
+    background-image: url(/images/icons/folder_lightbulb.png);
+}
+
+.x-grid-tree-node-expanded .icon-fld-all{
+    background-image: url(/images/icons/folder_lightbulb.png);
+}
+
+.ordering{
+    background-image: url(/images/icons/application_form_add.png);
+}
+
+.maintenance{
+    background-image: url(/images/icons/wrench.png);
+}
+
+.analysis{
+    background-image: url(/images/icons/chart_bar.png);
+}
+
+.employee{
+    background-image: url(/images/icons/group.png);
+}
+
+.activity{
+    background-image: url(/images/icons/wrench_orange.png);
+}
+
+.spare_part{
+    background-image: url(/images/icons/cog.png);
+}
+
+.customer{
+    background-image: url(/images/icons/user_green.png);
+}
+
+.purchase_place{
+    background-image: url(/images/icons/basket.png);
+}
+
+.dealer{
+    background-image: url(/images/icons/user_gray.png);
+}
+
+.defect{
+    background-image: url(/images/icons/bug.png);
+}
+
+.score{
+    background-image: url(/images/icons/award_star_gold_2.png);
+}
+
+.producer{
+    background-image: url(/images/icons/factory.png);
+}
+
+.product{
+    background-image: url(/images/icons/camera.png);
+}
+
+.location{
+    background-image: url(/images/icons/map.png);
+}
+
+.task{
+    background-image: url(/images/icons/database_gear.png);
+}
+
+.monitor{
+    background-image: url(/images/icons/monitor_lightning.png);
+}
+
+.dictionaries{
+    background-image: url(/images/icons/folder_table.png);
+}
+
+.x-grid-tree-node-expanded .dictionaries{
+    background-image: url(/images/icons/folder_table.png);
+}
+
+.settings{
+    background-image: url(/images/icons/setting_tools.png);
+}
+
+.x-grid-tree-node-expanded .settings{
+    background-image: url(/images/icons/setting_tools.png);
+}
+
+.organization{
+    background-image: url(/images/icons/building.png);
+}
+
+.currency{
+    background-image: url(/images/icons/money_dollar.png);
+}
+
+.report{
+    background-image: url(/images/icons/report.png);
+}
+
+.exchange{
+    background-image: url(/images/icons/folder_database.png);
+}
+
+.x-grid-tree-node-expanded .exchange{
+    background-image: url(/images/icons/folder_database.png);
+}

@@ -16,6 +16,9 @@ class AddActivityWindow < DictionaryWindow
     function(){
       this.callParent();
       this.addEvents('activityadded');
+      var panel = this.getChildNetzkeComponent('activities_panel');
+      this.grid = panel.getChildNetzkeComponent('activities_grid');
+      console.debug('grid', this.grid);
       console.debug('order', this.orderId);
       console.debug('activitywindow', this);
     }
@@ -23,7 +26,7 @@ class AddActivityWindow < DictionaryWindow
 
   js_method :on_select, <<-JS
     function(){
-      var selectionModel = this.items.first().getSelectionModel();
+      var selectionModel = this.grid.getSelectionModel();
       if (selectionModel.hasSelection())
         this.selection = selectionModel.getSelection()[0];
       this.closeResult = 'select';
@@ -35,6 +38,19 @@ class AddActivityWindow < DictionaryWindow
       );
     }
   JS
+
+  component :activities_panel do
+    {
+        :class_name => "ActivitiesPanel",
+        :editable => false
+    }
+  end
+
+  def configuration
+    super.tap do |s|
+      s[:items] = [:activities_panel.component(:prevent_header => true)]
+    end
+  end
 
   def js_config
     super.tap do |res|

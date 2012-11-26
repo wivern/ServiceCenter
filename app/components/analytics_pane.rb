@@ -15,23 +15,7 @@ class AnalyticsPane < Netzke::Basepack::BorderLayoutPanel
     {
         :class_name => 'AnalyserGrid',
         :model => 'Order',
-        :columns => [
-            :ticket, :applied_at, :product_passport__product__name,
-            :product_passport__factory_number,
-            {:name => :producer__name, :filterable => false, :sorting_scope => :order_by_producer},
-            {:name => :repair_type__name, :filter => {:type => :list}},
-            {:name => :status__name, :filter => {:type => :list}},
-            {:name => :manager__name, :filter => {:type => :list, :value_model => 'Person', :data_index => 'manager__name',
-                                          :scope => :active_and_in_current_organization}},
-            {:name => :engineer__name, :filter => {:type => :list, :value_model => 'Person', :data_index => 'engineer__name',
-                                          :scope => :active_and_in_current_organization}},
-            :activities_amount, :activities_count, :spare_parts_amount,
-            :total_amount, :total_amount_with_discount, :diag_price, :work_performed_at,
-            :actual_deliver_at, :customer__name,
-            {:name => :order_location__name, :filter => {:type => :list}},
-            :spare_parts_printable,
-            :reason, :activities_score, :activities_printable
-        ],
+        :columns => visible_columns,
         :title => "Заказы",
         :prohibit_create => true,
         :prohibit_update => true,
@@ -61,12 +45,42 @@ class AnalyticsPane < Netzke::Basepack::BorderLayoutPanel
   end
 
   def configuration
+    @user = Netzke::Core.current_user
+    @ability = Ability.new(@user)
     super.tap do |sup|
       sup[:items] = [
           :analysis_grid.component(:region => :center, :prevent_header => false),
           :analysis_form.component
       ]
     end
+  end
+
+  def visible_columns
+    columns = [
+                :ticket, :applied_at, :product_passport__product__name,
+                :product_passport__factory_number,
+                {:name => :producer__name, :filterable => false, :sorting_scope => :order_by_producer},
+                {:name => :repair_type__name, :filter => {:type => :list}},
+                {:name => :status__name, :filter => {:type => :list}},
+                {:name => :manager__name, :filter => {:type => :list, :value_model => 'Person', :data_index => 'manager__name',
+                                              :scope => :active_and_in_current_organization}},
+                {:name => :engineer__name, :filter => {:type => :list, :value_model => 'Person', :data_index => 'engineer__name',
+                                              :scope => :active_and_in_current_organization}}]
+    if @ability.can? :read, Price
+      logger.debug "#{@user.name} can see prices"
+      columns << :activities_amount
+    else
+      logger.debug "#{@user.name} cannot see prices"
+    end
+    columns << :activities_count
+    columns += [:spare_parts_amount, :total_amount, :total_amount_with_discount, :diag_price] if @ability.can? :read, Price
+    columns += [:work_performed_at,
+                :actual_deliver_at, :customer__name,
+                {:name => :order_location__name, :filter => {:type => :list}},
+                :spare_parts_printable,
+                :reason, :activities_score, :activities_printable
+            ]
+    columns
   end
 
   js_include :export

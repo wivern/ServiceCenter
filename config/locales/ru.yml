@@ -279,6 +279,7 @@ ru:
     director: "Директор"
     manager: "Менеджер"
     analyst: "Аналитик"
+    price_reader: "Чтение цен"
   tabbed_app:
     actions:
       reset_password: Сменить пароль

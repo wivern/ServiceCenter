@@ -1,5 +1,8 @@
 #encoding: UTF-8
 class ActivitiesGridPanel < DictionaryGridPanel
+
+  js_property :editable, true
+
   def configuration
     user = Netzke::Core.current_user
     columns = [:code, :name]
@@ -12,4 +15,6 @@ class ActivitiesGridPanel < DictionaryGridPanel
         :model => "Activity"
     )
   end
+
+  js_mixin :activities_grid_panel
 end

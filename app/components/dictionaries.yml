@@ -11,6 +11,7 @@ dictionaries:
   defect:
     text: activerecord.models.defect
     leaf: true
+    icon_cls: defect
     component: defect_component
   external_state:
     text: activerecord.models.external_state
@@ -24,14 +25,6 @@ dictionaries:
     text: activerecord.models.reason
     leaf: true
     component: reason_component
-  repair_type:
-    text: activerecord.models.repair_type
-    leaf: true
-    component: repair_type_component
-  location:
-    text: activerecord.models.order_location
-    leaf: true
-    component: location_component
   purchase:
     text: views.navigation.purchase
     expanded: true
@@ -39,14 +32,17 @@ dictionaries:
       customer:
         text: activerecord.models.customer
         leaf: true
+        icon_cls: customer
         component: customer_component
       purchase_place:
         text: activerecord.models.purchase_place
         leaf: true
+        icon_cls: purchase_place
         component: purchase_place_component
       dealer:
         text: activerecord.models.dealer
         leaf: true
+        icon_cls: dealer
         component: dealer_component
   diagnostic:
     text: views.navigation.diagnostic
@@ -71,10 +67,12 @@ dictionaries:
       activity:
         text: activerecord.models.activity
         leaf: true
+        icon_cls: activity
         component: activity_component
       spare_part:
         text: activerecord.models.spare_part
         leaf: true
+        icon_cls: spare_part
         component: part_component
   products:
     text: views.navigation.products
@@ -83,43 +81,60 @@ dictionaries:
       producer:
         text: activerecord.models.producer
         leaf: true
+        icon_cls: producer
         component: producer_component
       product:
         text: activerecord.models.product
         leaf: true
+        icon_cls: product
         component: product_component
   settings:
     text: views.navigation.settings
     expanded: true
+    icon_cls: settings
     children:
       organization:
         text: activerecord.models.organization
         leaf: true
+        icon_cls: organization
         component: organization_component
-      person:
-        text: activerecord.models.person
+      location:
+        text: activerecord.models.order_location
         leaf: true
-        component: person_component
-      score:
-        text: score
-        leaf: true
-        component: score_component
-      report:
-        text: activerecord.models.report
-        leaf: true
-        component: report_component
-      currency:
-        text: activerecord.models.currency
-        leaf: true
-        component: currency_component
+        icon_cls: location
+        component: location_component
       position:
         text: activerecord.models.position
         leaf: true
         component: position_component
+      person:
+        text: activerecord.models.person
+        leaf: true
+        component: person_component
+        icon_cls: employee
+      score:
+        text: score
+        leaf: true
+        icon_cls: score
+        component: score_component
       person_status:
         text: activerecord.models.person_status
         leaf: true
         component: person_status_component
+      repair_type:
+        text: activerecord.models.repair_type
+        leaf: true
+        component: repair_type_component
+      report:
+        text: activerecord.models.report
+        leaf: true
+        icon_cls: report
+        component: report_component
+      currency:
+        text: activerecord.models.currency
+        leaf: true
+        icon_cls: currency
+        component: currency_component
 components:
   :status_component:
     :class_name: DictionaryGridPanel
@@ -149,6 +164,7 @@ components:
     :enable_edit_in_form: false
     :lazy_loading: true
     :persistance: true
+    :icon_cls: dealer
     :force_fit: true
   defect_component:
     :class_name: DictionaryGridPanel
@@ -156,6 +172,7 @@ components:
     :model: Defect
     :lazy_loading: true
     :persistance: true
+    :icon_cls: defect
     :force_fit: true
   external_state_component:
     :class_name: DictionaryGridPanel
@@ -191,6 +208,7 @@ components:
     :enable_edit_in_form: false
     :lazy_loading: true
     :persistance: true
+    :icon_cls: producer
     :force_fit: true
   product_component:
     :class_name: DictionaryGridPanel
@@ -198,6 +216,7 @@ components:
     :enable_edit_in_form: false
     :lazy_loading: true
     :persistance: true
+    :icon_cls: product
     :force_fit: true
   purchase_place_component:
     :class_name: DictionaryGridPanel
@@ -205,6 +224,7 @@ components:
     :enable_edit_in_form: false
     :lazy_loading: true
     :persistance: true
+    :icon_cls: purchase_place
     :force_fit: true
   reason_component:
     :class_name: Netzke::Basepack::GridPanel
@@ -230,6 +250,7 @@ components:
     :lazy_loading: true
     :persistance: true
     :force_fit: true
+    :icon_cls: customer
     :columns:
       :name: !!null 
       :address: !!null 
@@ -240,36 +261,43 @@ components:
     :class_name: ActivitiesPanel
     :model: Activity
     :lazy_loading: true
+    :icon_cls: activity
+    :editable: true
     :persistance: true
   currency_component:
     :class_name: Netzke::Basepack::GridPanel
     :model: Currency
     :lazy_loading: true
     :persistance: true
+    :icon_cls: currency
     :force_fit: true
   report_component:
     :class_name: Netzke::Basepack::GridPanel
     :model: Report
     :lazy_loading: true
     :persistance: true
+    :icon_cls: report
     :force_fit: true
   organization_component:
     :class_name: Netzke::Basepack::GridPanel
     :model: Organization
     :lazy_loading: true
     :persistance: true
+    :icon_cls: organization
     :force_fit: true
   part_component:
     :class_name: SparePartsGridPanel
     :model: SparePart
     :lazy_loading: true
     :persistance: true
+    :icon_cls: spare_part
   person_component:
     :class_name: PersonsGrid
     :model: Person
     :lazy_loading: true
     :persistance: true
     :force_fit: true
+    :icon_cls: employee
   position_component:
     :class_name: PositionsGrid
     :model: Position
@@ -291,6 +319,7 @@ components:
     :lazy_loading: true
     :persistance: true
     :force_fit: true
+    :icon_cls: location
   score_component:
     :class_name: ScoreGrid
     :model: Person
@@ -298,3 +327,4 @@ components:
     :persistance: true
     :force_fit: true
     :title: Баллы
+    :icon_cls: score

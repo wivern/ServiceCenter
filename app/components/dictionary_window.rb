@@ -45,15 +45,17 @@ class DictionaryWindow < Netzke::Basepack::Window
   js_method :init_component, <<-JS
     function(){
       this.callParent();
-      var grid = this.items.first();
-      if (this.autofillColumn){
-        Ext.each(grid.columns, function(e, index){
-          if (e.name == this.autofillColumn)
-              e.flex = 1;
-        }, this);
+      this.grid = this.getChildNetzkeComponent('grid_panel'); //this.items.first();
+      if (typeof(this.grid) !== 'undefined'){
+        if (this.autofillColumn){
+          Ext.each(this.grid.columns, function(e, index){
+            if (e.name == this.autofillColumn)
+                e.flex = 1;
+          }, this);
+        }
+        if (this.initialSort)
+          this.grid.store.sort(this.initialSort);
       }
-      if (this.initialSort)
-        grid.store.sort(this.initialSort);
       this.on('show', function(){
         this.selection = null;
         this.closeResult = 'cancel';
@@ -64,7 +66,7 @@ class DictionaryWindow < Netzke::Basepack::Window
   js_method :on_select, <<-JS
     function(){
       console.debug("window onSelect");
-      var selectionModel = this.items.first().getSelectionModel();
+      var selectionModel = this.grid.getSelectionModel();
       if (selectionModel.hasSelection())
         this.selection = selectionModel.getSelection()[0];
       this.closeResult = 'select';

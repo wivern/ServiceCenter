@@ -156,6 +156,9 @@ ActiveRecord::Schema.define(:version => 20121109145250) do
     t.datetime "updated_at"
   end
 
+  create_table "netzke_temp_table", :force => true do |t|
+  end
+
   create_table "numerators", :force => true do |t|
     t.string  "name",                          :null => false
     t.integer "repair_type_id"

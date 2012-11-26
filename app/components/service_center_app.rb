@@ -131,13 +131,15 @@ class ServiceCenterApp < TabbedApp #Netzke::Basepack::AuthApp
 
   component :maintenance,
         :class_name => "EngineerWorkAreaPanel",
-        :title => "Ремонт и диагностика"
+        :title => "Ремонт и диагностика",
+        :icon_cls => "maintenance"
 
   component :order_form,
             :class_name => "AddOrderForm",
             :model => "Order",
             :title => "Приемка",
-            :persistance => false
+            :persistance => false,
+            :icon_cls => "ordering"
 
   component :order_details,
             :class_name => "OrderDetailsPanel",
@@ -145,13 +147,15 @@ class ServiceCenterApp < TabbedApp #Netzke::Basepack::AuthApp
 
   component :analytics,
             :class_name => "AnalyticsPane",
-            :title => "Аналитика"
+            :title => "Аналитика",
+            :icon_cls => "analysis"
 
   component :jobs,
         :class_name => "JobsGrid",
         :model => "ExchangeJob",
         :title => "Задания",
         :force_fit => true,
+        :icon_cls => "task",
         :columns => [
             {:name => :type, :renderer => :render_type_icon},
             :name, :target_path, :value, :run_at, :running?,
@@ -299,7 +303,7 @@ class ServiceCenterApp < TabbedApp #Netzke::Basepack::AuthApp
         :text => "Приемка",
         :leaf => true,
         :component => :order_form,
-        :icon => uri_to_icon(:application_form_add)
+        :icon_cls => 'ordering'
     } if @ability.can?(:deliver, :order_form)
     items << {
         :text => "Заказы",
@@ -309,28 +313,30 @@ class ServiceCenterApp < TabbedApp #Netzke::Basepack::AuthApp
     items << {
         :text => "Ремонт и диагностика",
         :leaf => true,
-        :icon => uri_to_icon(:wrench),
+        :icon_cls => 'maintenance',
         :component => :maintenance
     } # if Netzke::Core.current_user.has_role_engineer?
     items << {
         :text => "Аналитика",
         :leaf => true,
-        :component => :analytics
+        :component => :analytics,
+        :icon_cls => 'analysis'
     } if Netzke::Core.current_user.has_role_analyst?
     items << {
         :text => "Обмен данными",
         :expanded => true,
+        :icon_cls => "exchange",
         :children => [
             {
                 :text => "Задания",
                 :leaf => true,
-                :icon => uri_to_icon(:database_gear),
+                :icon_cls => 'task',
                 :component => :jobs
             },
             {
                 :text => "Монитор",
                 :leaf => true,
-                :icon => uri_to_icon(:monitor_lightning)
+                :icon_cls => 'monitor'
             }
         ]
     } if Netzke::Core.current_user.has_role_administrator?
@@ -338,7 +344,8 @@ class ServiceCenterApp < TabbedApp #Netzke::Basepack::AuthApp
     items << {
             :text => "Справочники",
             :expanded => true,
-            :children => dict_items
+            :children => dict_items,
+            :icon_cls => 'dictionaries'
     } unless dict_items.empty?
     items
   end
