@@ -15,6 +15,7 @@ class Person < ActiveRecord::Base
   has_many :performed_orders, :class_name => "Order", :foreign_key => "engineer_id", :include => :status,
       :conditions => "statuses.performed = TRUE" do
     def filter(date)
+      date = Date.parse(date) if date.instance_of?(String)
       where("work_performed_at between ? and ?", date.beginning_of_month, date.end_of_month)
     end
   end

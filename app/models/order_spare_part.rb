@@ -7,7 +7,11 @@ class OrderSparePart < ActiveRecord::Base
   before_create :checkout_price
 
   def amount
-    quantity * price
+    if quantity and price
+      quantity * price
+    else
+      0
+    end
   end
 
   protected

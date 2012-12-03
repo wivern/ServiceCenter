@@ -69,7 +69,7 @@ class ScoreGrid < Netzke::Basepack::GridPanel
     records.map{|r|
       data = []
       columns.each{|col|
-        if col[:name] == :scored_at
+        if col[:name].to_sym == :scored_at
           data << r.scored_at(component_session[:date])
         else
           data << r.send(col[:name])

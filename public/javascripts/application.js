@@ -7,3 +7,7 @@ if (! ("console" in window) || !("firebug" in console)) {
     window.console = {};
     for (var i = 0; i <names.length; ++i) window.console[names[i]] = function() {};
 }
+
+if (typeof(console.debug) !== 'function'){
+    console.debug = function(){};
+}
