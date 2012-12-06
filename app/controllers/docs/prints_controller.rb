@@ -1,3 +1,5 @@
+#encoding: UTF-8
+
 class Docs::PrintsController < ApplicationController
   def print
     @report = Report.find_by_friendly_url(params[:report])
@@ -56,6 +58,15 @@ class Docs::PrintsController < ApplicationController
 
   def add_table(report, ref, collection, options = { :header => true })
     logger.debug("adding table #{ref.name}")
+    if (collection.empty? and ("order_spare_parts" == ref.name.to_s))
+      collection = [{
+          :spare_part_name => I18n.t(:was_not_applied, :scope => [:spare_parts]),
+          :spare_part_part_number => '',
+          :quantity => '',
+          :amount => 0
+      }]
+      logger.debug "Empty spare parts replacement: #{collection.inspect}"
+    end
     report.add_table(ref.name, collection, options) do |t|
       ref.klass.columns.each { |col|
         logger.debug("adding column #{col.name}")
@@ -75,9 +86,13 @@ class Docs::PrintsController < ApplicationController
         assoc.klass.columns.each {|col|
           logger.debug("adding column #{assoc.name}_#{col.name}")
           t.add_column("#{assoc.name}_#{col.name}".to_sym){ |item|
-            #logger.debug "Call to #{assoc.name}.#{col.name}"
-            assoc_v = item.send(assoc.name)
-            assoc_v ? assoc_v.send(col.name) : '' }
+            if item.is_a?(Hash)
+              item["#{assoc.name}_#{col.name}".to_sym]
+            else
+              assoc_v = item.send(assoc.name)
+              assoc_v ? assoc_v.send(col.name) : ''
+            end
+          }
         }
       }
     end

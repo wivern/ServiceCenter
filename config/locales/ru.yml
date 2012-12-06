@@ -311,3 +311,5 @@ ru:
       recalc_tooltip: Пересчитать стоимость заказа
   access_denied: "Доступ запрещен"
   score: "Баллы"
+  spare_parts:
+    was_not_applied: "Не использовались"
