@@ -30,6 +30,15 @@ module Mergeable
           case (assoc.macro)
             when :has_and_belongs_to_many
             then
+              table = assoc.options[:join_table]
+              pk = assoc.primary_key_name
+              fk = assoc.association_foreign_key
+              conn.execute("DELETE FROM #{table} t1 WHERE #{pk} IN (#{items.join(",")}) AND EXISTS(SELECT * FROM #{table} WHERE #{pk} = #{item.id} AND  t1.#{fk} = #{fk})")
+              clean_items = items.dup
+              while(clean_items.size > 1)
+                item_id = clean_items.pop
+                conn.execute("DELETE FROM #{table} t1 WHERE #{pk} IN (#{clean_items.join(",")}) AND EXISTS(SELECT * FROM #{table} WHERE #{pk} = #{item_id} AND  t1.#{fk} = #{fk})")
+              end
               modified = conn.update_sql("UPDATE #{assoc.options[:join_table]} SET #{assoc.primary_key_name}=#{item.id} WHERE #{assoc.primary_key_name} IN (#{items.join(',')})")
             when :has_many
             then
