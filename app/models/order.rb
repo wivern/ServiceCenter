@@ -40,7 +40,7 @@ class Order < ActiveRecord::Base
   netzke_exclude_attributes :created_at, :updated_at
 
   accepts_nested_attributes_for :customer, :reason, :product_passport, :engineer
-  validates_presence_of :repair_type, :customer, :product_passport, :complects, :external_states, :defects, :on => :create
+  validates_presence_of :repair_type, :customer, :product_passport, :complects, :external_states, :on => :create
 
   scope :by_organization, lambda{
     where("Orders.organization_id = ?", Netzke::Core.current_user.organization)

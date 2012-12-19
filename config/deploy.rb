@@ -5,7 +5,7 @@ set :default_stage, "production"
 
 require 'capistrano/ext/multistage'
 
-$LOAD_PATH.unshift File.expand_path('./lib', ENV['rvm_path'])
+#$LOAD_PATH.unshift File.expand_path('./lib', ENV['rvm_path'])
 require 'rvm/capistrano'
 require 'bundler/capistrano'
 #load File.join(File.dirname(__FILE__), "deploy/targets.rb")

@@ -126,7 +126,7 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
                                                       :items => [
                                                           {:name => :complects__name, :xtype => :netzkeboxselect, :read_only => true,
                                                             :hide_trigger => true, :height => 110, :auto_load_store => true},
-                                                          {:name => :defects__name, :xtype => :netzkeboxselect, :read_only => true,
+                                                          {:name => :defects__name, :xtype => :netzkepopupselect, :selection_component => :select_defect,
                                                             :hide_trigger => true, :height => 140, :auto_load_store => true},
                                                           {:name => :defect_note, :xtype => :textarea, :height => 140, :read_only => true}
                                                       ]
