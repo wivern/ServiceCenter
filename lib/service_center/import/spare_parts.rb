@@ -47,7 +47,8 @@ module ServiceCenter
               begin
                 @ic = Iconv.new('UTF-8', default_encoding)
                 spare_parts = CSV.foreach(file, :col_sep => ';', :headers => true) do |row|
-                  import_record row
+                  logger.debug "Row: #{row.headers.inspect}"
+                  import_record row if not row.header_row? and row.header?("CODE")
                 end
               end
             when :dbf then
@@ -76,6 +77,7 @@ module ServiceCenter
 
       private
       def self.import_record(rec)
+        logger.debug "Import record"
         if rec.is_service == 'T' or rec.is_service == 'V'
           #is a service
           model = Activity.find_or_initialize_by_code(@ic.iconv(rec.code))
