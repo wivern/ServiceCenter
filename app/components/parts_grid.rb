@@ -17,11 +17,11 @@ class PartsGrid  < Netzke::Basepack::GridPanel
 
   def configuration
     @user = Netzke::Core.current_user
-    columns = [{:name => :spare_part__name, :read_only => true, :summary_type => "count", :data_index => "spare_part__name"},
-                {:name => :spare_part__part_number, :read_only => true}]
-    columns << {:name => :price, :read_only => true, :align => :right, :renderer => 'this.currencyRenderer'} if @user.has_no_role_engineer?
-    columns << {:name => :quantity, :align => :right, :summary_type => "count"}
-    columns << {:name => :amount, :read_only => true, :align => :right, :summary_type => "sum", :data_index => "amount",
+    columns = [{:name => :spare_part__name, :read_only => true, :summary_type => "count", :flex => 1, :data_index => "spare_part__name"},
+                {:name => :spare_part__part_number, :read_only => true, :flex => 0, :width => 128}]
+    columns << {:name => :price, :flex => 0, :width => 96, :read_only => true, :align => :right, :renderer => 'this.currencyRenderer'} if @user.has_no_role_engineer?
+    columns << {:name => :quantity, :flex => 0, :width => 64, :align => :right, :summary_type => "count"}
+    columns << {:name => :amount, :flex => 0, :width => 96, :read_only => true, :align => :right, :summary_type => "sum", :data_index => "amount",
                   :renderer => 'this.currencyRenderer'} if @user.has_no_role_engineer?
     super.merge(
         :class_name => "Netzke::Basepack::GridPanel",

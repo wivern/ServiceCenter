@@ -76,7 +76,7 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
         :scope => ["order_id = ?", config[:record_id]],
         :order_id => config[:record_id],
         :prevent_header => true,
-        :min_height => 300
+        :min_height => 600
     }
   end
 
@@ -91,6 +91,7 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
   end
 
   DIAG_FIELD_WIDTH = 450
+  FIELD_WIDTH = 435
 
   def configuration
     @user = Netzke::Core.current_user
@@ -125,10 +126,11 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
                                                       :flex => 1, :defaults => {:anchor => "-8"},
                                                       :items => [
                                                           {:name => :complects__name, :xtype => :netzkeboxselect, :read_only => true,
-                                                            :hide_trigger => true, :height => 110, :auto_load_store => true},
-                                                          {:name => :defects__name, :xtype => :netzkepopupselect, :selection_component => :select_defect,
+                                                            :hide_trigger => true, :width => FIELD_WIDTH, :height => 110, :auto_load_store => true},
+                                                          {:name => :defects__name, :width => FIELD_WIDTH, :xtype => :netzkepopupselect, :selection_component => :select_defect,
                                                             :hide_trigger => true, :height => 140, :auto_load_store => true},
-                                                          {:name => :defect_note, :xtype => :textarea, :height => 140, :read_only => true}
+                                                          {:name => :defect_note, :xtype => :textarea, :height => 180,
+                                                           :width => FIELD_WIDTH, :read_only => true}
                                                       ]
                                                   },
                                                   {
@@ -137,11 +139,11 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
                                                           {:name => :applied_at, :format => 'd.m.Y'},
                                                           {:name => :plan_deliver_at, :format => 'd.m.Y'},
                                                           {:name => :actual_deliver_at, :format => 'd.m.Y'},
-                                                          {:name => :deliver_manager__name, :scope => :active_and_in_current_organization},
+                                                          {:name => :deliver_manager__name, :scope => :active_and_in_current_organization, :width => FIELD_WIDTH},
                                                           {:name => :guarantee_case, :xtype => :numericfield},
-                                                          {:name => :external_states__name, :xtype => :netzkepopupselect, :height => 140,
+                                                          {:name => :external_states__name, :xtype => :netzkepopupselect, :width => FIELD_WIDTH, :height => 140,
                                                             :auto_load_store => true, :selection_component => :select_external_state},
-                                                          {:name => :external_state_note, :xtype => :textarea, :height => 140},
+                                                          {:name => :external_state_note, :xtype => :textarea, :width => FIELD_WIDTH, :height => 140},
                                                           {:name => :order_location__name}
                                                       ]
                                                   }
@@ -156,7 +158,7 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
                                                   :layout => :anchor, :border => false, :defaults => {:anchor => '50%'},
                                                   :items => [
                                                     { :name => :customer__name, :anchor => "60%", :read_only => true },
-                                                    { :name => :customer__address, :anchor => "100%", :read_only => true },
+                                                    { :name => :customer__address, :anchor => "70%", :height => 140, :xtype => :textarea, :read_only => true },
                                                     { :name => :customer__phone, :read_only => true },
                                                     { :name => :customer__email, :read_only => true },
                                                     { :name => :customer__passport, :read_only => true }
@@ -202,9 +204,9 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
                               }
                           ]
                       }
-    diagnostic_1_items = [ {:name => :diag_manager__name} ]
+    diagnostic_1_items = [ {:name => :diag_manager__name, :width => FIELD_WIDTH} ]
     diagnostic_1_items << {:field_label => Order.human_attribute_name("diag_price"), :name => :diagnostic_activity__name,
-        :xtype => :selecttriggerfield, :selection_component => :select_diagnostic_activity,
+        :xtype => :selecttriggerfield, :selection_component => :select_diagnostic_activity, :width => FIELD_WIDTH,
         :display_field => :name} #unless @user.has_role_engineer?
     diagnostic_1_items << {:name => :diagnosed_at} << {:name => :actual_defect, :xtype => :textarea, :height => 140, :width => DIAG_FIELD_WIDTH}
     diagnostic_1_items << {:name => :internal_states__name, :xtype => :netzkepopupselect, :height => 140, :width => DIAG_FIELD_WIDTH,
@@ -241,23 +243,27 @@ class OrderDetailsPanel < Netzke::Basepack::FormPanel
                       order_diagnostic_tab,
                       {
                           :title => I18n.t('activerecord.models.activity'),
+                          :border => false,
+                          :flex => 1,
+                          #:layout => {
+                          #    :type => :fit,
+                          #    :align => :stretch,
+                          #    :border => false
+                          #},
                           :items => [
-                              :activities.component(:title => "Работы"),
-                              { :layout => :fit, :border => false,
+                              :activities.component(:title => "Работы", :align => :stretch, :flex => 2, :layout => :fit),
+                              {
+                                :border => false,
                                 :bodyPadding => "10 0 0 0",
                                 :items => [
                                   {:name => :work_performed_at, :format => "d.m.y"},
-                                  {:name => :engineer__name, :xtype => :selecttriggerfield,
+                                  {:name => :engineer__name, :xtype => :selecttriggerfield, :width => FIELD_WIDTH,
                                     :selection_component => :select_person, :auto_load_store => true}
-                                  #{:name => :prior_cost, :xtype => :numericfield, :currency_symbol => 'руб.', :currency_at_end => true,
-                                  #        :allow_negative => false, :step => 10},
-                                  #{:name => :maximum_cost, :xtype => :numericfield, :currency_symbol => 'руб.', :currency_at_end => true,
-                                  #        :allow_negative => false, :step => 10}
                                 ]
                               }
                           ]
                       },
-                      :parts.component(:title => I18n.t('activerecord.models.spare_part'))
+                      :parts.component(:title => I18n.t('activerecord.models.spare_part'), :align => :stretch, :layout => :fit)
                   ]
     order_tabs << cost_tab if @user.has_no_role_engineer?
     order_tabs << service_tab

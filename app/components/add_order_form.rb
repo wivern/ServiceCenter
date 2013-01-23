@@ -83,6 +83,8 @@ class AddOrderForm < Netzke::Basepack::FormPanel
     super.merge(:model => "Order")
   end
 
+  FIELD_WIDTH = 435
+
   def configuration
     super.tap do |s|
       configure_locked(s)
@@ -102,7 +104,7 @@ class AddOrderForm < Netzke::Basepack::FormPanel
             :selection_component => :select_dealer, :allowNew => true}]
       customer_fields = [
           {:name => :customer__name, :xtype => :autosuggest, :populate_related_fields => true, :allow_blank => false, :allow_new => true},
-          {:name => :customer__address, :xtype => :textarea},
+          {:name => :customer__address, :xtype => :textarea, :width => FIELD_WIDTH},
           {:name => :customer__phone, :xtype => :textfield },
           {:name => :customer__email, :xtype => :textfield },
           {:name => :customer__passport, :xtype => :textfield }
@@ -135,6 +137,7 @@ class AddOrderForm < Netzke::Basepack::FormPanel
                       :xtype => :fieldset,
                       :title => I18n.t('views.forms.add_order.order_details'),
                       :grow => true,
+                      :width => 900,
                       :colspan => 2,
                       :collapsible => true,
                       :items => [{
@@ -148,20 +151,20 @@ class AddOrderForm < Netzke::Basepack::FormPanel
                                    {:field_label => Order.human_attribute_name("plan_deliver_at"), :name => :plan_deliver_at,
                                       :xtype => :datefield, :format => "d.m.y", :value => Date.today + 2.weeks}, #TODO: add default delivery period
                                    {:field_label => Order.human_attribute_name("complect"), :name => :complects__name,
-                                      :xtype => :netzkeboxselect, :editable => false, :hide_trigger => true, :height => 110},
+                                      :xtype => :netzkeboxselect, :editable => false, :hide_trigger => true, :width => FIELD_WIDTH, :height => 110},
                                    {:field_label => Order.human_attribute_name("external_state"), :name => :external_states__name,
-                                    :xtype => :netzkepopupselect, :selection_component => :select_external_state, :height => 140},
-                                   {:name => :external_state_note, :xtype => :textarea, :heigh => 140}
+                                    :xtype => :netzkepopupselect, :selection_component => :select_external_state, :height => 140, :width => FIELD_WIDTH},
+                                   {:name => :external_state_note, :xtype => :textarea, :heigh => 140, :width => FIELD_WIDTH}
                                ]
                               },
                               {# 2nd column
                                :flex => 1, :defaults => {:anchor => '100%'},
                                :items => [
                                    {:field_label => Order.human_attribute_name("defect"), :name => :defects__name, :xtype => :netzkepopupselect,
-                                    :width => 320, :height => 140, :selection_component => :select_defect},
-                                   {:name => :defect_note, :xtype => :textarea, :width => 320, :height => 140},
+                                    :width => FIELD_WIDTH, :height => 140, :selection_component => :select_defect},
+                                   {:name => :defect_note, :xtype => :textarea, :width => FIELD_WIDTH, :height => 140},
                                    {:field_label => Order.human_attribute_name("diag_price"), :name => :diagnostic_activity__price__value,
-                                   :xtype => :selecttriggerfield, :selection_component => :select_diagnostic_activity}
+                                   :xtype => :selecttriggerfield, :selection_component => :select_diagnostic_activity, :width => FIELD_WIDTH}
                                    #:display_field => :price__value}
                                    #{:field_label => Order.human_attribute_name("prior_cost"), :name => :prior_cost,
                                    #   :xtype => :numericfield, :currency_at_end => true, :currency_symbol => 'руб.', :step => 10},

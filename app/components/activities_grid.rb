@@ -7,21 +7,23 @@ class ActivitiesGrid < Netzke::Basepack::GridPanel
         :model => "Activity",
         :columns => activities_columns,
         :initial_sort => ['code', 'ASC'],
-        :order_id => config[:order_id]
+        :order_id => config[:order_id],
+        :width => 800
     }
   end
 
   def configuration
     @user = Netzke::Core.current_user
-    columns = [ {:name => :activity__code, :summary_type => :count, :read_only => true},
-                {:name => :activity__name, :summary_type => :count, :read_only => true},
-                {:name => :activity__diagnostic, :hidden => true, :read_only => true}
+    columns = [ {:name => :activity__code, :summary_type => :count, :read_only => true, :flex => 0, :width => 64},
+                {:name => :activity__name, :summary_type => :count, :read_only => true, :flex => 1},
+                {:name => :activity__diagnostic, :hidden => true, :read_only => true, :flex => 0, :width => 48}
               ]
-    columns << {:name => :price, :read_only => true, :type => :number,
+    columns << {:name => :price, :read_only => true, :type => :number, :flex => 0, :width => 94,
                           :align => 'right', :renderer => 'this.currencyRenderer', :summary_type => :sum} if @user.has_no_role_engineer?
-    columns << {:name => :activity__score, :read_only => true, :type => :number, :align => 'right', :summary_type => :sum} if @user.has_role_engineer?
+    columns << {:name => :activity__score, :read_only => true, :type => :number, :align => 'right',
+                :flex => 0, :width => 64, :summary_type => :sum} if @user.has_role_engineer?
 
-    columns << :notes
+    columns << {:name => :notes, :flex => 1}
     super.merge(
         :class_name => "Netzke::Basepack::GridPanel",
         :model => "OrderActivity",
