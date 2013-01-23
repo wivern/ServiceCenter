@@ -16,6 +16,15 @@
             });
 //            app.appLoadComponent('order_details');
             this.getForm().reset();
+            var appliedAt = this.getForm().findField("appliedAt"),
+                today = Ext.Date.now();
+            if (appliedAt){
+                appliedAt.setValue(today);
+                var deliverAt = this.getForm().findField("planDeliverAt");
+                if (deliverAt){
+                    deliverAt.setValue(Ext.Date.add(today,14));
+                }
+            }
         }, this);
         console.debug(this);
 

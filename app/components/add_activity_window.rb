@@ -49,6 +49,8 @@ class AddActivityWindow < DictionaryWindow
   def configuration
     super.tap do |s|
       s[:items] = [:activities_panel.component(:prevent_header => true)]
+      s[:maximizable] = true
+      s[:maximized] = true
     end
   end
 
