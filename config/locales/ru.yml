@@ -99,6 +99,7 @@ ru:
         product_passport__purchased_at: "Дата покупки"
         product_passport__purchased_at_str: "Дата покупки"
         product_passport__dealer__name: "Поступило от дилера"
+        product__name: "Название устройства"
         reason: "Причина обращения"
         service_state: Состояние
         service_info: Информация

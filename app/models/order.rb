@@ -164,6 +164,14 @@ class Order < ActiveRecord::Base
     collection_printable :spare_parts, :part_number
   end
 
+  def product_id
+    if product
+      product.id
+    else
+      0
+    end
+  end
+
   private
 
   def collection_printable(association, attribute = :name, separator = ', ')

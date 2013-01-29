@@ -150,6 +150,7 @@
                 var snumber =  order.data._meta.associationValues.product_passport__factory_number; //order.get('product_passport__factory_number');
                 console.debug('snumber', snumber, order);
                 this.filters.createFilters();
+                //Activate s/n filter
                 var snFilter = this.filters.getFilter('product_passport__factory_number');
                 if (!snFilter){
                     snFilter = this.filters.addFilter({
@@ -157,11 +158,19 @@
                        dataIndex: 'product_passport__factory_number'
                     });
                 }
-                snFilter.setActive(true);
+//                snFilter.setActive(true);
                 Ext.Function.defer(function(){
                    snFilter = this.filters.getFilter('product_passport__factory_number');
                    snFilter.setValue(snumber);
                 }, 10, this);
+                //Turn off other filters
+//                this.filters.clearFilters();
+                var filters = this.filters.filters;
+                console.debug("Filters", filters);
+                filters.each(function(item, index){
+                    console.debug("Item", item, index);
+                    item.setActive(item == snFilter);
+                }, this);
             }
         } else {
            console.debug("clear filter");

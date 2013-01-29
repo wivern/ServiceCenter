@@ -164,6 +164,7 @@ class OrdersGrid < Netzke::Basepack::GridPanel
   protected
   def get_list_filter_data(params = {})
     logger.debug "list filter params: #{params.inspect}"
+    return {} unless params['model']
     model = params['model'].camelize.constantize
     @items = model.scoped
     #params[:scope].split('.').each{|scope| @items = @items.send(scope)} if params[:scope]
