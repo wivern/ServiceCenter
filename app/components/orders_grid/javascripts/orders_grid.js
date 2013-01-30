@@ -165,12 +165,16 @@
                 }, 10, this);
                 //Turn off other filters
 //                this.filters.clearFilters();
+                console.debug("Turn off filters");
                 var filters = this.filters.filters;
                 console.debug("Filters", filters);
                 filters.each(function(item, index){
                     console.debug("Item", item, index);
                     item.setActive(item == snFilter);
                 }, this);
+                var ticketFilter = this.filters.getFilter('ticket');
+                if (ticketFilter) ticketFilter.setValue([]);
+                console.debug('ticketFilter', ticketFilter);
             }
         } else {
            console.debug("clear filter");

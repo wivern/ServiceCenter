@@ -288,6 +288,7 @@ ru:
     actions:
       reset_password: Сменить пароль
       logout: Выход
+      about: О программе
   analyser_form:
     title: Параметры анализа
   orders_grid:
@@ -312,5 +313,6 @@ ru:
       recalc_tooltip: Пересчитать стоимость заказа
   access_denied: "Доступ запрещен"
   score: "Баллы"
+  about: "О программе"
   spare_parts:
     was_not_applied: "Не использовались"

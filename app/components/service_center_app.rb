@@ -242,18 +242,18 @@ class ServiceCenterApp < TabbedApp #Netzke::Basepack::AuthApp
   js_method :on_about, <<-JS
     function(e){
     var msg = [
-    '',
-    'Source code for this demo: <a href="https://github.com/skozlov/netzke-demo">GitHub</a>.',
-    '', '',
-    '<div style="text-align:right;">Why follow <a href="http://twitter.com/nomadcoder">NomadCoder</a>?</div>'
+    'Лицензия: GPLv3',
+    'Исходные коды программы: <a href="https://github.com/wivern/ServiceCenter">GitHub</a>.',
+    '','',
+    'Разработка: <a href="mailto:vitaly.koulakov@gmail.com">Кулаков Виталий</a>', '',''
     ].join("<br/>");
 
     Ext.Msg.show({
-    width: 300,
-    title:'About',
-    msg: msg,
-    buttons: Ext.Msg.OK,
-    animEl: e.getId()
+      width: 300,
+      title: 'О программе',
+      msg: msg,
+      buttons: Ext.Msg.OK,
+      animEl: e.getId()
     });
     }
   JS
